@@ -94,20 +94,47 @@ def main():
     proactivity, experience = load_config()
     is_beginner = experience == "beginner"
 
-    # Only fire for beginners at moderate or high proactivity
-    if proactivity == "low":
+    # Low proactivity: skip tips, but still show greeting on startup
+    if proactivity == "low" and source != "startup":
         sys.exit(0)
 
     state = load_state(session_id)
     tip = None
+    greeting = None
 
-    if source == "startup" and is_beginner:
-        if not state.get("shown_startup_tip"):
-            # Pick a random tip from the pool
+    if source == "startup":
+        # Always inject the greeting instruction on fresh startup
+        if not state.get("shown_greeting"):
+            state["shown_greeting"] = True
+            greeting = (
+                "IMPORTANT — Claudia plugin is loaded. On this very first response, "
+                "before answering the user, display this exact greeting block:\n\n"
+                "```\n"
+                "         \u25c9 \u25c9\n"
+                "        \u256d\u2524 \u251c\u256e\n"
+                "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524   \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n"
+                "\u2502                                     \u2502\n"
+                "\u2502  Claudia is here.                   \u2502\n"
+                "\u2502  She catches what you miss.         \u2502\n"
+                "\u2502                                     \u2502\n"
+                "\u2502  /claudia:ask    \u2014 ask me anything  \u2502\n"
+                "\u2502  /claudia:explain \u2014 explain code    \u2502\n"
+                "\u2502  /claudia:review \u2014 review changes   \u2502\n"
+                "\u2502  /claudia:setup  \u2014 first-time setup \u2502\n"
+                "\u2502                                     \u2502\n"
+                "\u2502  Or just build. I'm watching.       \u2502\n"
+                "\u2502                                     \u2502\n"
+                "\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\n"
+                "```\n\n"
+                "Display this greeting exactly as shown, then answer whatever the user asked."
+            )
+
+        # Beginner tip after greeting
+        if is_beginner and not state.get("shown_startup_tip"):
             shown_tips = state.get("shown_tips_history", [])
             available = [t for t in STARTUP_TIPS if t not in shown_tips]
             if not available:
-                available = STARTUP_TIPS  # Reset if we've shown them all
+                available = STARTUP_TIPS
 
             tip_text = random.choice(available)
             state["shown_startup_tip"] = True
@@ -126,9 +153,11 @@ def main():
 
     # source == "clear": no tip needed
 
-    if tip:
+    # Combine greeting + tip if both exist
+    parts = [p for p in [greeting, tip] if p]
+    if parts:
         save_state(session_id, state)
-        output = json.dumps({"additionalContext": tip})
+        output = json.dumps({"additionalContext": "\n\n".join(parts)})
         print(output)
 
     sys.exit(0)
