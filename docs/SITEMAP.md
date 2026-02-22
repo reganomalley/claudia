@@ -4,7 +4,7 @@
 
 **Stack:** Static site. Astro or Next.js static export. Tailwind CSS. Deployed on Netlify.
 
-**Domain:** getclaudia.dev
+**Domain:** askclaudia.dev
 
 **Repo:** Same repo (`reganomalley/claudia`), `website/` directory. Or separate `claudia-website` repo if you want to keep plugin and site deployments independent.
 

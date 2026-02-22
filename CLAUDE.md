@@ -1,7 +1,7 @@
 # Claudia - Proactive Mentor Plugin
 
 ## What This Is
-Claude Code plugin: technology mentor, security advisor, prompt coach. 10 knowledge domains, 11 hooks, 6 commands. MIT licensed. npm: `claudia-mentor`. Web: getclaudia.dev.
+Claude Code plugin: technology mentor, security advisor, prompt coach. 10 knowledge domains, 11 hooks, 6 commands. MIT licensed. npm: `claudia-mentor`. Web: askclaudia.dev.
 
 ## Architecture
 - **Skills** (model-invocable): `claudia-mentor` (core brain/router), `claudia-databases`, `claudia-security`, `claudia-infrastructure`, `claudia-frontend`, `claudia-api`, `claudia-testing`, `claudia-performance`, `claudia-devops`, `claudia-data`

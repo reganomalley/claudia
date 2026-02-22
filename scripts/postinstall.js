@@ -135,7 +135,7 @@ const textLines = [
   `  ${d}She joins conversations about tech decisions.${r}`,
   `  ${d}She teaches you as you build.${r}`,
   ``,
-  `  ${d}Docs:${r}   ${w}https://getclaudia.dev${r}`,
+  `  ${d}Docs:${r}   ${w}https://askclaudia.dev${r}`,
   `  ${d}Source:${r} ${w}https://github.com/reganomalley/claudia${r}`,
   ``,
   `  ${d}Every Claude needs a Claudia.${r}`,

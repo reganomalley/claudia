@@ -116,7 +116,7 @@ Icon + lowercase monospace wordmark. Horizontal lockup is primary. Icon alone fo
 
 **GitHub avatar:** Logo icon on vermillion background
 **Twitter/X:** Same icon, banner shows tagline + feature summary
-**README badge:** `[![Claudia](badge-url)](getclaudia.dev)` -- vermillion badge with white text
+**README badge:** `[![Claudia](badge-url)](askclaudia.dev)` -- vermillion badge with white text
 
 ## Tone in Different Contexts
 

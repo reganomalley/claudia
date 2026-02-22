@@ -274,18 +274,33 @@ import Layout from "../layouts/Layout.astro";
             <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
             <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
           </div>
-          <div class="bg-[#111114] px-6 py-5 font-mono text-sm leading-[1.8]">
-            <div class="text-paper/40">╭──────────────────────────────────────╮</div>
-            <div class="text-paper/40">│                                      │</div>
-            <div class="text-paper/40">│   <span class="text-paper/70">Claudia is here.</span>                   │</div>
-            <div class="text-paper/40">│   <span class="text-paper/50">She catches what you miss.</span>     │</div>
-            <div class="text-paper/40">│                                      │</div>
-            <div class="text-paper/40">│   <span class="text-vermillion/60">/claudia:ask</span> <span class="text-paper/30">— ask me anything</span>     │</div>
-            <div class="text-paper/40">│   <span class="text-vermillion/60">/claudia:setup</span> <span class="text-paper/30">— first-time setup</span>  │</div>
-            <div class="text-paper/40">│                                      │</div>
-            <div class="text-paper/40">│   <span class="text-paper/30">Or just build. I'm watching.</span>       │</div>
-            <div class="text-paper/40">│                                      │</div>
-            <div class="text-paper/40">╰──────────────────────────────────────╯</div>
+          <div class="bg-[#111114] px-6 py-5 font-mono text-[13px] leading-none">
+            <!-- Pixel art mascot (matches postinstall.js output) -->
+            <!-- Colors: #303030=hair, #484848=hair-hi, #ff0000=red, #d70000=dark-red, #fff=eyes, #000=pupils, #ff5f5f=hands/coral, #5f0000=mouth -->
+            <div class="mascot-art mb-1" style="letter-spacing: 0;">
+              <div>      <span style="color:#ff5f5f">*</span></div>
+              <div>   <span style="color:#303030">▀</span><span style="color:#484848;background:#303030">▀</span><span style="color:#303030;background:#303030">█</span><span style="color:#303030">▀</span>      </div>
+              <div>  <span style="color:#303030;background:#303030">█</span><span style="color:#303030;background:#303030">█</span><span style="color:#303030;background:#ff0000">▀</span><span style="color:#303030;background:#ff0000">▀</span><span style="color:#303030;background:#ff0000">▀</span><span style="color:#303030;background:#ff0000">▀</span><span style="color:#303030;background:#303030">█</span><span style="color:#303030;background:#303030">█</span>    </div>
+              <div>  <span style="color:#303030;background:#303030">█</span><span style="color:#ff0000;background:#ff0000">█</span><span style="color:#fff;background:#fff">█</span><span style="color:#000;background:#000">█</span><span style="color:#ff0000;background:#ff0000">█</span><span style="color:#fff;background:#fff">█</span><span style="color:#000;background:#000">█</span><span style="color:#303030;background:#303030">█</span>    </div>
+              <div>   <span style="color:#ff0000;background:#ff0000">█</span><span style="color:#ff0000;background:#ff0000">█</span><span style="color:#5f0000;background:#5f0000">█</span><span style="color:#5f0000;background:#d70000">▀</span><span style="color:#ff0000;background:#ff0000">█</span><span style="color:#ff0000;background:#d70000">▀</span>     </div>
+              <div>  <span style="color:#ff5f5f">▀</span>      <span style="color:#ff5f5f">▀</span>    </div>
+            </div>
+
+            <div class="leading-[1.8] mt-3">
+              <div>  <span class="text-paper/70 font-bold">Claudia</span> <span class="text-paper/25">v0.4.0</span></div>
+              <div>  <span class="text-paper/30">She catches what you miss.</span></div>
+              <div>&nbsp;</div>
+              <div>  <span class="text-[#28c840]">+</span> <span class="text-paper/60">Auto-configured.</span> <span class="text-paper/30">Restart your terminal, then just type</span> <span class="text-paper/70">claude</span></div>
+              <div>&nbsp;</div>
+              <div>  <span class="text-paper/30">She checks your code automatically.</span></div>
+              <div>  <span class="text-paper/30">She joins conversations about tech decisions.</span></div>
+              <div>  <span class="text-paper/30">She teaches you as you build.</span></div>
+              <div>&nbsp;</div>
+              <div>  <span class="text-paper/25">Docs:</span>   <span class="text-paper/60">https://askclaudia.dev</span></div>
+              <div>  <span class="text-paper/25">Source:</span> <span class="text-paper/60">https://github.com/reganomalley/claudia</span></div>
+              <div>&nbsp;</div>
+              <div>  <span class="text-paper/30">Every Claude needs a Claudia.</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -301,25 +316,17 @@ import Layout from "../layouts/Layout.astro";
       </div>
 
       <p class="reveal text-sm text-paper/40 leading-relaxed mb-6">
-        Your terminal is going to be your workspace. It's worth making it comfortable.
+        Your terminal is going to be your workspace. It's worth making it comfortable — a better font, a better terminal app, maybe a color theme. But you don't have to figure that out yourself.
       </p>
 
-      <div class="reveal grid sm:grid-cols-2 gap-4">
-        <div class="border border-white/[0.06] bg-white/[0.015] rounded-xl p-5">
-          <h3 class="text-sm font-semibold text-paper/70 mb-2">A better font</h3>
-          <p class="text-xs text-paper/30 leading-relaxed">
-            <a href="https://www.jetbrains.com/lp/mono/" target="_blank" rel="noopener noreferrer" class="text-vermillion/60 hover:text-vermillion transition-colors underline underline-offset-2">JetBrains Mono</a> or
-            <a href="https://github.com/tonsky/FiraCode" target="_blank" rel="noopener noreferrer" class="text-vermillion/60 hover:text-vermillion transition-colors underline underline-offset-2">Fira Code</a> — monospace fonts designed for reading code. Free.
-          </p>
+      <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+        <p class="text-sm text-paper/50 mb-4">Just ask Claudia. She'll detect what you're running and walk you through it:</p>
+        <div class="bg-black/40 rounded-lg p-4 font-mono text-sm mb-4">
+          <span class="text-paper/30 select-none">> </span><span class="text-paper/60">/claudia:ask</span> <span class="text-paper/40">how do I make my terminal look nicer?</span>
         </div>
-        <div class="border border-white/[0.06] bg-white/[0.015] rounded-xl p-5">
-          <h3 class="text-sm font-semibold text-paper/70 mb-2">A better terminal</h3>
-          <p class="text-xs text-paper/30 leading-relaxed">
-            Mac: <a href="https://iterm2.com" target="_blank" rel="noopener noreferrer" class="text-vermillion/60 hover:text-vermillion transition-colors underline underline-offset-2">iTerm2</a>.
-            Windows: <a href="https://apps.microsoft.com/detail/9N0DX20HK701" target="_blank" rel="noopener noreferrer" class="text-vermillion/60 hover:text-vermillion transition-colors underline underline-offset-2">Windows Terminal</a>.
-            Cross-platform: <a href="https://warp.dev" target="_blank" rel="noopener noreferrer" class="text-vermillion/60 hover:text-vermillion transition-colors underline underline-offset-2">Warp</a>.
-          </p>
-        </div>
+        <p class="text-xs text-paper/30 leading-relaxed">
+          She'll recommend a font, a terminal app for your OS, and help you install and configure them — step by step, in your terminal, right now.
+        </p>
       </div>
     </div>
   </section>
