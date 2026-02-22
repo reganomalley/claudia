@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+/* Brand Colors */
+:root {
+  --vermillion: #E63B2E;
+  --void: #0A0A0A;
+  --paper: #FAFAF8;
+  --signal: #FF6B35;
+  --soft-gray: #2A2A2E;
+}
+
+/* Register custom colors with Tailwind v4 */
+@theme {
+  --color-vermillion: var(--vermillion);
+  --color-void: var(--void);
+  --color-paper: var(--paper);
+  --color-signal: var(--signal);
+  --color-soft-gray: var(--soft-gray);
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+code,
+pre {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--vermillion);
+  color: var(--paper);
+}

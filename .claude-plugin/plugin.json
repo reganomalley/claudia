@@ -1,0 +1,8 @@
+{
+  "name": "claudia-mentor",
+  "description": "Proactive technology mentor, security advisor, and prompt coach for Claude Code. Catches bad practices, advises on architecture decisions, and coaches better prompting.",
+  "author": {
+    "name": "Regan O'Malley",
+    "email": "regan@reganomalley.com"
+  }
+}

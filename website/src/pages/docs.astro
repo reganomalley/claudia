@@ -1,0 +1,97 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Claudia Documentation">
+  <!-- Hero -->
+  <section class="pt-24 pb-16 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-paper mb-6">
+        Documentation
+      </h1>
+      <p class="text-lg sm:text-xl text-paper/60 max-w-2xl mx-auto">
+        Everything you need to know about Claudia
+      </p>
+    </div>
+  </section>
+
+  <!-- Doc Sections Grid -->
+  <section class="py-16 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href="#getting-started" class="group border border-soft-gray rounded-lg p-6 hover:border-vermillion/50 transition-colors block">
+          <h3 class="text-lg font-semibold text-paper mb-2 group-hover:text-vermillion transition-colors">
+            Getting Started
+          </h3>
+          <p class="text-paper/50 text-sm">
+            Install, first run, configuration
+          </p>
+        </a>
+
+        <a href="#knowledge-domains" class="group border border-soft-gray rounded-lg p-6 hover:border-vermillion/50 transition-colors block">
+          <h3 class="text-lg font-semibold text-paper mb-2 group-hover:text-vermillion transition-colors">
+            Knowledge Domains
+          </h3>
+          <p class="text-paper/50 text-sm">
+            10 domains of opinionated technology advice
+          </p>
+        </a>
+
+        <a href="#hooks" class="group border border-soft-gray rounded-lg p-6 hover:border-vermillion/50 transition-colors block">
+          <h3 class="text-lg font-semibold text-paper mb-2 group-hover:text-vermillion transition-colors">
+            Hooks
+          </h3>
+          <p class="text-paper/50 text-sm">
+            7 automated checks on every file write
+          </p>
+        </a>
+
+        <a href="#configuration" class="group border border-soft-gray rounded-lg p-6 hover:border-vermillion/50 transition-colors block">
+          <h3 class="text-lg font-semibold text-paper mb-2 group-hover:text-vermillion transition-colors">
+            Configuration
+          </h3>
+          <p class="text-paper/50 text-sm">
+            Proactivity levels, per-project overrides
+          </p>
+        </a>
+
+        <a href="/contribute" class="group border border-soft-gray rounded-lg p-6 hover:border-vermillion/50 transition-colors block sm:col-span-2">
+          <h3 class="text-lg font-semibold text-paper mb-2 group-hover:text-vermillion transition-colors">
+            Contributing
+          </h3>
+          <p class="text-paper/50 text-sm">
+            How to add domains, hooks, and reference files
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Note -->
+  <section class="py-12 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="border border-signal/30 bg-signal/5 rounded-lg p-6">
+        <p class="text-paper/70 text-sm leading-relaxed">
+          Claudia's documentation is generated from the same markdown files that power the plugin. What you read here is what Claude reads.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GitHub Link -->
+  <section class="py-16 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <a
+        href="https://github.com/reganomalley/claudia"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-paper/50 hover:text-paper transition-colors text-sm"
+      >
+        View the full source on GitHub
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
+    </div>
+  </section>
+</Layout>

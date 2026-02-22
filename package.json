@@ -1,0 +1,26 @@
+{
+  "name": "claudia-mentor",
+  "version": "0.1.0",
+  "description": "Proactive technology mentor, security advisor, and prompt coach for Claude Code",
+  "author": "Regan O'Malley <regan@reganomalley.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reganomalley/claudia"
+  },
+  "keywords": [
+    "claude-code",
+    "plugin",
+    "mentor",
+    "security",
+    "architecture",
+    "prompt-engineering"
+  ],
+  "files": [
+    ".claude-plugin/",
+    "commands/",
+    "skills/",
+    "hooks/",
+    "config/"
+  ]
+}
