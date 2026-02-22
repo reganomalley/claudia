@@ -30,6 +30,41 @@
     "check_practices": {
       "enabled": true,
       "action": "advisory"
+    },
+    "claudia_teach": {
+      "enabled": true,
+      "action": "advisory",
+      "min_proactivity": "moderate"
+    },
+    "claudia_compact_tip": {
+      "enabled": true,
+      "action": "advisory",
+      "beginner_only": true
+    },
+    "claudia_session_tips": {
+      "enabled": true,
+      "action": "advisory",
+      "min_proactivity": "moderate"
+    },
+    "claudia_prompt_coach": {
+      "enabled": true,
+      "action": "advisory",
+      "min_proactivity": "high"
     }
+  },
+  "teaching_keywords": {
+    "categories": ["hosting", "databases", "frameworks", "tools", "concepts"],
+    "total_terms": 35,
+    "dedup": "once per keyword per session"
+  },
+  "tips_pool": {
+    "startup_tips_count": 10,
+    "rotation": "random, no repeats until pool exhausted",
+    "sources": ["startup", "compact", "resume"]
+  },
+  "prompt_coaching": {
+    "max_per_session": 3,
+    "detects": ["vague prompts", "very short prompts", "all-caps frustration"],
+    "skips": ["slash commands", "single-word confirmations"]
   }
 }

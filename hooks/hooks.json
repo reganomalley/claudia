@@ -1,5 +1,5 @@
 {
-  "description": "Claudia mentor hooks: security, anti-patterns, dependencies, Docker, git hygiene, accessibility, and license compliance",
+  "description": "Claudia mentor hooks: security, anti-patterns, dependencies, Docker, git hygiene, accessibility, license compliance, teaching moments, compaction tips, session tips, and prompt coaching",
   "hooks": {
     "PreToolUse": [
       {
@@ -71,6 +71,50 @@
           }
         ],
         "matcher": "Edit|Write|MultiEdit"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-teach.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-compact-tip.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-session-tips.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-prompt-coach.py",
+            "timeout": 10
+          }
+        ]
       }
     ]
   }

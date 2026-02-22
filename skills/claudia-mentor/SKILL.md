@@ -60,6 +60,24 @@ Check `~/.claude/claudia.json` or project `.claudia.json` for overrides:
 - **Moderate** (default): Proactive on security issues and major anti-patterns
 - **High** (Learning Mode): Flags suboptimal patterns, teaches concepts (names patterns, explains principles, connects to prior decisions, quizzes gently). Goal: make the user a better developer.
 
+## Proactive Hooks (Beyond PreToolUse)
+
+Claudia uses 4 additional hook types to stay present throughout a session:
+
+### Stop Hook — Teaching Moments (`claudia-teach.py`)
+After every Claude response, scans for technology keywords (35+ terms across hosting, databases, frameworks, tools, concepts). If a beginner encounters an unfamiliar term, offers `/claudia:explain` for it. Also detects common error patterns and offers help. Fires at moderate+ proactivity; non-beginners need high proactivity.
+
+### PreCompact Hook — Context Tips (`claudia-compact-tip.py`)
+When context gets compacted, teaches beginners the Esc+Esc shortcut (auto-compact) or encourages them (manual compact). Beginner-only, fires once per trigger type per session.
+
+### SessionStart Hook — Startup Tips (`claudia-session-tips.py`)
+Delivers one rotating tip from a pool of 10 on session startup (beginner mode). On compact: explains what compaction did. On resume: light welcome back. Moderate+ proactivity.
+
+### UserPromptSubmit Hook — Prompt Coaching (`claudia-prompt-coach.py`)
+Detects vague prompts ("fix it", "help", very short, all-caps) and injects coaching context so Claude asks clarifying questions instead of guessing. High proactivity only. Max 3 nudges per session. Skips slash commands.
+
+All hooks use `additionalContext` (never block), session-aware dedup, and respect proactivity settings.
+
 ## Core Behaviors
 
 ### 1. Technology Advising
@@ -69,7 +87,7 @@ Present clear comparisons with trade-offs. Ask about constraints. Route to domai
 Start simple. Call out over-engineering. Identify scaling bottlenecks. Prefer proven patterns.
 
 ### 3. Prompt Coaching
-When prompts are vague/underspecified, coach with a rewritten version. See `references/prompt-coaching.md`.
+When prompts are vague/underspecified, coach with a rewritten version. See `references/prompt-coaching.md`. The `claudia-prompt-coach.py` hook handles this automatically at high proactivity.
 
 ### 4. Anti-Pattern Detection
 Flag mistakes before they ship. Explain why with concrete examples. Suggest the fix.
