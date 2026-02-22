@@ -2,25 +2,24 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Claudia — The mentor in your terminal">
+<Layout title="Claudia — The senior dev you don't have">
 
   <!-- ===================== HERO ===================== -->
   <section class="relative min-h-screen flex items-center overflow-hidden pt-14">
-    <!-- Background glow -->
     <div class="absolute top-1/4 right-0 w-[600px] h-[600px] bg-vermillion/[0.07] rounded-full blur-[120px] pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-6 w-full">
       <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-16 lg:gap-20 items-center">
         <div>
           <div class="reveal">
-            <p class="font-mono text-xs text-vermillion tracking-widest uppercase mb-6">Claude Code Plugin</p>
+            <p class="font-mono text-xs text-vermillion tracking-widest uppercase mb-6">Free Claude Code Plugin</p>
           </div>
           <h1 class="reveal reveal-delay-1 text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[0.95] tracking-[-0.035em]">
-            The mentor<br />in your<br />
-            <span class="text-vermillion">terminal</span>
+            The senior dev<br />you don't<br />
+            <span class="text-vermillion">have</span>
           </h1>
           <p class="reveal reveal-delay-2 mt-8 text-lg sm:text-xl text-paper/50 leading-relaxed max-w-md font-light">
-            She catches security mistakes, advises on technology decisions, and coaches you to write better prompts.
+            You prompt. Claude codes. Claudia makes sure it's actually good — catching security holes, picking the right tools, and turning vague ideas into precise instructions.
           </p>
 
           <!-- Install -->
@@ -53,7 +52,7 @@ import Layout from "../layouts/Layout.astro";
             </a>
             <span class="text-paper/10">|</span>
             <a href="/docs" class="text-sm text-paper/40 hover:text-paper transition-colors">
-              Read the docs
+              How it works
             </a>
           </div>
         </div>
@@ -79,15 +78,15 @@ import Layout from "../layouts/Layout.astro";
     <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-3 gap-8">
       <div class="reveal text-center">
         <span class="block text-3xl sm:text-4xl font-extrabold tracking-tight text-vermillion">10</span>
-        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Knowledge Domains</span>
+        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Topics she knows cold</span>
       </div>
       <div class="reveal text-center">
         <span class="block text-3xl sm:text-4xl font-extrabold tracking-tight text-vermillion">7</span>
-        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Automated Hooks</span>
+        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Things she catches automatically</span>
       </div>
       <div class="reveal text-center">
         <span class="block text-3xl sm:text-4xl font-extrabold tracking-tight text-vermillion">0</span>
-        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Config Required</span>
+        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Setup required</span>
       </div>
     </div>
   </section>
@@ -96,14 +95,14 @@ import Layout from "../layouts/Layout.astro";
   <section class="py-28 sm:py-36">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-[0.4fr_0.6fr] gap-16 items-center">
-        <!-- Text side -->
         <div>
-          <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Live protection</p>
+          <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Automatic protection</p>
           <h2 class="reveal text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
-            She catches what<br />you miss
+            You didn't know<br />this was dangerous.<br />
+            <span class="text-vermillion">She did.</span>
           </h2>
           <p class="reveal mt-5 text-paper/40 leading-relaxed">
-            Claudia intercepts hardcoded secrets, catches anti-patterns, and blocks dangerous code before it reaches your codebase. Every file write. Automatically.
+            You asked Claude to write the database config. Claude put your AWS key right in the code. Claudia stopped it before it shipped — and showed you the safe way to do it.
           </p>
         </div>
 
@@ -126,42 +125,42 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-  <!-- ===================== DOMAINS — EDITORIAL LAYOUT ===================== -->
+  <!-- ===================== ASK HER ANYTHING ===================== -->
   <section class="py-28 sm:py-36 border-t border-white/[0.06]">
     <div class="max-w-7xl mx-auto px-6">
       <div class="max-w-2xl">
-        <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Knowledge</p>
+        <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Ask her anything</p>
         <h2 class="reveal text-4xl sm:text-5xl font-bold leading-[1.05] tracking-tight">
-          10 domains.<br />Opinionated advice.
+          You don't need to<br />know the answer.<br />
+          <span class="text-paper/30">Just the question.</span>
         </h2>
         <p class="reveal mt-5 text-paper/40 leading-relaxed max-w-lg">
-          Not "it depends." Claudia gives you the answer first, then explains the trade-offs so you can disagree with confidence.
+          Not sure which database to use? Don't know if you need WebSockets or just polling? Wondering why your app is slow? Ask Claudia. She gives you the answer first, then explains why — so you actually learn.
         </p>
       </div>
 
       <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] rounded-xl overflow-hidden stagger">
         {[
-          { name: "Databases", desc: "SQL vs NoSQL, vector DBs, time-series. Just use Postgres — and when not to.", q: "What database for IoT time-series?" },
-          { name: "Security", desc: "Auth patterns, secrets management, TEEs and sandboxing.", q: "JWT or sessions for my SPA?" },
-          { name: "Infrastructure", desc: "AWS vs GCP vs Azure. Containers, serverless, edge.", q: "Lambda or ECS for this workload?" },
-          { name: "Frontend", desc: "React, Vue, Svelte, Solid. SSR vs SPA vs islands.", q: "Which framework for this project?" },
-          { name: "API Design", desc: "REST vs GraphQL vs gRPC. Versioning, pagination, real-time.", q: "Should my mobile app use GraphQL?" },
-          { name: "Testing", desc: "Test pyramid, framework comparison, when NOT to mock.", q: "What should I test vs skip?" },
-          { name: "Performance", desc: "Measure before you optimize. N+1, caching, Core Web Vitals.", q: "Why is my app slow?" },
-          { name: "DevOps", desc: "CI/CD pipelines, deployment strategies, monitoring.", q: "How should I set up GitHub Actions?" },
-          { name: "Data Modeling", desc: "Schema design, migrations, indexing strategy.", q: "How to handle soft deletes?" },
-        ].map((d, i) => (
+          { q: "Where should I store my data?", topic: "Databases", detail: "Postgres, Mongo, Redis, Pinecone — she'll tell you which one and why." },
+          { q: "How do I add login to my app?", topic: "Security", detail: "Auth0 vs rolling your own, sessions vs JWT, OAuth flows explained." },
+          { q: "Should I use AWS or Vercel?", topic: "Infrastructure", detail: "Where to host, when serverless makes sense, how to not get a surprise bill." },
+          { q: "React or Svelte for this?", topic: "Frontend", detail: "Framework picking, SSR vs SPA, state management without the headache." },
+          { q: "REST or GraphQL?", topic: "API Design", detail: "Which API style, how to handle pagination, when you need real-time." },
+          { q: "What should I even test?", topic: "Testing", detail: "What's worth testing, what's a waste of time, which testing tools to use." },
+          { q: "Why is my app so slow?", topic: "Performance", detail: "Where to look first, common bottlenecks, how to measure before you guess." },
+          { q: "How do I deploy this?", topic: "DevOps", detail: "CI/CD from scratch, GitHub Actions patterns, monitoring that matters." },
+          { q: "How should I structure this data?", topic: "Data Modeling", detail: "Schema design, migrations without downtime, indexes that actually help." },
+        ].map((d) => (
           <div class="reveal bg-void p-7 group">
-            <h3 class="text-sm font-semibold text-paper/90 group-hover:text-vermillion transition-colors">{d.name}</h3>
-            <p class="mt-2 text-xs text-paper/35 leading-relaxed">{d.desc}</p>
-            <p class="mt-3 text-[11px] font-mono text-vermillion/50 italic">"{d.q}"</p>
+            <p class="text-sm font-medium text-paper/80 group-hover:text-vermillion transition-colors">"{d.q}"</p>
+            <p class="mt-3 text-xs text-paper/30 leading-relaxed">{d.detail}</p>
+            <p class="mt-3 text-[10px] font-mono text-paper/15 uppercase tracking-widest">{d.topic}</p>
           </div>
         ))}
-        <!-- Prompt Coaching — spans to fill -->
         <div class="reveal bg-void p-7 group">
-          <h3 class="text-sm font-semibold text-paper/90 group-hover:text-vermillion transition-colors">Prompt Coaching</h3>
-          <p class="mt-2 text-xs text-paper/35 leading-relaxed">Detects vague prompts, suggests improvements across 5 quality dimensions.</p>
-          <p class="mt-3 text-[11px] font-mono text-vermillion/50 italic">"Make it better" → here's how</p>
+          <p class="text-sm font-medium text-paper/80 group-hover:text-vermillion transition-colors">"How do I ask Claude for what I actually want?"</p>
+          <p class="mt-3 text-xs text-paper/30 leading-relaxed">Claudia detects vague prompts and rewrites them into instructions that get results.</p>
+          <p class="mt-3 text-[10px] font-mono text-paper/15 uppercase tracking-widest">Prompt Coaching</p>
         </div>
       </div>
     </div>
@@ -181,23 +180,23 @@ import Layout from "../layouts/Layout.astro";
           <div class="absolute inset-0 bg-gradient-to-r from-transparent to-void/40"></div>
         </div>
         <div>
-          <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Always active</p>
+          <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Runs in the background</p>
           <h2 class="reveal text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
-            7 hooks.<br />Zero config.
+            She's watching<br />every file you write
           </h2>
           <p class="reveal mt-5 text-paper/40 leading-relaxed">
-            Every file write passes through Claudia's hooks. Some block. Most advise. All explain why.
+            You don't have to remember to check for security issues, bad patterns, or broken dependencies. Claudia checks every time Claude writes a file. If something's wrong, she tells you what and why.
           </p>
 
           <div class="reveal mt-10 space-y-3 stagger">
             {[
-              { name: "Secret Detection", badge: "Blocks", color: "bg-[#ff5f57]/20 text-[#ff5f57]", desc: "AWS keys, tokens, passwords, private keys" },
-              { name: "Git Hygiene", badge: "Blocks", color: "bg-[#ff5f57]/20 text-[#ff5f57]", desc: ".env writes, merge conflict markers" },
-              { name: "Code Practices", badge: "Warns", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "eval(), empty catch, console.log, SQL concat" },
-              { name: "Dependencies", badge: "Warns", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Deprecated, compromised, trivial packages" },
-              { name: "Dockerfile", badge: "Warns", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Root user, :latest, missing multi-stage" },
-              { name: "Accessibility", badge: "Warns", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Missing alt text, unlabeled inputs" },
-              { name: "License", badge: "Warns", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Copyleft deps in permissive projects" },
+              { name: "Leaked secrets", badge: "Stops it", color: "bg-[#ff5f57]/20 text-[#ff5f57]", desc: "API keys, passwords, and tokens that should never be in code" },
+              { name: "Broken git", badge: "Stops it", color: "bg-[#ff5f57]/20 text-[#ff5f57]", desc: "Writing to .env, leaving merge conflict markers" },
+              { name: "Bad code patterns", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "eval(), empty catch blocks, console.log in production" },
+              { name: "Sketchy dependencies", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Deprecated, hacked, or pointlessly small packages" },
+              { name: "Docker mistakes", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Running as root, using :latest, missing optimizations" },
+              { name: "Accessibility gaps", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Images without alt text, buttons without labels" },
+              { name: "License conflicts", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "GPL code sneaking into your MIT project" },
             ].map((h) => (
               <div class="reveal flex items-start gap-3 py-2">
                 <span class={`shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded-full ${h.color}`}>{h.badge}</span>
@@ -213,27 +212,28 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-  <!-- ===================== THINKING IMAGE + PROMPT COACHING ===================== -->
+  <!-- ===================== PROMPT COACHING ===================== -->
   <section class="py-28 sm:py-36">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-[0.5fr_0.5fr] gap-16 items-center">
         <div class="order-2 lg:order-1">
-          <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Prompt coaching</p>
+          <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Better prompts = better code</p>
           <h2 class="reveal text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
-            Your prompts<br />could be better
+            The difference between<br />"fix the auth" and<br />
+            <span class="text-vermillion">getting what you want</span>
           </h2>
           <p class="reveal mt-5 text-paper/40 leading-relaxed">
-            "Make it better" gives Claude nothing to work with. Claudia detects vague prompts and rewrites them into specific, actionable instructions.
+            Most vibe coders leave 80% of Claude's power on the table because they don't know how to ask. Claudia notices when your prompt is too vague and shows you how to rewrite it.
           </p>
 
           <div class="reveal mt-8 space-y-4">
             <div class="border border-white/[0.06] rounded-lg p-4">
-              <p class="text-[11px] font-mono text-paper/30 uppercase tracking-wider mb-2">Before</p>
+              <p class="text-[11px] font-mono text-paper/30 uppercase tracking-wider mb-2">What you typed</p>
               <p class="text-sm text-paper/50 line-through decoration-vermillion/40">"Fix the auth"</p>
             </div>
             <div class="border border-vermillion/20 bg-vermillion/[0.03] rounded-lg p-4">
-              <p class="text-[11px] font-mono text-vermillion/60 uppercase tracking-wider mb-2">After</p>
-              <p class="text-sm text-paper/70">"Refactor the auth middleware to use async/await, add error handling for expired tokens, and return proper 401 responses with error codes."</p>
+              <p class="text-[11px] font-mono text-vermillion/60 uppercase tracking-wider mb-2">What Claudia suggests</p>
+              <p class="text-sm text-paper/70">"Refactor the auth middleware to use async/await, add error handling for expired tokens, and return 401 responses with JSON error codes."</p>
             </div>
           </div>
         </div>
@@ -256,9 +256,9 @@ import Layout from "../layouts/Layout.astro";
     <div class="max-w-7xl mx-auto px-6">
       <div class="reveal max-w-xl mx-auto text-center">
         <h2 class="text-4xl sm:text-5xl font-extrabold tracking-[-0.03em]">
-          Try her out
+          Ship with confidence
         </h2>
-        <p class="mt-4 text-paper/40 text-lg font-light">Install once. She takes it from there.</p>
+        <p class="mt-4 text-paper/40 text-lg font-light">One install. She handles the rest.</p>
 
         <div class="mt-10 space-y-2 text-left max-w-sm mx-auto font-mono text-sm">
           <div class="bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 text-paper/60">
@@ -272,7 +272,9 @@ import Layout from "../layouts/Layout.astro";
           </div>
         </div>
 
-        <div class="mt-10 flex items-center justify-center gap-4">
+        <p class="mt-6 text-xs text-paper/25">Free, open source, MIT licensed. Works with any Claude Code project.</p>
+
+        <div class="mt-8 flex items-center justify-center gap-4">
           <a
             href="https://github.com/reganomalley/claudia"
             target="_blank"
@@ -313,14 +315,15 @@ import Layout from "../layouts/Layout.astro";
   // Terminal typing animation
   const lines = [
     { text: "$ claude", cls: "text-[#28c840]", delay: 600 },
-    { text: "> Write the database config with credentials", cls: "text-paper/50", delay: 1200 },
+    { text: "> Hook up the database with my AWS credentials", cls: "text-paper/50", delay: 1200 },
     { text: "", cls: "", delay: 400 },
-    { text: "claudia  blocked  Hardcoded secret detected", cls: "", html: '<span class="text-paper/40">claudia</span> <span class="text-[#ff5f57] font-semibold">blocked</span> <span class="text-[#febc2e]">Hardcoded secret detected</span>', delay: 800 },
+    { text: "", cls: "", html: '<span class="text-paper/40">claudia</span> <span class="text-[#ff5f57] font-semibold">blocked</span> <span class="text-[#febc2e]">Hardcoded secret detected</span>', delay: 800 },
     { text: "", cls: "", delay: 200 },
     { text: "  Pattern: AWS access key (AKIA...)", cls: "text-paper/40", delay: 300 },
     { text: "  File:    src/config/database.ts", cls: "text-paper/40", delay: 300 },
     { text: "", cls: "", delay: 400 },
-    { text: "  Fix: Use environment variables instead.", cls: "", html: '  <span class="text-[#28c840] font-semibold">Fix:</span> <span class="text-paper/50">Use environment variables instead.</span>', delay: 600 },
+    { text: "", cls: "", html: '  <span class="text-[#28c840] font-semibold">Fix:</span> <span class="text-paper/50">Use environment variables instead.</span>', delay: 600 },
+    { text: "  Your secret would have been visible to anyone who sees this code.", cls: "text-paper/30", delay: 400 },
     { text: "", cls: "", delay: 300 },
     { text: '  export const db = createPool(process.env.DATABASE_URL)', cls: "text-[#28c840]/80 bg-white/[0.03] inline-block px-2 rounded", delay: 0 },
   ];
@@ -332,7 +335,6 @@ import Layout from "../layouts/Layout.astro";
   function typeTerminal() {
     if (started) return;
     started = true;
-    let i = 0;
     let totalDelay = 0;
 
     lines.forEach((line) => {
@@ -352,7 +354,6 @@ import Layout from "../layouts/Layout.astro";
     });
   }
 
-  // Start when terminal scrolls into view
   const terminalSection = output?.closest("section");
   if (terminalSection) {
     const tObs = new IntersectionObserver(

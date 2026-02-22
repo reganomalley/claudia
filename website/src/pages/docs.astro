@@ -2,15 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Claudia — Documentation">
+<Layout title="Claudia — How it works">
   <section class="pt-32 pb-20 px-6">
     <div class="max-w-4xl mx-auto">
-      <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Documentation</p>
+      <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">How it works</p>
       <h1 class="reveal text-4xl sm:text-5xl font-extrabold tracking-[-0.03em] leading-[1.05]">
-        Everything Claudia knows,<br />you can read too
+        No settings to learn.<br />No config to write.
       </h1>
       <p class="reveal mt-5 text-paper/40 text-lg font-light max-w-lg">
-        These docs are generated from the same markdown files that power the plugin. What you read here is what Claude reads.
+        Install Claudia, open Claude Code, start building. She reads the same docs you'd read — except she's already read all of them.
       </p>
     </div>
   </section>
@@ -23,56 +23,55 @@ import Layout from "../layouts/Layout.astro";
             Getting Started
           </h3>
           <p class="mt-2 text-sm text-paper/35 leading-relaxed">
-            Install, first run, configuration. Up and running in 30 seconds.
+            Install with one command. Working in under 30 seconds.
           </p>
         </a>
 
-        <a href="#knowledge-domains" class="reveal group bg-void p-8 block">
+        <a href="#what-she-knows" class="reveal group bg-void p-8 block">
           <h3 class="text-lg font-semibold text-paper/90 group-hover:text-vermillion transition-colors">
-            Knowledge Domains
+            What She Knows
           </h3>
           <p class="mt-2 text-sm text-paper/35 leading-relaxed">
-            10 domains of opinionated technology advice with decision frameworks.
+            10 topics — databases, security, infrastructure, frontend, APIs, testing, performance, devops, data, and prompts.
           </p>
         </a>
 
-        <a href="#hooks" class="reveal group bg-void p-8 block">
+        <a href="#what-she-catches" class="reveal group bg-void p-8 block">
           <h3 class="text-lg font-semibold text-paper/90 group-hover:text-vermillion transition-colors">
-            Hooks
+            What She Catches
           </h3>
           <p class="mt-2 text-sm text-paper/35 leading-relaxed">
-            7 automated checks on every file write. What they catch, how they work.
+            7 automatic checks — leaked secrets, bad patterns, broken dependencies, Docker issues, and more.
           </p>
         </a>
 
-        <a href="#configuration" class="reveal group bg-void p-8 block">
+        <a href="#customization" class="reveal group bg-void p-8 block">
           <h3 class="text-lg font-semibold text-paper/90 group-hover:text-vermillion transition-colors">
-            Configuration
+            Customization
           </h3>
           <p class="mt-2 text-sm text-paper/35 leading-relaxed">
-            Proactivity levels, per-project overrides, personality tuning.
+            Dial her up or down. Quiet mode, default mode, or full mentor mode. Per-project overrides.
           </p>
         </a>
 
         <a href="/contribute" class="reveal group bg-void p-8 block sm:col-span-2">
           <h3 class="text-lg font-semibold text-paper/90 group-hover:text-vermillion transition-colors">
-            Contributing
+            Help Make Her Smarter
           </h3>
           <p class="mt-2 text-sm text-paper/35 leading-relaxed">
-            How to add domains, hooks, and reference files. The easiest open source contribution you'll ever make.
+            Contributing to Claudia means writing markdown. If you know something about a technology, you can teach it to her.
           </p>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- GitHub link -->
   <section class="pb-20 px-6">
     <div class="max-w-4xl mx-auto">
       <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <p class="text-sm font-medium text-paper/70">Full source and documentation</p>
-          <p class="text-xs text-paper/30 mt-1">Every SKILL.md and reference file, browsable on GitHub.</p>
+          <p class="text-sm font-medium text-paper/70">Want to see everything?</p>
+          <p class="text-xs text-paper/30 mt-1">Every knowledge file and hook script is open source on GitHub.</p>
         </div>
         <a
           href="https://github.com/reganomalley/claudia"
@@ -80,7 +79,7 @@ import Layout from "../layouts/Layout.astro";
           rel="noopener noreferrer"
           class="inline-flex items-center gap-2 text-sm text-paper/50 hover:text-vermillion transition-colors shrink-0"
         >
-          View on GitHub
+          Browse the source
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>

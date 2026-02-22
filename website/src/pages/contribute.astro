@@ -2,15 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Claudia — Contribute">
+<Layout title="Claudia — Teach her something">
   <section class="pt-32 pb-20 px-6">
     <div class="max-w-4xl mx-auto">
       <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Open source</p>
       <h1 class="reveal text-4xl sm:text-5xl font-extrabold tracking-[-0.03em] leading-[1.05]">
-        The easiest contribution<br />you'll ever make
+        Know something?<br />Teach it to Claudia.
       </h1>
       <p class="reveal mt-5 text-paper/40 text-lg font-light max-w-lg">
-        Contributing to Claudia means writing markdown. No code review, no tests, no build step. Just knowledge.
+        Contributing means writing a markdown file. That's it. No code review, no tests, no build step. If you can explain something about technology, you can make Claudia smarter.
       </p>
     </div>
   </section>
@@ -22,11 +22,11 @@ import Layout from "../layouts/Layout.astro";
 
       <div class="space-y-px stagger">
         {[
-          { title: "Add a reference file", time: "~30 min", desc: "Drop a .md in any references/ directory. Write what you know about a technology, pattern, or best practice." },
-          { title: "Add anti-pattern rules", time: "~1 hour", desc: "Add entries to hook scripts. Teach Claudia to catch common mistakes before they land." },
-          { title: "Improve a domain", time: "~2 hours", desc: "Expand SKILL.md or add reference files to an existing knowledge domain. Make the advice deeper." },
-          { title: "Create a new domain", time: "~4 hours", desc: "Use the scaffolding tool to create a full knowledge domain from scratch. Own a topic." },
-          { title: "Build a new hook", time: "~4 hours", desc: "Write a PreToolUse script that automatically catches issues on every file write." },
+          { title: "Write what you know", time: "~30 min", desc: "Drop a markdown file in any references/ folder. Know a lot about Redis? Write about Redis. That's the whole contribution." },
+          { title: "Teach her to catch mistakes", time: "~1 hour", desc: "Add patterns to the hook scripts. If you've seen a common mistake, teach Claudia to catch it for everyone." },
+          { title: "Make a topic deeper", time: "~2 hours", desc: "Pick a domain Claudia already knows and make her advice better. Add examples, edge cases, real-world gotchas." },
+          { title: "Add a whole new topic", time: "~4 hours", desc: "Use the scaffolding tool to create a full knowledge domain. Own a subject — architecture, mobile, ML, whatever you know." },
+          { title: "Build a new automatic check", time: "~4 hours", desc: "Write a script that catches an issue every time Claude writes a file. Security, quality, accessibility — anything that should never slip through." },
         ].map((item) => (
           <div class="reveal bg-white/[0.02] border border-white/[0.04] rounded-lg p-6 hover:border-vermillion/20 transition-colors group">
             <div class="flex items-start justify-between gap-4">
@@ -55,9 +55,9 @@ import Layout from "../layouts/Layout.astro";
         </div>
         <pre class="bg-[#141417] px-6 py-5 text-[13px] font-mono leading-[1.9] overflow-x-auto"><code><span class="text-[#28c840]">git clone</span> <span class="text-paper/60">https://github.com/reganomalley/claudia.git</span>
 <span class="text-[#28c840]">cd</span> <span class="text-paper/60">claudia</span>
-<span class="text-[#28c840]">./scripts/create-domain.sh</span> <span class="text-paper/60">architecture</span>
-<span class="text-paper/25"># Edit skills/claudia-architecture/SKILL.md</span>
-<span class="text-paper/25"># Add references in skills/claudia-architecture/references/</span></code></pre>
+<span class="text-[#28c840]">./scripts/create-domain.sh</span> <span class="text-paper/60">mobile</span>
+<span class="text-paper/25"># Now just write markdown in skills/claudia-mobile/</span>
+<span class="text-paper/25"># That's literally it. Open a PR when you're done.</span></code></pre>
       </div>
     </div>
   </section>
@@ -65,14 +65,14 @@ import Layout from "../layouts/Layout.astro";
   <!-- Writing guidelines -->
   <section class="pb-28 px-6">
     <div class="max-w-4xl mx-auto">
-      <p class="reveal font-mono text-xs text-paper/30 tracking-widest uppercase mb-8">Writing guidelines</p>
+      <p class="reveal font-mono text-xs text-paper/30 tracking-widest uppercase mb-8">How to write for Claudia</p>
 
       <div class="grid sm:grid-cols-2 gap-px bg-white/[0.06] rounded-xl overflow-hidden stagger">
         {[
-          { title: "Be opinionated", desc: "Claudia doesn't present options neutrally. She recommends the right tool and explains why alternatives fall short." },
-          { title: "Decision trees over prose", desc: "Structured guidance is more useful than paragraphs. Help the reader make a choice, not just understand the landscape." },
-          { title: "Explain the why", desc: "Don't just say what to do — explain the reasoning. Developers trust advice more when they understand the tradeoffs." },
-          { title: "Include when NOT to use", desc: "Every tool has limits. Documenting when something is the wrong choice builds credibility and saves debugging time." },
+          { title: "Have an opinion", desc: "Don't say 'it depends.' Say what you'd actually use, then explain the tradeoffs so people can disagree." },
+          { title: "Lead with the answer", desc: "Put the recommendation first. Then the reasoning. People are here because they need to make a decision, not learn the theory." },
+          { title: "Say when NOT to use it", desc: "Every tool breaks somewhere. Saying where builds trust and saves people hours of debugging the wrong choice." },
+          { title: "Use tables and decision trees", desc: "A comparison table is worth a thousand words. If someone is choosing between two things, make a table." },
         ].map((g) => (
           <div class="reveal bg-void p-7">
             <h3 class="text-sm font-semibold text-vermillion">{g.title}</h3>
@@ -80,9 +80,9 @@ import Layout from "../layouts/Layout.astro";
           </div>
         ))}
         <div class="reveal bg-void p-7 sm:col-span-2">
-          <h3 class="text-sm font-semibold text-vermillion">Keep SKILL.md under ~2000 words</h3>
+          <h3 class="text-sm font-semibold text-vermillion">Keep it tight</h3>
           <p class="mt-2 text-xs text-paper/35 leading-relaxed">
-            SKILL.md loads into Claude's context window. Keep it tight. Move deep dives, reference tables, and extended examples into <code class="text-vermillion/60">references/</code> — those load on demand.
+            The main file loads into Claude's memory every time. Keep it under 2000 words. Put deep dives, reference tables, and long examples into the <code class="text-vermillion/60">references/</code> folder — those only load when needed.
           </p>
         </div>
       </div>
@@ -98,7 +98,7 @@ import Layout from "../layouts/Layout.astro";
         rel="noopener noreferrer"
         class="reveal inline-flex items-center gap-2 bg-vermillion hover:bg-vermillion/90 text-paper text-sm font-medium px-6 py-2.5 rounded-lg transition-colors"
       >
-        View on GitHub
+        Start contributing
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
         </svg>
