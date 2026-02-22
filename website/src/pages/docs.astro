@@ -7,7 +7,7 @@ import Layout from "../layouts/Layout.astro";
     <div class="max-w-4xl mx-auto">
       <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">How it works</p>
       <h1 class="reveal text-4xl sm:text-5xl font-extrabold tracking-[-0.03em] leading-[1.05]">
-        Three steps. Two minutes.<br />Then she's just there.
+        One command.<br />Then she's just there.
       </h1>
       <p class="reveal mt-5 text-paper/40 text-lg font-light max-w-lg">
         No account to create. No config to write. No settings to learn.
@@ -20,54 +20,19 @@ import Layout from "../layouts/Layout.astro";
     <div class="max-w-4xl mx-auto">
       <div class="space-y-6 stagger">
 
-        <!-- Step 1 -->
         <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8">
-          <div class="flex items-baseline gap-4 mb-4">
-            <span class="text-5xl font-extrabold text-vermillion/20 leading-none">1</span>
-            <h3 class="text-xl font-semibold text-paper/90">Install Claudia</h3>
-          </div>
+          <h3 class="text-xl font-semibold text-paper/90 mb-5">Install Claudia</h3>
           <p class="text-sm text-paper/40 mb-5">
-            Open your terminal (the app called "Terminal" on your Mac, or wherever you normally run Claude Code) and paste this:
+            Open your terminal and paste this:
           </p>
           <div class="bg-black/40 rounded-lg p-4 font-mono text-sm">
             <span class="text-paper/30 select-none">$ </span><span class="text-paper/80">npm install -g claudia-mentor</span>
           </div>
+          <p class="text-sm text-paper/40 mt-5">
+            That's it. The installer automatically configures your shell. Restart your terminal, type <code class="text-paper/60">claude</code>, and Claudia is there. Every session. Forever.
+          </p>
           <p class="text-xs text-paper/25 mt-3">
-            This downloads Claudia to your computer. You only do this once. If you see a big red "C" at the end, it worked.
-          </p>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8">
-          <div class="flex items-baseline gap-4 mb-4">
-            <span class="text-5xl font-extrabold text-vermillion/20 leading-none">2</span>
-            <h3 class="text-xl font-semibold text-paper/90">Start Claude Code with Claudia</h3>
-          </div>
-          <p class="text-sm text-paper/40 mb-5">
-            Instead of typing <code class="text-paper/60">claude</code> to start Claude Code, type this:
-          </p>
-          <div class="bg-black/40 rounded-lg p-4 font-mono text-sm">
-            <span class="text-paper/30 select-none">$ </span><span class="text-paper/80">claude --plugin-dir /usr/local/lib/node_modules/claudia-mentor</span>
-          </div>
-          <p class="text-xs text-paper/25 mt-3">
-            This tells Claude Code to load Claudia when it starts. She's now in the session with you.
-          </p>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8">
-          <div class="flex items-baseline gap-4 mb-4">
-            <span class="text-5xl font-extrabold text-vermillion/20 leading-none">3</span>
-            <h3 class="text-xl font-semibold text-paper/90">Make it permanent (optional)</h3>
-          </div>
-          <p class="text-sm text-paper/40 mb-5">
-            Typing that long command every time is annoying. Add a shell alias so typing <code class="text-paper/60">claude</code> always loads Claudia. Open <code class="text-paper/60">~/.zshrc</code> in any text editor and add this line at the bottom:
-          </p>
-          <div class="bg-black/40 rounded-lg p-4 font-mono text-sm">
-            <span class="text-paper/80">alias claude=&quot;claude --plugin-dir /usr/local/lib/node_modules/claudia-mentor&quot;</span>
-          </div>
-          <p class="text-xs text-paper/25 mt-3">
-            Save, restart your terminal, and now every <code class="text-paper/40">claude</code> session includes Claudia. To verify, type <code class="text-paper/40">/claudia are you there?</code> inside Claude Code.
+            To verify she's loaded, type <code class="text-paper/40">/claudia-mentor:claudia are you there?</code> inside Claude Code.
           </p>
         </div>
 

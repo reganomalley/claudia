@@ -15,27 +15,13 @@ A Claude Code plugin that acts as your technology mentor, security advisor, and 
 
 ## Install
 
-**Step 1: Get Claudia**
-
 ```bash
 npm install -g claudia-mentor
 ```
 
-**Step 2: Start Claude Code with Claudia**
+That's it. One command. The installer automatically configures your shell so every `claude` session loads Claudia. Restart your terminal and type `claude` -- she's there.
 
-```bash
-claude --plugin-dir $(npm root -g)/claudia-mentor
-```
-
-That's it. Claudia is now loaded. Try `/claudia are you there?` to say hi.
-
-**Want her loaded every time?** Add this to your shell config (`~/.zshrc` or `~/.bashrc`):
-
-```bash
-alias claude='claude --plugin-dir $(npm root -g)/claudia-mentor'
-```
-
-Then restart your terminal. Now every `claude` session includes Claudia automatically.
+To verify, type `/claudia-mentor:claudia are you there?` inside Claude Code.
 
 ## Usage
 
