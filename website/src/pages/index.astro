@@ -22,7 +22,6 @@ import Layout from "../layouts/Layout.astro";
             You prompt. Claude codes. Claudia makes sure it's actually good — catching security holes, picking the right tools, and turning vague ideas into precise instructions.
           </p>
 
-          <!-- Install -->
           <div class="reveal reveal-delay-3 mt-10">
             <div class="inline-flex items-center gap-3 bg-white/[0.04] border border-white/[0.08] rounded-xl px-5 py-3.5">
               <code id="install-cmd" class="text-sm font-mono text-paper/80 select-all">npm i -g claudia-mentor</code>
@@ -42,30 +41,15 @@ import Layout from "../layouts/Layout.astro";
           </div>
 
           <div class="reveal reveal-delay-4 mt-6 flex items-center gap-5">
-            <a
-              href="https://github.com/reganomalley/claudia"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-sm text-paper/40 hover:text-paper transition-colors"
-            >
-              View source
-            </a>
+            <a href="https://github.com/reganomalley/claudia" target="_blank" rel="noopener noreferrer" class="text-sm text-paper/40 hover:text-paper transition-colors">View source</a>
             <span class="text-paper/10">|</span>
-            <a href="/docs" class="text-sm text-paper/40 hover:text-paper transition-colors">
-              How it works
-            </a>
+            <a href="#how-she-works" class="text-sm text-paper/40 hover:text-paper transition-colors">How it works</a>
           </div>
         </div>
 
-        <!-- Hero image -->
         <div class="reveal reveal-delay-2 relative">
           <div class="relative rounded-2xl overflow-hidden">
-            <img
-              src="/assets/hero-wide.jpeg"
-              alt="Claudia"
-              class="w-full h-auto parallax-img"
-              loading="eager"
-            />
+            <img src="/assets/hero-wide.jpeg" alt="Claudia" class="w-full h-auto parallax-img" loading="eager" />
             <div class="absolute inset-0 bg-gradient-to-t from-void/60 via-transparent to-transparent"></div>
           </div>
         </div>
@@ -73,26 +57,76 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-  <!-- ===================== NUMBERS STRIP ===================== -->
+  <!-- ===================== TAGLINE STRIP ===================== -->
   <section class="border-y border-white/[0.06] bg-white/[0.015]">
-    <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-3 gap-8">
-      <div class="reveal text-center">
-        <span class="block text-3xl sm:text-4xl font-extrabold tracking-tight text-vermillion">10</span>
-        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Topics she knows cold</span>
+    <div class="max-w-7xl mx-auto px-6 py-12 text-center">
+      <p class="reveal text-2xl sm:text-3xl font-bold tracking-tight">
+        Every Claude needs a <span class="text-vermillion">Claudia</span>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== HOW SHE WORKS ===================== -->
+  <section id="how-she-works" class="py-28 sm:py-36">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl mb-16">
+        <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">How she works</p>
+        <h2 class="reveal text-4xl sm:text-5xl font-bold leading-[1.05] tracking-tight">
+          Three ways she<br />shows up
+        </h2>
+        <p class="reveal mt-5 text-paper/40 leading-relaxed max-w-lg">
+          You don't have to do anything different. Just use Claude Code like you normally do. Claudia works in the background and jumps in when it matters.
+        </p>
       </div>
-      <div class="reveal text-center">
-        <span class="block text-3xl sm:text-4xl font-extrabold tracking-tight text-vermillion">7</span>
-        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Things she catches automatically</span>
-      </div>
-      <div class="reveal text-center">
-        <span class="block text-3xl sm:text-4xl font-extrabold tracking-tight text-vermillion">0</span>
-        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Setup required</span>
+
+      <div class="grid md:grid-cols-3 gap-6 stagger">
+        <!-- Mode 1: Hooks -->
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-xl p-7">
+          <div class="w-10 h-10 rounded-lg bg-[#ff5f57]/15 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-[#ff5f57]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.999L13.732 4.001c-.77-1.333-2.694-1.333-3.464 0L3.34 16.001C2.57 17.335 3.536 19 5.072 19z" /></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-paper/90 mb-2">Automatic checks</h3>
+          <p class="text-sm text-paper/40 leading-relaxed mb-4">
+            Every time Claude writes or edits a file, Claudia scans it automatically. You never have to ask.
+          </p>
+          <p class="text-xs text-paper/25 leading-relaxed">
+            Leaked API keys get blocked. Bad patterns get flagged. You see a message explaining what's wrong and how to fix it — before the code lands.
+          </p>
+        </div>
+
+        <!-- Mode 2: Skills -->
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-xl p-7">
+          <div class="w-10 h-10 rounded-lg bg-vermillion/15 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-vermillion" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-paper/90 mb-2">She jumps into conversation</h3>
+          <p class="text-sm text-paper/40 leading-relaxed mb-4">
+            When you're talking to Claude and make a technology decision, Claudia joins in with her opinion.
+          </p>
+          <p class="text-xs text-paper/25 leading-relaxed">
+            Say "I'll use MongoDB for this" and Claudia might say "Actually, Postgres handles this better — here's why." Claude sees her advice and adjusts.
+          </p>
+        </div>
+
+        <!-- Mode 3: Slash commands -->
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-xl p-7">
+          <div class="w-10 h-10 rounded-lg bg-signal/15 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-signal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          </div>
+          <h3 class="text-lg font-semibold text-paper/90 mb-2">Ask her directly</h3>
+          <p class="text-sm text-paper/40 leading-relaxed mb-4">
+            Type <code class="text-vermillion/70 text-xs">/claudia</code> followed by any question to get her take on something specific.
+          </p>
+          <p class="text-xs text-paper/25 leading-relaxed">
+            <code class="text-paper/30">/claudia should I use REST or GraphQL for my mobile app?</code> — she gives you the answer, the tradeoffs, and the reasoning.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ===================== TERMINAL DEMO ===================== -->
-  <section class="py-28 sm:py-36">
+  <section class="py-28 sm:py-36 border-t border-white/[0.06]">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-[0.4fr_0.6fr] gap-16 items-center">
         <div>
@@ -106,7 +140,7 @@ import Layout from "../layouts/Layout.astro";
           </p>
         </div>
 
-        <!-- Terminal -->
+        <!-- Terminal - static content with CSS line-by-line reveal -->
         <div class="reveal">
           <div class="rounded-xl overflow-hidden border border-white/[0.08] shadow-2xl shadow-black/40">
             <div class="bg-[#1a1a1e] px-4 py-3 flex items-center gap-2">
@@ -115,9 +149,19 @@ import Layout from "../layouts/Layout.astro";
               <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
               <span class="ml-3 text-[11px] text-paper/20 font-mono">claude</span>
             </div>
-            <div class="bg-[#141417] px-5 py-5 font-mono text-[13px] leading-[1.8] min-h-[260px]">
-              <div id="terminal-output"></div>
-              <span id="terminal-cursor" class="cursor"></span>
+            <div id="terminal" class="bg-[#141417] px-5 py-5 font-mono text-[13px] leading-[1.8]">
+              <div class="term-line" style="--delay: 0"><span class="text-[#28c840]">$</span> <span class="text-paper/70">claude</span></div>
+              <div class="term-line" style="--delay: 1"><span class="text-paper/50">&gt; Hook up the database with my AWS credentials</span></div>
+              <div class="term-line" style="--delay: 2">&nbsp;</div>
+              <div class="term-line" style="--delay: 3"><span class="text-paper/40">claudia</span> <span class="text-[#ff5f57] font-semibold">blocked</span> <span class="text-[#febc2e]">Hardcoded secret detected</span></div>
+              <div class="term-line" style="--delay: 4">&nbsp;</div>
+              <div class="term-line" style="--delay: 5"><span class="text-paper/40">&nbsp;&nbsp;Pattern: AWS access key (AKIA...)</span></div>
+              <div class="term-line" style="--delay: 6"><span class="text-paper/40">&nbsp;&nbsp;File: &nbsp;&nbsp; src/config/database.ts</span></div>
+              <div class="term-line" style="--delay: 7">&nbsp;</div>
+              <div class="term-line" style="--delay: 8"><span class="text-[#28c840] font-semibold">&nbsp;&nbsp;Fix:</span> <span class="text-paper/50">Use environment variables instead.</span></div>
+              <div class="term-line" style="--delay: 9"><span class="text-paper/30">&nbsp;&nbsp;Your secret would have been visible to anyone who sees this code.</span></div>
+              <div class="term-line" style="--delay: 10">&nbsp;</div>
+              <div class="term-line" style="--delay: 11"><span class="text-[#28c840]/80 bg-white/[0.03] inline-block px-2 rounded">&nbsp;&nbsp;export const db = createPool(process.env.DATABASE_URL)</span></div>
             </div>
           </div>
         </div>
@@ -135,11 +179,11 @@ import Layout from "../layouts/Layout.astro";
           <span class="text-paper/30">Just the question.</span>
         </h2>
         <p class="reveal mt-5 text-paper/40 leading-relaxed max-w-lg">
-          Not sure which database to use? Don't know if you need WebSockets or just polling? Wondering why your app is slow? Ask Claudia. She gives you the answer first, then explains why — so you actually learn.
+          Not sure which database to use? Don't know if you need WebSockets or just polling? Ask Claudia. She gives you the answer first, then explains why — so you actually learn.
         </p>
       </div>
 
-      <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] rounded-xl overflow-hidden stagger">
+      <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 stagger">
         {[
           { q: "Where should I store my data?", topic: "Databases", detail: "Postgres, Mongo, Redis, Pinecone — she'll tell you which one and why." },
           { q: "How do I add login to my app?", topic: "Security", detail: "Auth0 vs rolling your own, sessions vs JWT, OAuth flows explained." },
@@ -151,13 +195,13 @@ import Layout from "../layouts/Layout.astro";
           { q: "How do I deploy this?", topic: "DevOps", detail: "CI/CD from scratch, GitHub Actions patterns, monitoring that matters." },
           { q: "How should I structure this data?", topic: "Data Modeling", detail: "Schema design, migrations without downtime, indexes that actually help." },
         ].map((d) => (
-          <div class="reveal bg-void p-7 group">
+          <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-xl p-6 group hover:border-vermillion/20 transition-colors">
             <p class="text-sm font-medium text-paper/80 group-hover:text-vermillion transition-colors">"{d.q}"</p>
             <p class="mt-3 text-xs text-paper/30 leading-relaxed">{d.detail}</p>
             <p class="mt-3 text-[10px] font-mono text-paper/15 uppercase tracking-widest">{d.topic}</p>
           </div>
         ))}
-        <div class="reveal bg-void p-7 group">
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-xl p-6 group hover:border-vermillion/20 transition-colors">
           <p class="text-sm font-medium text-paper/80 group-hover:text-vermillion transition-colors">"How do I ask Claude for what I actually want?"</p>
           <p class="mt-3 text-xs text-paper/30 leading-relaxed">Claudia detects vague prompts and rewrites them into instructions that get results.</p>
           <p class="mt-3 text-[10px] font-mono text-paper/15 uppercase tracking-widest">Prompt Coaching</p>
@@ -171,12 +215,7 @@ import Layout from "../layouts/Layout.astro";
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-[0.5fr_0.5fr] gap-16 items-center">
         <div class="reveal relative rounded-2xl overflow-hidden">
-          <img
-            src="/assets/logo-arms-crossed.jpeg"
-            alt="Claudia — arms crossed"
-            class="w-full h-auto parallax-img"
-            loading="lazy"
-          />
+          <img src="/assets/logo-arms-crossed.jpeg" alt="Claudia — arms crossed" class="w-full h-auto parallax-img" loading="lazy" />
           <div class="absolute inset-0 bg-gradient-to-r from-transparent to-void/40"></div>
         </div>
         <div>
@@ -239,12 +278,7 @@ import Layout from "../layouts/Layout.astro";
         </div>
 
         <div class="reveal order-1 lg:order-2 relative rounded-2xl overflow-hidden">
-          <img
-            src="/assets/thinking-intense.jpeg"
-            alt="Claudia thinking"
-            class="w-full h-auto parallax-img"
-            loading="lazy"
-          />
+          <img src="/assets/thinking-intense.jpeg" alt="Claudia thinking" class="w-full h-auto parallax-img" loading="lazy" />
           <div class="absolute inset-0 bg-gradient-to-l from-transparent to-void/30"></div>
         </div>
       </div>
@@ -293,6 +327,29 @@ import Layout from "../layouts/Layout.astro";
 
 </Layout>
 
+<style>
+  /* Terminal line-by-line animation */
+  .term-line {
+    opacity: 0;
+    transform: translateY(4px);
+    animation: term-reveal 0.3s ease forwards;
+    animation-delay: calc(var(--delay) * 0.35s + 0.5s);
+  }
+
+  #terminal.playing .term-line {
+    opacity: 0;
+    animation: term-reveal 0.3s ease forwards;
+    animation-delay: calc(var(--delay) * 0.35s);
+  }
+
+  @keyframes term-reveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
 <script>
   // Copy button
   const btn = document.getElementById("copy-btn");
@@ -312,59 +369,18 @@ import Layout from "../layouts/Layout.astro";
     }, 2000);
   });
 
-  // Terminal typing animation
-  const lines = [
-    { text: "$ claude", cls: "text-[#28c840]", delay: 600 },
-    { text: "> Hook up the database with my AWS credentials", cls: "text-paper/50", delay: 1200 },
-    { text: "", cls: "", delay: 400 },
-    { text: "", cls: "", html: '<span class="text-paper/40">claudia</span> <span class="text-[#ff5f57] font-semibold">blocked</span> <span class="text-[#febc2e]">Hardcoded secret detected</span>', delay: 800 },
-    { text: "", cls: "", delay: 200 },
-    { text: "  Pattern: AWS access key (AKIA...)", cls: "text-paper/40", delay: 300 },
-    { text: "  File:    src/config/database.ts", cls: "text-paper/40", delay: 300 },
-    { text: "", cls: "", delay: 400 },
-    { text: "", cls: "", html: '  <span class="text-[#28c840] font-semibold">Fix:</span> <span class="text-paper/50">Use environment variables instead.</span>', delay: 600 },
-    { text: "  Your secret would have been visible to anyone who sees this code.", cls: "text-paper/30", delay: 400 },
-    { text: "", cls: "", delay: 300 },
-    { text: '  export const db = createPool(process.env.DATABASE_URL)', cls: "text-[#28c840]/80 bg-white/[0.03] inline-block px-2 rounded", delay: 0 },
-  ];
-
-  const output = document.getElementById("terminal-output");
-  const cursor = document.getElementById("terminal-cursor");
-  let started = false;
-
-  function typeTerminal() {
-    if (started) return;
-    started = true;
-    let totalDelay = 0;
-
-    lines.forEach((line) => {
-      totalDelay += line.delay;
-      setTimeout(() => {
-        const el = document.createElement("div");
-        if (line.html) {
-          el.innerHTML = line.html;
-        } else if (line.text) {
-          el.className = line.cls;
-          el.textContent = line.text;
-        } else {
-          el.innerHTML = "&nbsp;";
-        }
-        output?.insertBefore(el, cursor);
-      }, totalDelay);
-    });
-  }
-
-  const terminalSection = output?.closest("section");
-  if (terminalSection) {
+  // Terminal animation - restart when visible
+  const terminal = document.getElementById("terminal");
+  if (terminal) {
     const tObs = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          setTimeout(typeTerminal, 500);
+          terminal.classList.add("playing");
           tObs.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.15 }
     );
-    tObs.observe(terminalSection);
+    tObs.observe(terminal);
   }
 </script>

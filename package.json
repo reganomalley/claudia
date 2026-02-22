@@ -16,11 +16,15 @@
     "architecture",
     "prompt-engineering"
   ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
   "files": [
     ".claude-plugin/",
     "commands/",
     "skills/",
     "hooks/",
-    "config/"
+    "config/",
+    "scripts/postinstall.js"
   ]
 }
