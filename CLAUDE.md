@@ -6,22 +6,22 @@ Claude Code plugin: technology mentor, security advisor, prompt coach. 10 knowle
 ## Architecture
 - **Skills** (model-invocable): `claudia-mentor` (core brain/router), `claudia-databases`, `claudia-security`, `claudia-infrastructure`, `claudia-frontend`, `claudia-api`, `claudia-testing`, `claudia-performance`, `claudia-devops`, `claudia-data`
 - **Hooks** (PreToolUse): `check-secrets.sh` (blocks), `check-practices.py`, `check-deps.py`, `check-dockerfile.py`, `check-git-hygiene.py` (blocks .env + conflicts), `check-accessibility.py`, `check-license.py`
-- **Commands**: `claudia` (ask anything), `claudia-explain` (explain code), `claudia-review` (catch bugs), `claudia-why` (explain stack), `claudia-health` (project audit)
+- **Commands**: `ask` (ask anything), `explain` (explain code), `review` (catch bugs), `why` (explain stack), `health` (project audit)
 - **Config**: `defaults.json` for personality/proactivity, user override via `~/.claude/claudia.json`
 - **Context persistence**: `~/.claude/claudia-context.json` stores stack detection + tech decisions across sessions
 
 ## Key Files
 - `skills/claudia-mentor/SKILL.md` -- personality, routing, greeting, learning mode, context persistence
 - `hooks/hooks.json` -- hook registration (7 hooks)
-- `commands/claudia.md` -- main question entry point
-- `commands/claudia-explain.md` -- code explanation for vibecoders
-- `commands/claudia-review.md` -- "almost right" bug catcher
-- `commands/claudia-why.md` -- stack decision explainer
-- `commands/claudia-health.md` -- health audit command
+- `commands/ask.md` -- main question entry point
+- `commands/explain.md` -- code explanation for vibecoders
+- `commands/review.md` -- "almost right" bug catcher
+- `commands/why.md` -- stack decision explainer
+- `commands/health.md` -- health audit command
 - `config/defaults.json` -- default personality + proactivity level
 
 ## Plugin Registration
-- Commands are namespaced: `/claudia-mentor:claudia`, `/claudia-mentor:claudia-explain`, etc.
+- Commands are namespaced: `/claudia:ask`, `/claudia:explain`, `/claudia:review`, `/claudia:why`, `/claudia:health`
 - SKILL.md frontmatter must NOT have `name:` field (causes namespace-stripping bug)
 - Load via: `claude --plugin-dir ~/personal/claudia` or `claude --plugin-dir $(npm root -g)/claudia-mentor`
 

@@ -21,7 +21,7 @@ npm install -g claudia-mentor
 
 That's it. One command. The installer automatically configures your shell so every `claude` session loads Claudia. Restart your terminal and type `claude` -- she's there.
 
-To verify, type `/claudia-mentor:claudia are you there?` inside Claude Code.
+To verify, type `/claudia:ask are you there?` inside Claude Code.
 
 ## Usage
 
@@ -30,14 +30,14 @@ To verify, type `/claudia-mentor:claudia are you there?` inside Claude Code.
 Commands are namespaced under `claudia-mentor:`. Type `/claudia-mentor:` and tab to see all options.
 
 ```
-/claudia-mentor:claudia what database should I use for time-series data?
-/claudia-mentor:claudia-explain                 # Explain the code that was just written
-/claudia-mentor:claudia-explain src/auth.ts      # Explain a specific file
-/claudia-mentor:claudia-review                   # Review recent changes for bugs
-/claudia-mentor:claudia-review feature-branch    # Review a specific branch
-/claudia-mentor:claudia-why                      # Explain why your project uses this stack
-/claudia-mentor:claudia-why prisma               # Explain a specific technology choice
-/claudia-mentor:claudia-health                   # Run a full project health audit
+/claudia:ask what database should I use for time-series data?
+/claudia:explain                 # Explain the code that was just written
+/claudia:explain src/auth.ts      # Explain a specific file
+/claudia:review                   # Review recent changes for bugs
+/claudia:review feature-branch    # Review a specific branch
+/claudia:why                      # Explain why your project uses this stack
+/claudia:why prisma               # Explain a specific technology choice
+/claudia:health                   # Run a full project health audit
 ```
 
 ### Automatic (Model-Invoked)

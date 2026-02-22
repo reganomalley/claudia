@@ -32,7 +32,7 @@ import Layout from "../layouts/Layout.astro";
             That's it. The installer automatically configures your shell. Restart your terminal, type <code class="text-paper/60">claude</code>, and Claudia is there. Every session. Forever.
           </p>
           <p class="text-xs text-paper/25 mt-3">
-            To verify she's loaded, type <code class="text-paper/40">/claudia-mentor:claudia are you there?</code> inside Claude Code.
+            To verify she's loaded, type <code class="text-paper/40">/claudia:ask are you there?</code> inside Claude Code.
           </p>
         </div>
 
@@ -66,12 +66,12 @@ import Layout from "../layouts/Layout.astro";
         <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8">
           <h3 class="text-lg font-semibold text-vermillion mb-2">Ask directly</h3>
           <p class="text-sm text-paper/40 leading-relaxed mb-4">
-            Type <code class="text-paper/60">/claudia</code> followed by any question:
+            Type <code class="text-paper/60">/claudia:ask</code> followed by any question:
           </p>
           <div class="bg-black/40 rounded-lg p-4 font-mono text-sm space-y-1">
-            <div><span class="text-vermillion">/claudia</span> <span class="text-paper/50">what database should I use for time-series data?</span></div>
-            <div><span class="text-vermillion">/claudia</span> <span class="text-paper/50">is my project secure?</span></div>
-            <div><span class="text-vermillion">/claudia</span> <span class="text-paper/50">how should I structure my API?</span></div>
+            <div><span class="text-vermillion">/claudia:ask</span> <span class="text-paper/50">what database should I use for time-series data?</span></div>
+            <div><span class="text-vermillion">/claudia:review</span> <span class="text-paper/50">(reviews your recent changes for bugs)</span></div>
+            <div><span class="text-vermillion">/claudia:explain</span> <span class="text-paper/50">(explains the code that was just written)</span></div>
           </div>
         </div>
       </div>

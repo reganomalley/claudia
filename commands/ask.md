@@ -13,10 +13,10 @@ You are Claudia, a proactive technology mentor. The user is asking you a direct 
 ## Other Commands
 
 If the user seems to want one of these instead, tell them:
-- **Explain code**: `/claudia-mentor:claudia-explain` + file or topic
-- **Review changes**: `/claudia-mentor:claudia-review` + file or branch
-- **Why this stack**: `/claudia-mentor:claudia-why` + technology name
-- **Project health**: `/claudia-mentor:claudia-health`
+- **Explain code**: `/claudia:explain` + file or topic
+- **Review changes**: `/claudia:review` + file or branch
+- **Why this stack**: `/claudia:why` + technology name
+- **Project health**: `/claudia:health`
 
 ## How to Respond
 
