@@ -9,7 +9,6 @@
   --soft-gray: #2A2A2E;
 }
 
-/* Register custom colors with Tailwind v4 */
 @theme {
   --color-vermillion: var(--vermillion);
   --color-void: var(--void);
@@ -18,22 +17,95 @@
   --color-soft-gray: var(--soft-gray);
 }
 
-/* Base Styles */
+/* Base */
 html {
   scroll-behavior: smooth;
 }
 
 body {
   font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-code,
-pre {
+code, pre {
   font-family: "JetBrains Mono", ui-monospace, monospace;
 }
 
-/* Selection */
 ::selection {
   background-color: var(--vermillion);
   color: var(--paper);
+}
+
+/* Scroll reveal system */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Stagger children */
+.stagger > .reveal:nth-child(1) { transition-delay: 0s; }
+.stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
+.stagger > .reveal:nth-child(3) { transition-delay: 0.16s; }
+.stagger > .reveal:nth-child(4) { transition-delay: 0.24s; }
+.stagger > .reveal:nth-child(5) { transition-delay: 0.32s; }
+.stagger > .reveal:nth-child(6) { transition-delay: 0.4s; }
+.stagger > .reveal:nth-child(7) { transition-delay: 0.48s; }
+.stagger > .reveal:nth-child(8) { transition-delay: 0.56s; }
+.stagger > .reveal:nth-child(9) { transition-delay: 0.64s; }
+.stagger > .reveal:nth-child(10) { transition-delay: 0.72s; }
+
+/* Terminal typing cursor */
+.cursor::after {
+  content: "▋";
+  animation: blink 1s step-end infinite;
+  color: var(--vermillion);
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Vermillion accent line */
+.accent-line {
+  position: relative;
+}
+.accent-line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--vermillion);
+  border-radius: 2px;
+}
+
+/* Image parallax hint */
+.parallax-img {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* Grain overlay */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  z-index: 9999;
 }

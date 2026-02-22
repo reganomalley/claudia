@@ -2,150 +2,87 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Contribute to Claudia">
-  <!-- Hero -->
-  <section class="pt-24 pb-16 px-6">
-    <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-paper mb-6">
-        The easiest open source contribution you'll ever make
+<Layout title="Claudia — Contribute">
+  <section class="pt-32 pb-20 px-6">
+    <div class="max-w-4xl mx-auto">
+      <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Open source</p>
+      <h1 class="reveal text-4xl sm:text-5xl font-extrabold tracking-[-0.03em] leading-[1.05]">
+        The easiest contribution<br />you'll ever make
       </h1>
-      <p class="text-lg sm:text-xl text-paper/60 max-w-2xl mx-auto">
-        Contributing to Claudia means writing markdown. No code review, no tests, no build step.
+      <p class="reveal mt-5 text-paper/40 text-lg font-light max-w-lg">
+        Contributing to Claudia means writing markdown. No code review, no tests, no build step. Just knowledge.
       </p>
     </div>
   </section>
 
-  <!-- Contribution Types -->
-  <section class="py-16 px-6">
+  <!-- Contribution levels -->
+  <section class="pb-28 px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-semibold text-paper mb-10 text-center">
-        Pick your level
-      </h2>
-      <div class="grid gap-4">
-        <!-- Card 1 -->
-        <div class="group border border-soft-gray rounded-lg p-6 hover:border-vermillion/50 transition-colors">
-          <div class="flex items-start justify-between gap-4 mb-2">
-            <h3 class="text-lg font-semibold text-paper">Add a reference file</h3>
-            <span class="shrink-0 text-sm font-mono text-signal bg-signal/10 px-2 py-0.5 rounded">
-              ~30 min
-            </span>
-          </div>
-          <p class="text-paper/50">
-            Drop a <code class="text-vermillion/80">.md</code> in any <code class="text-vermillion/80">references/</code> directory. Write what you know about a technology, pattern, or best practice.
-          </p>
-        </div>
+      <p class="reveal font-mono text-xs text-paper/30 tracking-widest uppercase mb-8">Pick your level</p>
 
-        <!-- Card 2 -->
-        <div class="group border border-soft-gray rounded-lg p-6 hover:border-vermillion/50 transition-colors">
-          <div class="flex items-start justify-between gap-4 mb-2">
-            <h3 class="text-lg font-semibold text-paper">Add anti-pattern rules</h3>
-            <span class="shrink-0 text-sm font-mono text-signal bg-signal/10 px-2 py-0.5 rounded">
-              ~1 hour
-            </span>
+      <div class="space-y-px stagger">
+        {[
+          { title: "Add a reference file", time: "~30 min", desc: "Drop a .md in any references/ directory. Write what you know about a technology, pattern, or best practice." },
+          { title: "Add anti-pattern rules", time: "~1 hour", desc: "Add entries to hook scripts. Teach Claudia to catch common mistakes before they land." },
+          { title: "Improve a domain", time: "~2 hours", desc: "Expand SKILL.md or add reference files to an existing knowledge domain. Make the advice deeper." },
+          { title: "Create a new domain", time: "~4 hours", desc: "Use the scaffolding tool to create a full knowledge domain from scratch. Own a topic." },
+          { title: "Build a new hook", time: "~4 hours", desc: "Write a PreToolUse script that automatically catches issues on every file write." },
+        ].map((item) => (
+          <div class="reveal bg-white/[0.02] border border-white/[0.04] rounded-lg p-6 hover:border-vermillion/20 transition-colors group">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h3 class="text-base font-semibold text-paper/90 group-hover:text-vermillion transition-colors">{item.title}</h3>
+                <p class="mt-2 text-sm text-paper/35 leading-relaxed">{item.desc}</p>
+              </div>
+              <span class="shrink-0 text-[11px] font-mono text-vermillion/60 bg-vermillion/[0.08] px-2.5 py-1 rounded-full">{item.time}</span>
+            </div>
           </div>
-          <p class="text-paper/50">
-            Add entries to hook scripts. Teach Claudia to catch common mistakes before they land.
-          </p>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="group border border-soft-gray rounded-lg p-6 hover:border-vermillion/50 transition-colors">
-          <div class="flex items-start justify-between gap-4 mb-2">
-            <h3 class="text-lg font-semibold text-paper">Improve a domain</h3>
-            <span class="shrink-0 text-sm font-mono text-signal bg-signal/10 px-2 py-0.5 rounded">
-              ~2 hours
-            </span>
-          </div>
-          <p class="text-paper/50">
-            Expand <code class="text-vermillion/80">SKILL.md</code> or add reference files to an existing knowledge domain.
-          </p>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="group border border-soft-gray rounded-lg p-6 hover:border-vermillion/50 transition-colors">
-          <div class="flex items-start justify-between gap-4 mb-2">
-            <h3 class="text-lg font-semibold text-paper">Create a new domain</h3>
-            <span class="shrink-0 text-sm font-mono text-signal bg-signal/10 px-2 py-0.5 rounded">
-              ~4 hours
-            </span>
-          </div>
-          <p class="text-paper/50">
-            Use the scaffolding tool to create a full knowledge domain from scratch.
-          </p>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="group border border-soft-gray rounded-lg p-6 hover:border-vermillion/50 transition-colors">
-          <div class="flex items-start justify-between gap-4 mb-2">
-            <h3 class="text-lg font-semibold text-paper">Build a new hook</h3>
-            <span class="shrink-0 text-sm font-mono text-signal bg-signal/10 px-2 py-0.5 rounded">
-              ~4 hours
-            </span>
-          </div>
-          <p class="text-paper/50">
-            Write a <code class="text-vermillion/80">PreToolUse</code> script that automatically catches issues on every file write.
-          </p>
-        </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- Quick Start -->
-  <section class="py-16 px-6 bg-soft-gray/30">
+  <!-- Quick start -->
+  <section class="pb-28 px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-semibold text-paper mb-8 text-center">
-        Quick start
-      </h2>
-      <div class="bg-void border border-soft-gray rounded-lg overflow-hidden">
-        <div class="flex items-center gap-2 px-4 py-3 border-b border-soft-gray">
-          <span class="w-3 h-3 rounded-full bg-vermillion/40"></span>
-          <span class="w-3 h-3 rounded-full bg-signal/40"></span>
-          <span class="w-3 h-3 rounded-full bg-paper/20"></span>
+      <p class="reveal font-mono text-xs text-paper/30 tracking-widest uppercase mb-8">Quick start</p>
+
+      <div class="reveal rounded-xl overflow-hidden border border-white/[0.08]">
+        <div class="bg-[#1a1a1e] px-4 py-3 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
         </div>
-        <pre class="p-6 text-sm leading-relaxed overflow-x-auto"><code class="text-paper/80"><span class="text-signal">git clone</span> https://github.com/reganomalley/claudia.git
-<span class="text-signal">cd</span> claudia
-<span class="text-signal">./scripts/create-domain.sh</span> architecture
-<span class="text-paper/40"># Edit skills/claudia-architecture/SKILL.md</span>
-<span class="text-paper/40"># Add references in skills/claudia-architecture/references/</span></code></pre>
+        <pre class="bg-[#141417] px-6 py-5 text-[13px] font-mono leading-[1.9] overflow-x-auto"><code><span class="text-[#28c840]">git clone</span> <span class="text-paper/60">https://github.com/reganomalley/claudia.git</span>
+<span class="text-[#28c840]">cd</span> <span class="text-paper/60">claudia</span>
+<span class="text-[#28c840]">./scripts/create-domain.sh</span> <span class="text-paper/60">architecture</span>
+<span class="text-paper/25"># Edit skills/claudia-architecture/SKILL.md</span>
+<span class="text-paper/25"># Add references in skills/claudia-architecture/references/</span></code></pre>
       </div>
     </div>
   </section>
 
-  <!-- Writing Guidelines -->
-  <section class="py-16 px-6">
+  <!-- Writing guidelines -->
+  <section class="pb-28 px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-semibold text-paper mb-10 text-center">
-        Writing guidelines
-      </h2>
-      <div class="grid sm:grid-cols-2 gap-6">
-        <div class="border border-soft-gray rounded-lg p-6">
-          <h3 class="text-lg font-semibold text-vermillion mb-3">Be opinionated</h3>
-          <p class="text-paper/50 text-sm">
-            Claudia doesn't present options neutrally. She recommends the right tool for the job and explains why alternatives fall short.
-          </p>
-        </div>
-        <div class="border border-soft-gray rounded-lg p-6">
-          <h3 class="text-lg font-semibold text-vermillion mb-3">Use decision trees and comparison tables</h3>
-          <p class="text-paper/50 text-sm">
-            Structured guidance is more useful than paragraphs of prose. Help the reader make a choice, not just understand the landscape.
-          </p>
-        </div>
-        <div class="border border-soft-gray rounded-lg p-6">
-          <h3 class="text-lg font-semibold text-vermillion mb-3">Explain the "why"</h3>
-          <p class="text-paper/50 text-sm">
-            Don't just say what to do -- explain the reasoning. Developers trust advice more when they understand the tradeoffs behind it.
-          </p>
-        </div>
-        <div class="border border-soft-gray rounded-lg p-6">
-          <h3 class="text-lg font-semibold text-vermillion mb-3">Include "when NOT to use this"</h3>
-          <p class="text-paper/50 text-sm">
-            Every tool has limits. Documenting when something is the wrong choice builds credibility and saves real debugging time.
-          </p>
-        </div>
-        <div class="sm:col-span-2 border border-soft-gray rounded-lg p-6">
-          <h3 class="text-lg font-semibold text-vermillion mb-3">Keep SKILL.md under ~2000 words</h3>
-          <p class="text-paper/50 text-sm">
-            SKILL.md is loaded into Claude's context window. Keep it tight. Move deep dives, reference tables, and extended examples into the <code class="text-vermillion/80">references/</code> directory -- those are loaded on demand.
+      <p class="reveal font-mono text-xs text-paper/30 tracking-widest uppercase mb-8">Writing guidelines</p>
+
+      <div class="grid sm:grid-cols-2 gap-px bg-white/[0.06] rounded-xl overflow-hidden stagger">
+        {[
+          { title: "Be opinionated", desc: "Claudia doesn't present options neutrally. She recommends the right tool and explains why alternatives fall short." },
+          { title: "Decision trees over prose", desc: "Structured guidance is more useful than paragraphs. Help the reader make a choice, not just understand the landscape." },
+          { title: "Explain the why", desc: "Don't just say what to do — explain the reasoning. Developers trust advice more when they understand the tradeoffs." },
+          { title: "Include when NOT to use", desc: "Every tool has limits. Documenting when something is the wrong choice builds credibility and saves debugging time." },
+        ].map((g) => (
+          <div class="reveal bg-void p-7">
+            <h3 class="text-sm font-semibold text-vermillion">{g.title}</h3>
+            <p class="mt-2 text-xs text-paper/35 leading-relaxed">{g.desc}</p>
+          </div>
+        ))}
+        <div class="reveal bg-void p-7 sm:col-span-2">
+          <h3 class="text-sm font-semibold text-vermillion">Keep SKILL.md under ~2000 words</h3>
+          <p class="mt-2 text-xs text-paper/35 leading-relaxed">
+            SKILL.md loads into Claude's context window. Keep it tight. Move deep dives, reference tables, and extended examples into <code class="text-vermillion/60">references/</code> — those load on demand.
           </p>
         </div>
       </div>
@@ -153,16 +90,16 @@ import Layout from "../layouts/Layout.astro";
   </section>
 
   <!-- CTA -->
-  <section class="py-20 px-6">
+  <section class="pb-20 px-6">
     <div class="max-w-4xl mx-auto text-center">
       <a
         href="https://github.com/reganomalley/claudia"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 bg-vermillion hover:bg-vermillion/90 text-paper font-semibold px-8 py-3 rounded-lg transition-colors"
+        class="reveal inline-flex items-center gap-2 bg-vermillion hover:bg-vermillion/90 text-paper text-sm font-medium px-6 py-2.5 rounded-lg transition-colors"
       >
         View on GitHub
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
         </svg>
       </a>

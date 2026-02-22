@@ -2,39 +2,38 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Claudia - The mentor in your terminal">
+<Layout title="Claudia — The mentor in your terminal">
 
   <!-- ===================== HERO ===================== -->
-  <section class="relative overflow-hidden">
-    <div class="max-w-6xl mx-auto px-6 py-20 md:py-32">
-      <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+  <section class="relative min-h-screen flex items-center overflow-hidden pt-14">
+    <!-- Background glow -->
+    <div class="absolute top-1/4 right-0 w-[600px] h-[600px] bg-vermillion/[0.07] rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full">
+      <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-16 lg:gap-20 items-center">
         <div>
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
-            The mentor in<br />your terminal
+          <div class="reveal">
+            <p class="font-mono text-xs text-vermillion tracking-widest uppercase mb-6">Claude Code Plugin</p>
+          </div>
+          <h1 class="reveal reveal-delay-1 text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[0.95] tracking-[-0.035em]">
+            The mentor<br />in your<br />
+            <span class="text-vermillion">terminal</span>
           </h1>
-          <p class="mt-6 text-lg text-paper/70 leading-relaxed max-w-lg">
-            Claudia is a Claude Code plugin that catches security mistakes, advises on technology decisions, and coaches you to write better prompts.
-          </p>
-          <p class="mt-4 text-sm font-medium text-vermillion tracking-wide uppercase">
-            10 knowledge domains &middot; 7 automated hooks
+          <p class="reveal reveal-delay-2 mt-8 text-lg sm:text-xl text-paper/50 leading-relaxed max-w-md font-light">
+            She catches security mistakes, advises on technology decisions, and coaches you to write better prompts.
           </p>
 
-          <!-- Install command -->
-          <div class="mt-8 flex items-center gap-2 max-w-md">
-            <div class="flex-1 relative group">
-              <code
-                id="install-cmd"
-                class="block w-full bg-soft-gray rounded-lg px-4 py-3 text-sm font-mono text-paper/90 select-all"
-              >
-                npm install -g claudia-mentor
-              </code>
+          <!-- Install -->
+          <div class="reveal reveal-delay-3 mt-10">
+            <div class="inline-flex items-center gap-3 bg-white/[0.04] border border-white/[0.08] rounded-xl px-5 py-3.5">
+              <code id="install-cmd" class="text-sm font-mono text-paper/80 select-all">npm i -g claudia-mentor</code>
               <button
                 id="copy-btn"
                 aria-label="Copy install command"
-                class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-md text-paper/40 hover:text-paper hover:bg-white/10 transition-colors cursor-pointer"
+                class="p-1 rounded text-paper/30 hover:text-vermillion transition-colors cursor-pointer"
               >
                 <svg class="w-4 h-4" id="copy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                 </svg>
                 <svg class="w-4 h-4 hidden" id="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -43,107 +42,83 @@ import Layout from "../layouts/Layout.astro";
             </div>
           </div>
 
-          <!-- CTA links -->
-          <div class="mt-6 flex items-center gap-4">
+          <div class="reveal reveal-delay-4 mt-6 flex items-center gap-5">
             <a
               href="https://github.com/reganomalley/claudia"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 text-sm font-medium text-paper/70 hover:text-paper transition-colors"
+              class="text-sm text-paper/40 hover:text-paper transition-colors"
             >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              View on GitHub
+              View source
+            </a>
+            <span class="text-paper/10">|</span>
+            <a href="/docs" class="text-sm text-paper/40 hover:text-paper transition-colors">
+              Read the docs
             </a>
           </div>
         </div>
 
         <!-- Hero image -->
-        <div class="relative">
-          <div class="rounded-2xl overflow-hidden shadow-2xl shadow-vermillion/10 border border-white/5">
+        <div class="reveal reveal-delay-2 relative">
+          <div class="relative rounded-2xl overflow-hidden">
             <img
               src="/assets/hero-wide.jpeg"
-              alt="Claudia - AI mentor for Claude Code"
-              class="w-full h-auto object-cover"
+              alt="Claudia"
+              class="w-full h-auto parallax-img"
               loading="eager"
             />
+            <div class="absolute inset-0 bg-gradient-to-t from-void/60 via-transparent to-transparent"></div>
           </div>
-          <div class="absolute -inset-4 bg-vermillion/5 rounded-3xl -z-10 blur-2xl"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== HOW IT WORKS ===================== -->
-  <section class="border-t border-white/5">
-    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
-      <h2 class="text-3xl sm:text-4xl font-bold text-center">How it works</h2>
-      <p class="mt-4 text-center text-paper/50 max-w-lg mx-auto">
-        Install once, forget about it. Claudia works alongside Claude Code automatically.
-      </p>
-
-      <div class="mt-14 grid md:grid-cols-3 gap-8">
-        <!-- Card 1 -->
-        <div class="border-l-2 border-vermillion pl-6 py-1">
-          <h3 class="text-xl font-semibold">Always Watching</h3>
-          <p class="mt-3 text-paper/60 leading-relaxed">
-            7 hooks catch secrets, anti-patterns, and bad dependencies before they ship.
-          </p>
-        </div>
-        <!-- Card 2 -->
-        <div class="border-l-2 border-vermillion pl-6 py-1">
-          <h3 class="text-xl font-semibold">Ask Anything</h3>
-          <p class="mt-3 text-paper/60 leading-relaxed">
-            10 knowledge domains advise on technology decisions with clear trade-offs.
-          </p>
-        </div>
-        <!-- Card 3 -->
-        <div class="border-l-2 border-vermillion pl-6 py-1">
-          <h3 class="text-xl font-semibold">On-Demand Audits</h3>
-          <p class="mt-3 text-paper/60 leading-relaxed">
-            <code class="text-vermillion text-sm">/claudia</code> for questions, <code class="text-vermillion text-sm">/claudia-health</code> for full project scans with scored reports.
-          </p>
-        </div>
+  <!-- ===================== NUMBERS STRIP ===================== -->
+  <section class="border-y border-white/[0.06] bg-white/[0.015]">
+    <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-3 gap-8">
+      <div class="reveal text-center">
+        <span class="block text-3xl sm:text-4xl font-extrabold tracking-tight text-vermillion">10</span>
+        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Knowledge Domains</span>
+      </div>
+      <div class="reveal text-center">
+        <span class="block text-3xl sm:text-4xl font-extrabold tracking-tight text-vermillion">7</span>
+        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Automated Hooks</span>
+      </div>
+      <div class="reveal text-center">
+        <span class="block text-3xl sm:text-4xl font-extrabold tracking-tight text-vermillion">0</span>
+        <span class="block mt-1 text-xs text-paper/40 uppercase tracking-widest">Config Required</span>
       </div>
     </div>
   </section>
 
   <!-- ===================== TERMINAL DEMO ===================== -->
-  <section class="border-t border-white/5">
-    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
-      <h2 class="text-3xl sm:text-4xl font-bold text-center">See Claudia in action</h2>
-      <p class="mt-4 text-center text-paper/50 max-w-lg mx-auto">
-        Claudia intercepts dangerous code before it reaches your codebase.
-      </p>
+  <section class="py-28 sm:py-36">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-[0.4fr_0.6fr] gap-16 items-center">
+        <!-- Text side -->
+        <div>
+          <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Live protection</p>
+          <h2 class="reveal text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
+            She catches what<br />you miss
+          </h2>
+          <p class="reveal mt-5 text-paper/40 leading-relaxed">
+            Claudia intercepts hardcoded secrets, catches anti-patterns, and blocks dangerous code before it reaches your codebase. Every file write. Automatically.
+          </p>
+        </div>
 
-      <div class="mt-14 max-w-2xl mx-auto">
-        <!-- Terminal window -->
-        <div class="rounded-xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10">
-          <!-- Title bar -->
-          <div class="bg-[#1a1a1e] px-4 py-3 flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-[#ff5f57]"></span>
-            <span class="w-3 h-3 rounded-full bg-[#febc2e]"></span>
-            <span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
-            <span class="ml-4 text-xs text-paper/30 font-mono">terminal</span>
-          </div>
-          <!-- Terminal body -->
-          <div class="bg-soft-gray px-6 py-5 font-mono text-sm leading-relaxed">
-            <p><span class="text-[#28c840]">$</span> <span class="text-paper/80">claude</span></p>
-            <p class="text-paper/60 mt-1">&gt; Write the database config</p>
-            <p class="mt-4">
-              <span class="text-paper/50">Claudia</span>
-              <span class="text-[#ff5f57] font-semibold"> blocked</span><span class="text-paper/50">:</span>
-              <span class="text-[#febc2e]"> Hardcoded secret detected</span>
-            </p>
-            <div class="mt-2 pl-4 border-l border-paper/10">
-              <p class="text-paper/50">Pattern: <span class="text-[#febc2e]">AWS access key (AKIA...)</span></p>
-              <p class="text-paper/50">File: <span class="text-paper/70">src/config/database.ts</span></p>
+        <!-- Terminal -->
+        <div class="reveal">
+          <div class="rounded-xl overflow-hidden border border-white/[0.08] shadow-2xl shadow-black/40">
+            <div class="bg-[#1a1a1e] px-4 py-3 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
+              <span class="ml-3 text-[11px] text-paper/20 font-mono">claude</span>
             </div>
-            <p class="mt-4">
-              <span class="text-[#28c840] font-semibold">Fix:</span>
-              <span class="text-paper/60"> Use environment variables instead.</span>
-            </p>
-            <div class="mt-2 bg-black/30 rounded-md px-3 py-2">
-              <code class="text-[#28c840] text-xs">export const db = createPool(process.env.DATABASE_URL)</code>
+            <div class="bg-[#141417] px-5 py-5 font-mono text-[13px] leading-[1.8] min-h-[260px]">
+              <div id="terminal-output"></div>
+              <span id="terminal-cursor" class="cursor"></span>
             </div>
           </div>
         </div>
@@ -151,157 +126,162 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-  <!-- ===================== KNOWLEDGE DOMAINS ===================== -->
-  <section class="border-t border-white/5">
-    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
-      <h2 class="text-3xl sm:text-4xl font-bold text-center">10 knowledge domains</h2>
-      <p class="mt-4 text-center text-paper/50 max-w-lg mx-auto">
-        Opinionated advice with trade-offs, not "it depends."
-      </p>
+  <!-- ===================== DOMAINS — EDITORIAL LAYOUT ===================== -->
+  <section class="py-28 sm:py-36 border-t border-white/[0.06]">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl">
+        <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Knowledge</p>
+        <h2 class="reveal text-4xl sm:text-5xl font-bold leading-[1.05] tracking-tight">
+          10 domains.<br />Opinionated advice.
+        </h2>
+        <p class="reveal mt-5 text-paper/40 leading-relaxed max-w-lg">
+          Not "it depends." Claudia gives you the answer first, then explains the trade-offs so you can disagree with confidence.
+        </p>
+      </div>
 
-      <div class="mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] rounded-xl overflow-hidden stagger">
         {[
-          { name: "Databases", desc: "SQL vs NoSQL, vector DBs, time-series", q: "What database for IoT time-series data?", color: "#E63B2E" },
-          { name: "Security", desc: "Auth patterns, secrets, sandboxing", q: "JWT or session-based auth for my SPA?", color: "#FF6B35" },
-          { name: "Infrastructure", desc: "Cloud providers, containers, serverless", q: "Should I use Lambda or ECS?", color: "#E63B2E" },
-          { name: "Frontend", desc: "Frameworks, SSR vs SPA, state management", q: "React or Svelte for this project?", color: "#FF6B35" },
-          { name: "API Design", desc: "REST vs GraphQL vs gRPC", q: "Should my mobile app use GraphQL?", color: "#E63B2E" },
-          { name: "Testing", desc: "Test pyramid, frameworks, mocking", q: "What should I test vs skip?", color: "#FF6B35" },
-          { name: "Performance", desc: "Profiling, caching, Core Web Vitals", q: "Why is my app slow?", color: "#E63B2E" },
-          { name: "DevOps", desc: "CI/CD, deployment, monitoring", q: "How should I set up GitHub Actions?", color: "#FF6B35" },
-          { name: "Data Modeling", desc: "Schema design, migrations, indexing", q: "How to handle soft deletes?", color: "#E63B2E" },
-          { name: "Prompt Coaching", desc: "Detects vague prompts, suggests improvements", q: '"Make it better" → here\'s how', color: "#FF6B35" },
-        ].map((domain) => (
-          <div class="bg-soft-gray/50 border border-white/5 rounded-xl p-5 hover:border-vermillion/30 transition-colors">
-            <div
-              class="w-8 h-8 rounded-lg mb-4 opacity-80"
-              style={`background-color: ${domain.color}`}
-            />
-            <h3 class="font-semibold text-sm">{domain.name}</h3>
-            <p class="mt-1.5 text-xs text-paper/50 leading-relaxed">{domain.desc}</p>
-            <p class="mt-2.5 text-xs italic text-paper/35 leading-relaxed">"{domain.q}"</p>
+          { name: "Databases", desc: "SQL vs NoSQL, vector DBs, time-series. Just use Postgres — and when not to.", q: "What database for IoT time-series?" },
+          { name: "Security", desc: "Auth patterns, secrets management, TEEs and sandboxing.", q: "JWT or sessions for my SPA?" },
+          { name: "Infrastructure", desc: "AWS vs GCP vs Azure. Containers, serverless, edge.", q: "Lambda or ECS for this workload?" },
+          { name: "Frontend", desc: "React, Vue, Svelte, Solid. SSR vs SPA vs islands.", q: "Which framework for this project?" },
+          { name: "API Design", desc: "REST vs GraphQL vs gRPC. Versioning, pagination, real-time.", q: "Should my mobile app use GraphQL?" },
+          { name: "Testing", desc: "Test pyramid, framework comparison, when NOT to mock.", q: "What should I test vs skip?" },
+          { name: "Performance", desc: "Measure before you optimize. N+1, caching, Core Web Vitals.", q: "Why is my app slow?" },
+          { name: "DevOps", desc: "CI/CD pipelines, deployment strategies, monitoring.", q: "How should I set up GitHub Actions?" },
+          { name: "Data Modeling", desc: "Schema design, migrations, indexing strategy.", q: "How to handle soft deletes?" },
+        ].map((d, i) => (
+          <div class="reveal bg-void p-7 group">
+            <h3 class="text-sm font-semibold text-paper/90 group-hover:text-vermillion transition-colors">{d.name}</h3>
+            <p class="mt-2 text-xs text-paper/35 leading-relaxed">{d.desc}</p>
+            <p class="mt-3 text-[11px] font-mono text-vermillion/50 italic">"{d.q}"</p>
           </div>
         ))}
+        <!-- Prompt Coaching — spans to fill -->
+        <div class="reveal bg-void p-7 group">
+          <h3 class="text-sm font-semibold text-paper/90 group-hover:text-vermillion transition-colors">Prompt Coaching</h3>
+          <p class="mt-2 text-xs text-paper/35 leading-relaxed">Detects vague prompts, suggests improvements across 5 quality dimensions.</p>
+          <p class="mt-3 text-[11px] font-mono text-vermillion/50 italic">"Make it better" → here's how</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== HOOKS TABLE ===================== -->
-  <section class="border-t border-white/5">
-    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
-      <h2 class="text-3xl sm:text-4xl font-bold text-center">7 hooks. Always active.</h2>
-      <p class="mt-4 text-center text-paper/50 max-w-lg mx-auto">
-        Automated checks on every file write.
-      </p>
+  <!-- ===================== CHARACTER BREAK — ARMS CROSSED ===================== -->
+  <section class="relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-[0.5fr_0.5fr] gap-16 items-center">
+        <div class="reveal relative rounded-2xl overflow-hidden">
+          <img
+            src="/assets/logo-arms-crossed.jpeg"
+            alt="Claudia — arms crossed"
+            class="w-full h-auto parallax-img"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent to-void/40"></div>
+        </div>
+        <div>
+          <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Always active</p>
+          <h2 class="reveal text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
+            7 hooks.<br />Zero config.
+          </h2>
+          <p class="reveal mt-5 text-paper/40 leading-relaxed">
+            Every file write passes through Claudia's hooks. Some block. Most advise. All explain why.
+          </p>
 
-      <div class="mt-14 max-w-3xl mx-auto">
-        <!-- Desktop table -->
-        <div class="hidden md:block overflow-hidden rounded-xl border border-white/10">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="bg-soft-gray/70 text-paper/50 text-left">
-                <th class="px-5 py-3 font-medium">Hook</th>
-                <th class="px-5 py-3 font-medium">Type</th>
-                <th class="px-5 py-3 font-medium">What it catches</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-white/5">
-              {[
-                { hook: "Secret Detection", type: "Blocks", typeColor: "bg-[#ff5f57]/15 text-[#ff5f57]", desc: "AWS keys, API tokens, passwords, private keys" },
-                { hook: "Git Hygiene", type: "Blocks", typeColor: "bg-[#ff5f57]/15 text-[#ff5f57]", desc: ".env writes, merge conflict markers" },
-                { hook: "Code Practices", type: "Advisory", typeColor: "bg-[#febc2e]/15 text-[#febc2e]", desc: "eval(), empty catch, console.log, SQL concat" },
-                { hook: "Dependencies", type: "Advisory", typeColor: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Deprecated, compromised, trivial packages" },
-                { hook: "Dockerfile", type: "Advisory", typeColor: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Root user, :latest, missing multi-stage" },
-                { hook: "Accessibility", type: "Advisory", typeColor: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Missing alt text, unlabeled inputs" },
-                { hook: "License", type: "Advisory", typeColor: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Copyleft deps in permissive projects" },
-              ].map((row) => (
-                <tr class="hover:bg-white/[0.02] transition-colors">
-                  <td class="px-5 py-3.5 font-medium text-paper/90">{row.hook}</td>
-                  <td class="px-5 py-3.5">
-                    <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${row.typeColor}`}>
-                      {row.type}
-                    </span>
-                  </td>
-                  <td class="px-5 py-3.5 text-paper/60">{row.desc}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div class="reveal mt-10 space-y-3 stagger">
+            {[
+              { name: "Secret Detection", badge: "Blocks", color: "bg-[#ff5f57]/20 text-[#ff5f57]", desc: "AWS keys, tokens, passwords, private keys" },
+              { name: "Git Hygiene", badge: "Blocks", color: "bg-[#ff5f57]/20 text-[#ff5f57]", desc: ".env writes, merge conflict markers" },
+              { name: "Code Practices", badge: "Warns", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "eval(), empty catch, console.log, SQL concat" },
+              { name: "Dependencies", badge: "Warns", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Deprecated, compromised, trivial packages" },
+              { name: "Dockerfile", badge: "Warns", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Root user, :latest, missing multi-stage" },
+              { name: "Accessibility", badge: "Warns", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Missing alt text, unlabeled inputs" },
+              { name: "License", badge: "Warns", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Copyleft deps in permissive projects" },
+            ].map((h) => (
+              <div class="reveal flex items-start gap-3 py-2">
+                <span class={`shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded-full ${h.color}`}>{h.badge}</span>
+                <div>
+                  <span class="text-sm font-medium text-paper/80">{h.name}</span>
+                  <span class="text-sm text-paper/30 ml-2">{h.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== THINKING IMAGE + PROMPT COACHING ===================== -->
+  <section class="py-28 sm:py-36">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-[0.5fr_0.5fr] gap-16 items-center">
+        <div class="order-2 lg:order-1">
+          <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Prompt coaching</p>
+          <h2 class="reveal text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
+            Your prompts<br />could be better
+          </h2>
+          <p class="reveal mt-5 text-paper/40 leading-relaxed">
+            "Make it better" gives Claude nothing to work with. Claudia detects vague prompts and rewrites them into specific, actionable instructions.
+          </p>
+
+          <div class="reveal mt-8 space-y-4">
+            <div class="border border-white/[0.06] rounded-lg p-4">
+              <p class="text-[11px] font-mono text-paper/30 uppercase tracking-wider mb-2">Before</p>
+              <p class="text-sm text-paper/50 line-through decoration-vermillion/40">"Fix the auth"</p>
+            </div>
+            <div class="border border-vermillion/20 bg-vermillion/[0.03] rounded-lg p-4">
+              <p class="text-[11px] font-mono text-vermillion/60 uppercase tracking-wider mb-2">After</p>
+              <p class="text-sm text-paper/70">"Refactor the auth middleware to use async/await, add error handling for expired tokens, and return proper 401 responses with error codes."</p>
+            </div>
+          </div>
         </div>
 
-        <!-- Mobile cards -->
-        <div class="md:hidden space-y-3">
-          {[
-            { hook: "Secret Detection", type: "Blocks", typeColor: "bg-[#ff5f57]/15 text-[#ff5f57]", desc: "AWS keys, API tokens, passwords, private keys" },
-            { hook: "Git Hygiene", type: "Blocks", typeColor: "bg-[#ff5f57]/15 text-[#ff5f57]", desc: ".env writes, merge conflict markers" },
-            { hook: "Code Practices", type: "Advisory", typeColor: "bg-[#febc2e]/15 text-[#febc2e]", desc: "eval(), empty catch, console.log, SQL concat" },
-            { hook: "Dependencies", type: "Advisory", typeColor: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Deprecated, compromised, trivial packages" },
-            { hook: "Dockerfile", type: "Advisory", typeColor: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Root user, :latest, missing multi-stage" },
-            { hook: "Accessibility", type: "Advisory", typeColor: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Missing alt text, unlabeled inputs" },
-            { hook: "License", type: "Advisory", typeColor: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Copyleft deps in permissive projects" },
-          ].map((row) => (
-            <div class="bg-soft-gray/50 border border-white/5 rounded-xl p-4">
-              <div class="flex items-center justify-between mb-2">
-                <h3 class="font-medium text-sm">{row.hook}</h3>
-                <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${row.typeColor}`}>
-                  {row.type}
-                </span>
-              </div>
-              <p class="text-xs text-paper/50">{row.desc}</p>
-            </div>
-          ))}
+        <div class="reveal order-1 lg:order-2 relative rounded-2xl overflow-hidden">
+          <img
+            src="/assets/thinking-intense.jpeg"
+            alt="Claudia thinking"
+            class="w-full h-auto parallax-img"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-l from-transparent to-void/30"></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ===================== INSTALL CTA ===================== -->
-  <section class="border-t border-white/5 bg-soft-gray/30">
-    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
-      <div class="max-w-2xl mx-auto text-center">
-        <div class="inline-block mb-6">
-          <div class="h-1 w-16 bg-vermillion rounded-full mx-auto"></div>
-        </div>
-        <h2 class="text-3xl sm:text-4xl font-bold">Get started in 30 seconds</h2>
+  <section class="py-28 sm:py-36 border-t border-white/[0.06]">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="reveal max-w-xl mx-auto text-center">
+        <h2 class="text-4xl sm:text-5xl font-extrabold tracking-[-0.03em]">
+          Try her out
+        </h2>
+        <p class="mt-4 text-paper/40 text-lg font-light">Install once. She takes it from there.</p>
 
-        <div class="mt-10 space-y-3 max-w-md mx-auto text-left font-mono text-sm">
-          <div class="bg-void border border-white/10 rounded-lg px-4 py-3 flex items-center justify-between gap-3">
-            <div>
-              <span class="text-paper/40 select-none mr-2">1.</span>
-              <code class="text-paper/80">npm install -g claudia-mentor</code>
-            </div>
+        <div class="mt-10 space-y-2 text-left max-w-sm mx-auto font-mono text-sm">
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 text-paper/60">
+            <span class="text-vermillion mr-2">$</span>npm i -g claudia-mentor
           </div>
-          <div class="bg-void border border-white/10 rounded-lg px-4 py-3 flex items-center justify-between gap-3">
-            <div>
-              <span class="text-paper/40 select-none mr-2">2.</span>
-              <code class="text-paper/80">cd your-project && claude</code>
-            </div>
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 text-paper/60">
+            <span class="text-vermillion mr-2">$</span>cd your-project && claude
           </div>
-          <div class="bg-void border border-white/10 rounded-lg px-4 py-3 flex items-center justify-between gap-3">
-            <div>
-              <span class="text-paper/40 select-none mr-2">3.</span>
-              <code class="text-paper/80">Claudia activates automatically</code>
-            </div>
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 text-paper/40 italic">
+            <span class="text-[#28c840] mr-2">✓</span>Claudia activates automatically
           </div>
         </div>
 
-        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div class="mt-10 flex items-center justify-center gap-4">
           <a
             href="https://github.com/reganomalley/claudia"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 bg-vermillion hover:bg-vermillion/90 text-paper font-medium px-6 py-3 rounded-lg transition-colors"
+            class="inline-flex items-center gap-2 bg-vermillion hover:bg-vermillion/90 text-paper text-sm font-medium px-6 py-2.5 rounded-lg transition-colors"
           >
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
             View on GitHub
-          </a>
-          <a
-            href="/docs"
-            class="inline-flex items-center gap-1 text-sm font-medium text-paper/60 hover:text-paper transition-colors"
-          >
-            Read the docs
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </a>
         </div>
@@ -312,6 +292,7 @@ import Layout from "../layouts/Layout.astro";
 </Layout>
 
 <script>
+  // Copy button
   const btn = document.getElementById("copy-btn");
   const cmd = document.getElementById("install-cmd");
   const copyIcon = document.getElementById("copy-icon");
@@ -320,31 +301,69 @@ import Layout from "../layouts/Layout.astro";
   btn?.addEventListener("click", async () => {
     const text = cmd?.textContent?.trim();
     if (!text) return;
-
-    try {
-      await navigator.clipboard.writeText(text);
-      copyIcon?.classList.add("hidden");
-      checkIcon?.classList.remove("hidden");
-      setTimeout(() => {
-        copyIcon?.classList.remove("hidden");
-        checkIcon?.classList.add("hidden");
-      }, 2000);
-    } catch {
-      // Fallback for older browsers
-      const textarea = document.createElement("textarea");
-      textarea.value = text;
-      textarea.style.position = "fixed";
-      textarea.style.opacity = "0";
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      copyIcon?.classList.add("hidden");
-      checkIcon?.classList.remove("hidden");
-      setTimeout(() => {
-        copyIcon?.classList.remove("hidden");
-        checkIcon?.classList.add("hidden");
-      }, 2000);
-    }
+    await navigator.clipboard.writeText(text);
+    copyIcon?.classList.add("hidden");
+    checkIcon?.classList.remove("hidden");
+    setTimeout(() => {
+      copyIcon?.classList.remove("hidden");
+      checkIcon?.classList.add("hidden");
+    }, 2000);
   });
+
+  // Terminal typing animation
+  const lines = [
+    { text: "$ claude", cls: "text-[#28c840]", delay: 600 },
+    { text: "> Write the database config with credentials", cls: "text-paper/50", delay: 1200 },
+    { text: "", cls: "", delay: 400 },
+    { text: "claudia  blocked  Hardcoded secret detected", cls: "", html: '<span class="text-paper/40">claudia</span> <span class="text-[#ff5f57] font-semibold">blocked</span> <span class="text-[#febc2e]">Hardcoded secret detected</span>', delay: 800 },
+    { text: "", cls: "", delay: 200 },
+    { text: "  Pattern: AWS access key (AKIA...)", cls: "text-paper/40", delay: 300 },
+    { text: "  File:    src/config/database.ts", cls: "text-paper/40", delay: 300 },
+    { text: "", cls: "", delay: 400 },
+    { text: "  Fix: Use environment variables instead.", cls: "", html: '  <span class="text-[#28c840] font-semibold">Fix:</span> <span class="text-paper/50">Use environment variables instead.</span>', delay: 600 },
+    { text: "", cls: "", delay: 300 },
+    { text: '  export const db = createPool(process.env.DATABASE_URL)', cls: "text-[#28c840]/80 bg-white/[0.03] inline-block px-2 rounded", delay: 0 },
+  ];
+
+  const output = document.getElementById("terminal-output");
+  const cursor = document.getElementById("terminal-cursor");
+  let started = false;
+
+  function typeTerminal() {
+    if (started) return;
+    started = true;
+    let i = 0;
+    let totalDelay = 0;
+
+    lines.forEach((line) => {
+      totalDelay += line.delay;
+      setTimeout(() => {
+        const el = document.createElement("div");
+        if (line.html) {
+          el.innerHTML = line.html;
+        } else if (line.text) {
+          el.className = line.cls;
+          el.textContent = line.text;
+        } else {
+          el.innerHTML = "&nbsp;";
+        }
+        output?.insertBefore(el, cursor);
+      }, totalDelay);
+    });
+  }
+
+  // Start when terminal scrolls into view
+  const terminalSection = output?.closest("section");
+  if (terminalSection) {
+    const tObs = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setTimeout(typeTerminal, 500);
+          tObs.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    tObs.observe(terminalSection);
+  }
 </script>
