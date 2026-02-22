@@ -7,65 +7,267 @@ import Layout from "../layouts/Layout.astro";
     <div class="max-w-4xl mx-auto">
       <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">How it works</p>
       <h1 class="reveal text-4xl sm:text-5xl font-extrabold tracking-[-0.03em] leading-[1.05]">
-        No settings to learn.<br />No config to write.
+        Three steps. Two minutes.<br />Then she's just there.
       </h1>
       <p class="reveal mt-5 text-paper/40 text-lg font-light max-w-lg">
-        Install Claudia, open Claude Code, start building. She reads the same docs you'd read — except she's already read all of them.
+        No account to create. No config to write. No settings to learn.
       </p>
     </div>
   </section>
 
-  <section class="pb-28 px-6">
+  <!-- Getting Started -->
+  <section id="getting-started" class="pb-28 px-6">
     <div class="max-w-4xl mx-auto">
-      <div class="grid sm:grid-cols-2 gap-px bg-white/[0.06] rounded-xl overflow-hidden stagger">
-        <a href="#getting-started" class="reveal group bg-void p-8 block">
-          <h3 class="text-lg font-semibold text-paper/90 group-hover:text-vermillion transition-colors">
-            Getting Started
-          </h3>
-          <p class="mt-2 text-sm text-paper/35 leading-relaxed">
-            Install with one command. Working in under 30 seconds.
-          </p>
-        </a>
+      <div class="space-y-6 stagger">
 
-        <a href="#what-she-knows" class="reveal group bg-void p-8 block">
-          <h3 class="text-lg font-semibold text-paper/90 group-hover:text-vermillion transition-colors">
-            What She Knows
-          </h3>
-          <p class="mt-2 text-sm text-paper/35 leading-relaxed">
-            10 topics — databases, security, infrastructure, frontend, APIs, testing, performance, devops, data, and prompts.
+        <!-- Step 1 -->
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8">
+          <div class="flex items-baseline gap-4 mb-4">
+            <span class="text-5xl font-extrabold text-vermillion/20 leading-none">1</span>
+            <h3 class="text-xl font-semibold text-paper/90">Install Claudia</h3>
+          </div>
+          <p class="text-sm text-paper/40 mb-5">
+            Open your terminal (the app called "Terminal" on your Mac, or wherever you normally run Claude Code) and paste this:
           </p>
-        </a>
+          <div class="bg-black/40 rounded-lg p-4 font-mono text-sm">
+            <span class="text-paper/30 select-none">$ </span><span class="text-paper/80">npm install -g claudia-mentor</span>
+          </div>
+          <p class="text-xs text-paper/25 mt-3">
+            This downloads Claudia to your computer. You only do this once. If you see a big red "C" at the end, it worked.
+          </p>
+        </div>
 
-        <a href="#what-she-catches" class="reveal group bg-void p-8 block">
-          <h3 class="text-lg font-semibold text-paper/90 group-hover:text-vermillion transition-colors">
-            What She Catches
-          </h3>
-          <p class="mt-2 text-sm text-paper/35 leading-relaxed">
-            7 automatic checks — leaked secrets, bad patterns, broken dependencies, Docker issues, and more.
+        <!-- Step 2 -->
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8">
+          <div class="flex items-baseline gap-4 mb-4">
+            <span class="text-5xl font-extrabold text-vermillion/20 leading-none">2</span>
+            <h3 class="text-xl font-semibold text-paper/90">Start Claude Code with Claudia</h3>
+          </div>
+          <p class="text-sm text-paper/40 mb-5">
+            Instead of typing <code class="text-paper/60">claude</code> to start Claude Code, type this:
           </p>
-        </a>
+          <div class="bg-black/40 rounded-lg p-4 font-mono text-sm">
+            <span class="text-paper/30 select-none">$ </span><span class="text-paper/80">claude --plugin-dir /usr/local/lib/node_modules/claudia-mentor</span>
+          </div>
+          <p class="text-xs text-paper/25 mt-3">
+            This tells Claude Code to load Claudia when it starts. She's now in the session with you.
+          </p>
+        </div>
 
-        <a href="#customization" class="reveal group bg-void p-8 block">
-          <h3 class="text-lg font-semibold text-paper/90 group-hover:text-vermillion transition-colors">
-            Customization
-          </h3>
-          <p class="mt-2 text-sm text-paper/35 leading-relaxed">
-            Dial her up or down. Quiet mode, default mode, or full mentor mode. Per-project overrides.
+        <!-- Step 3 -->
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8">
+          <div class="flex items-baseline gap-4 mb-4">
+            <span class="text-5xl font-extrabold text-vermillion/20 leading-none">3</span>
+            <h3 class="text-xl font-semibold text-paper/90">Make it permanent (optional)</h3>
+          </div>
+          <p class="text-sm text-paper/40 mb-5">
+            Typing that long command every time is annoying. Add a shell alias so typing <code class="text-paper/60">claude</code> always loads Claudia. Open <code class="text-paper/60">~/.zshrc</code> in any text editor and add this line at the bottom:
           </p>
-        </a>
+          <div class="bg-black/40 rounded-lg p-4 font-mono text-sm">
+            <span class="text-paper/80">alias claude=&quot;claude --plugin-dir /usr/local/lib/node_modules/claudia-mentor&quot;</span>
+          </div>
+          <p class="text-xs text-paper/25 mt-3">
+            Save, restart your terminal, and now every <code class="text-paper/40">claude</code> session includes Claudia. To verify, type <code class="text-paper/40">/claudia are you there?</code> inside Claude Code.
+          </p>
+        </div>
 
-        <a href="/contribute" class="reveal group bg-void p-8 block sm:col-span-2">
-          <h3 class="text-lg font-semibold text-paper/90 group-hover:text-vermillion transition-colors">
-            Help Make Her Smarter
-          </h3>
-          <p class="mt-2 text-sm text-paper/35 leading-relaxed">
-            Contributing to Claudia means writing markdown. If you know something about a technology, you can teach it to her.
-          </p>
-        </a>
       </div>
     </div>
   </section>
 
+  <!-- How she shows up -->
+  <section class="pb-28 px-6">
+    <div class="max-w-4xl mx-auto">
+      <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Three modes</p>
+      <h2 class="reveal text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] mb-12">
+        She shows up three different ways
+      </h2>
+
+      <div class="space-y-6 stagger">
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8">
+          <h3 class="text-lg font-semibold text-vermillion mb-2">Automatic checks</h3>
+          <p class="text-sm text-paper/40 leading-relaxed">
+            Every time Claude writes or edits a file, Claudia scans it. Leaked API key? She blocks it before it lands. Dangerous pattern like <code class="text-paper/60">eval()</code>? She warns you. You don't do anything — she just watches.
+          </p>
+        </div>
+
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8">
+          <h3 class="text-lg font-semibold text-vermillion mb-2">Joins the conversation</h3>
+          <p class="text-sm text-paper/40 leading-relaxed">
+            When you ask Claude something like "should I use MongoDB or Postgres?" or "how should I set up auth?", Claudia recognizes it as a technology decision and jumps in with opinionated advice. You don't summon her — she just knows when to show up.
+          </p>
+        </div>
+
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8">
+          <h3 class="text-lg font-semibold text-vermillion mb-2">Ask directly</h3>
+          <p class="text-sm text-paper/40 leading-relaxed mb-4">
+            Type <code class="text-paper/60">/claudia</code> followed by any question:
+          </p>
+          <div class="bg-black/40 rounded-lg p-4 font-mono text-sm space-y-1">
+            <div><span class="text-vermillion">/claudia</span> <span class="text-paper/50">what database should I use for time-series data?</span></div>
+            <div><span class="text-vermillion">/claudia</span> <span class="text-paper/50">is my project secure?</span></div>
+            <div><span class="text-vermillion">/claudia</span> <span class="text-paper/50">how should I structure my API?</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What she knows -->
+  <section id="what-she-knows" class="pb-28 px-6">
+    <div class="max-w-4xl mx-auto">
+      <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Knowledge</p>
+      <h2 class="reveal text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] mb-4">
+        What she knows
+      </h2>
+      <p class="reveal text-paper/40 text-lg font-light mb-12">
+        10 topics. Real opinions, not "it depends."
+      </p>
+
+      <div class="grid sm:grid-cols-2 gap-3 stagger">
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-lg p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Databases</h3>
+          <p class="text-xs text-paper/30">"Should I use Postgres or Mongo?" She'll tell you.</p>
+        </div>
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-lg p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Security</h3>
+          <p class="text-xs text-paper/30">Auth patterns, secrets management, common mistakes.</p>
+        </div>
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-lg p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Infrastructure</h3>
+          <p class="text-xs text-paper/30">AWS vs GCP vs Vercel. Containers. Serverless. Edge.</p>
+        </div>
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-lg p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Frontend</h3>
+          <p class="text-xs text-paper/30">React vs Svelte vs Vue. SSR vs SPA. State management.</p>
+        </div>
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-lg p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">API Design</h3>
+          <p class="text-xs text-paper/30">REST vs GraphQL vs tRPC. Versioning. Real-time.</p>
+        </div>
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-lg p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Testing</h3>
+          <p class="text-xs text-paper/30">What to test. What not to test. When to mock.</p>
+        </div>
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-lg p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Performance</h3>
+          <p class="text-xs text-paper/30">N+1 queries. Bundle size. Core Web Vitals.</p>
+        </div>
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-lg p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">DevOps</h3>
+          <p class="text-xs text-paper/30">CI/CD pipelines. Deployments. Monitoring.</p>
+        </div>
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-lg p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Data Modeling</h3>
+          <p class="text-xs text-paper/30">Schema design. Migrations. Indexing strategy.</p>
+        </div>
+        <div class="reveal bg-white/[0.03] border border-white/[0.06] rounded-lg p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Prompt Coaching</h3>
+          <p class="text-xs text-paper/30">Detects vague prompts. Suggests better ones.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What she catches -->
+  <section id="what-she-catches" class="pb-28 px-6">
+    <div class="max-w-4xl mx-auto">
+      <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Automatic checks</p>
+      <h2 class="reveal text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] mb-4">
+        What she catches
+      </h2>
+      <p class="reveal text-paper/40 text-lg font-light mb-12">
+        7 hooks that run automatically. You don't configure them.
+      </p>
+
+      <div class="space-y-4 stagger">
+        <div class="reveal flex items-start gap-4 border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <span class="text-xs font-mono text-red-400 bg-red-400/10 px-2 py-0.5 rounded shrink-0">blocks</span>
+          <div>
+            <h3 class="text-sm font-semibold text-paper/80">Leaked secrets</h3>
+            <p class="text-xs text-paper/30 mt-1">AWS keys, API tokens, passwords, private keys, connection strings. Blocked before they touch the file.</p>
+          </div>
+        </div>
+        <div class="reveal flex items-start gap-4 border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <span class="text-xs font-mono text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded shrink-0">warns</span>
+          <div>
+            <h3 class="text-sm font-semibold text-paper/80">Bad patterns</h3>
+            <p class="text-xs text-paper/30 mt-1">eval(), empty catch blocks, console.log in production, SQL concatenation, HTTP URLs, chmod 777.</p>
+          </div>
+        </div>
+        <div class="reveal flex items-start gap-4 border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <span class="text-xs font-mono text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded shrink-0">warns</span>
+          <div>
+            <h3 class="text-sm font-semibold text-paper/80">Sketchy dependencies</h3>
+            <p class="text-xs text-paper/30 mt-1">Deprecated packages, compromised packages, trivial packages that should be inline code.</p>
+          </div>
+        </div>
+        <div class="reveal flex items-start gap-4 border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <span class="text-xs font-mono text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded shrink-0">warns</span>
+          <div>
+            <h3 class="text-sm font-semibold text-paper/80">Docker issues</h3>
+            <p class="text-xs text-paper/30 mt-1">Running as root, huge base images, secrets in ENV, missing multi-stage builds.</p>
+          </div>
+        </div>
+        <div class="reveal flex items-start gap-4 border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <span class="text-xs font-mono text-red-400 bg-red-400/10 px-2 py-0.5 rounded shrink-0">blocks</span>
+          <div>
+            <h3 class="text-sm font-semibold text-paper/80">Git hygiene</h3>
+            <p class="text-xs text-paper/30 mt-1">Blocks .env file writes and merge conflict markers. Warns on large binaries.</p>
+          </div>
+        </div>
+        <div class="reveal flex items-start gap-4 border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <span class="text-xs font-mono text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded shrink-0">warns</span>
+          <div>
+            <h3 class="text-sm font-semibold text-paper/80">Accessibility</h3>
+            <p class="text-xs text-paper/30 mt-1">Missing alt text, unlabeled inputs, icon-only buttons, click handlers on divs.</p>
+          </div>
+        </div>
+        <div class="reveal flex items-start gap-4 border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <span class="text-xs font-mono text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded shrink-0">warns</span>
+          <div>
+            <h3 class="text-sm font-semibold text-paper/80">License compliance</h3>
+            <p class="text-xs text-paper/30 mt-1">Catches GPL/AGPL dependencies sneaking into your MIT-licensed project.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customization -->
+  <section id="customization" class="pb-28 px-6">
+    <div class="max-w-4xl mx-auto">
+      <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Customization</p>
+      <h2 class="reveal text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] mb-4">
+        Dial her up or down
+      </h2>
+      <p class="reveal text-paper/40 text-lg font-light mb-12">
+        Create <code class="text-paper/60">~/.claude/claudia.json</code> to change how she behaves.
+      </p>
+
+      <div class="reveal bg-black/40 rounded-xl p-6 font-mono text-sm mb-8">
+        <div class="text-paper/30 mb-3">~/.claude/claudia.json</div>
+        <pre class="text-paper/70"><code>{'{\n  "proactivity": "high"\n}'}</code></pre>
+      </div>
+
+      <div class="space-y-3 stagger">
+        <div class="reveal flex items-center gap-4 border border-white/[0.06] bg-white/[0.015] rounded-lg p-5">
+          <code class="text-sm font-mono text-vermillion shrink-0">"low"</code>
+          <p class="text-sm text-paper/40">Only responds when you use <code class="text-paper/60">/claudia</code>. Quiet mode.</p>
+        </div>
+        <div class="reveal flex items-center gap-4 border border-white/[0.06] bg-white/[0.015] rounded-lg p-5">
+          <code class="text-sm font-mono text-vermillion shrink-0">"moderate"</code>
+          <p class="text-sm text-paper/40">Jumps in on security issues and major decisions. This is the default.</p>
+        </div>
+        <div class="reveal flex items-center gap-4 border border-white/[0.06] bg-white/[0.015] rounded-lg p-5">
+          <code class="text-sm font-mono text-vermillion shrink-0">"high"</code>
+          <p class="text-sm text-paper/40">Flags everything. Full mentor mode. Great for learning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Source link -->
   <section class="pb-20 px-6">
     <div class="max-w-4xl mx-auto">
       <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
