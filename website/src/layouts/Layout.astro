@@ -33,8 +33,18 @@ const { title, description = "Proactive technology mentor for Claude Code. 10 kn
     <!-- Nav -->
     <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-void/80 border-b border-white/[0.06]">
       <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
-        <a href="/" class="font-mono font-bold text-sm tracking-tight hover:text-vermillion transition-colors">
+        <a href="/" class="flex items-center gap-2 font-mono font-bold text-sm tracking-tight hover:text-vermillion transition-colors">
           claudia
+          <img
+            id="claudia-hang"
+            src="/assets/claudia-dark.jpg"
+            alt=""
+            width="36"
+            height="36"
+            class="w-9 h-9 rounded-full object-cover opacity-0 transition-all duration-500"
+            style="object-position: center 40%;"
+            loading="eager"
+          />
         </a>
         <div class="flex items-center gap-6">
           <a href="/start" class="text-xs text-paper/50 hover:text-paper transition-colors">Start</a>
@@ -95,7 +105,7 @@ const { title, description = "Proactive technology mentor for Claude Code. 10 kn
       </div>
     </footer>
 
-    <!-- Scroll reveal observer -->
+    <!-- Scroll reveal observer + Claudia peek -->
     <script>
       const observer = new IntersectionObserver(
         (entries) => {
@@ -110,6 +120,23 @@ const { title, description = "Proactive technology mentor for Claude Code. 10 kn
       );
 
       document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+      // Claudia in nav: fades in after scrolling past hero
+      const hang = document.getElementById("claudia-hang");
+      if (hang) {
+        let visible = false;
+        const checkScroll = () => {
+          const pastHero = window.scrollY > window.innerHeight * 0.4;
+          if (pastHero && !visible) {
+            visible = true;
+            hang.style.opacity = "1";
+          } else if (!pastHero && visible) {
+            visible = false;
+            hang.style.opacity = "0";
+          }
+        };
+        window.addEventListener("scroll", checkScroll, { passive: true });
+      }
     </script>
   </body>
 </html>

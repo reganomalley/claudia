@@ -65,28 +65,51 @@ try {
   aliasStatus = 'failed';
 }
 
-// ── Animation ──────────────────────────────────────────────────
+// ── iTerm2 inline image support ─────────────────────────────────
 
-const icon = [
+function isITerm2() {
+  return !!(process.env.TERM_PROGRAM === 'iTerm.app' ||
+            process.env.LC_TERMINAL === 'iTerm2' ||
+            process.env.ITERM_SESSION_ID);
+}
+
+function renderInlineImage(imagePath, opts = {}) {
+  try {
+    const data = fs.readFileSync(imagePath);
+    const base64 = data.toString('base64');
+    const width = opts.width || '20';
+    const height = opts.height || 'auto';
+    // iTerm2 inline image protocol: OSC 1337 ; File=[args] : base64 ST
+    return `\x1b]1337;File=inline=1;width=${width};height=${height};preserveAspectRatio=1:${base64}\x07`;
+  } catch (e) {
+    return null;
+  }
+}
+
+// ── Build output ────────────────────────────────────────────────
+
+const mascotPath = path.join(__dirname, '..', 'assets', 'claudia-terminal.jpg');
+const canInline = isITerm2() && fs.existsSync(mascotPath);
+
+const asciiIcon = [
   `      ${p}*${r}`,
-  `      ${v}│${r}`,
-  `  ${v}██████${r}`,
-  `  ${v}██${r}${d2}██${r}${v}██${r}`,
-  `  ${v}██${r}`,
-  `  ${v}██${r}${d2}██${r}${v}██${r}`,
-  `  ${v}██████${r}`,
+  `      ${v}|${r}`,
+  `  ${v}@@@@@@${r}`,
+  `  ${v}@@${r}${d2}@@${r}${v}@@${r}`,
+  `  ${v}@@${r}`,
+  `  ${v}@@${r}${d2}@@${r}${v}@@${r}`,
+  `  ${v}@@@@@@${r}`,
 ];
 
 const setupMsg = aliasStatus === 'added'
-  ? `  ${g}✓${r} ${w}Auto-configured.${r} ${d}Restart your terminal, then just type${r} ${w}claude${r}`
+  ? `  ${g}+${r} ${w}Auto-configured.${r} ${d}Restart your terminal, then just type${r} ${w}claude${r}`
   : aliasStatus === 'updated'
-  ? `  ${g}✓${r} ${d}Alias updated.${r} ${w}claude${r} ${d}always loads Claudia.${r}`
+  ? `  ${g}+${r} ${d}Alias updated.${r} ${w}claude${r} ${d}always loads Claudia.${r}`
   : aliasStatus === 'exists'
-  ? `  ${g}✓${r} ${d}Already configured.${r} ${w}claude${r} ${d}always loads Claudia.${r}`
+  ? `  ${g}+${r} ${d}Already configured.${r} ${w}claude${r} ${d}always loads Claudia.${r}`
   : `  ${d}Run:${r} ${w}claude --plugin-dir "${pluginDir}"${r}`;
 
-const lines = [
-  ...icon,
+const textLines = [
   ``,
   `  ${w}${b}Claudia${r} ${d}v${version}${r}`,
   `  ${d}She catches what you miss.${r}`,
@@ -111,15 +134,24 @@ async function sleep(ms) {
 async function animate() {
   process.stdout.write(hide + '\n');
 
-  for (let i = 0; i < icon.length; i++) {
-    process.stdout.write(lines[i] + '\n');
-    await sleep(50);
+  if (canInline) {
+    // Render the mascot image inline (iTerm2)
+    const img = renderInlineImage(mascotPath, { width: '18', height: 'auto' });
+    if (img) {
+      process.stdout.write(img + '\n');
+      await sleep(200);
+    }
+  } else {
+    // ASCII fallback
+    for (let i = 0; i < asciiIcon.length; i++) {
+      process.stdout.write(asciiIcon[i] + '\n');
+      await sleep(50);
+    }
+    await sleep(150);
   }
 
-  await sleep(150);
-
-  for (let i = icon.length; i < lines.length; i++) {
-    process.stdout.write(lines[i] + '\n');
+  for (let i = 0; i < textLines.length; i++) {
+    process.stdout.write(textLines[i] + '\n');
     await sleep(30);
   }
 
@@ -128,7 +160,11 @@ async function animate() {
 
 animate().catch(() => {
   process.stdout.write(show);
-  console.log(lines.join('\n'));
+  if (canInline) {
+    const img = renderInlineImage(mascotPath, { width: '18', height: 'auto' });
+    if (img) process.stdout.write(img + '\n');
+  }
+  console.log(textLines.join('\n'));
 });
 
 process.on('exit', () => process.stdout.write(show));
