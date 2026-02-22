@@ -208,7 +208,16 @@ Use the scaffolding tool:
 
 This creates the directory structure and template files. Fill in the SKILL.md, add reference files, and update the mentor's routing table.
 
-### Guidelines
+### Security Rules for Hook Contributions
+
+Hooks run locally with the same permissions as Claude Code. Malicious hooks could read files, exfiltrate data, or modify code silently.
+
+- **All hook/script PRs require maintainer review** — markdown-only reference PRs are lower risk
+- **No network calls in hooks** — no fetching URLs, no phoning home, local filesystem only
+- **No obfuscated code** — every line must be readable and understandable
+- Hook PRs get a dedicated security review with line-by-line diff and sandboxed testing
+
+### Writing Guidelines
 - Be opinionated -- "it depends" without follow-up is not helpful
 - Use decision trees and comparison tables
 - Explain the "why" behind every recommendation

@@ -89,6 +89,39 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
+  <!-- Security model -->
+  <section class="pb-28 px-6">
+    <div class="max-w-4xl mx-auto">
+      <p class="reveal font-mono text-xs text-[#ff5f57] tracking-widest uppercase mb-8">Before you contribute</p>
+
+      <div class="reveal border border-[#ff5f57]/20 bg-[#ff5f57]/[0.03] rounded-xl p-8">
+        <h3 class="text-lg font-semibold text-paper/90 mb-4">Hooks run on real machines</h3>
+        <p class="text-sm text-paper/40 leading-relaxed mb-6">
+          Claudia's hook scripts execute locally with the same permissions as Claude Code. A malicious hook could read files, exfiltrate data, or modify code silently. We take this seriously.
+        </p>
+
+        <div class="space-y-4">
+          <div class="flex items-start gap-3">
+            <span class="shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#ff5f57]/20 text-[#ff5f57]">Rule</span>
+            <p class="text-sm text-paper/50"><strong class="text-paper/70">All hook and script PRs require maintainer review.</strong> Markdown-only contributions to references/ are lower risk, but hooks touch every user's machine.</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#ff5f57]/20 text-[#ff5f57]">Rule</span>
+            <p class="text-sm text-paper/50"><strong class="text-paper/70">No network calls in hooks.</strong> Hook scripts must never fetch URLs, phone home, or access anything outside the local filesystem.</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-[#ff5f57]/20 text-[#ff5f57]">Rule</span>
+            <p class="text-sm text-paper/50"><strong class="text-paper/70">No obfuscated code.</strong> Every line should be readable. If a reviewer can't understand what a script does, it doesn't ship.</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-vermillion/20 text-vermillion">How</span>
+            <p class="text-sm text-paper/50">Hook PRs get a dedicated security review. We diff every line against the existing script, check for exfil patterns, and test in a sandboxed environment before merging.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="pb-20 px-6">
     <div class="max-w-4xl mx-auto text-center">
