@@ -12,6 +12,16 @@
     "moderate": "Proactive on security issues and major anti-patterns",
     "high": "Proactive on any suboptimal pattern or decision"
   },
+  "beginner_mode": {
+    "enabled_when": "claudia-context.json contains experience: beginner",
+    "behavior": {
+      "explain_jargon": true,
+      "use_analogies": true,
+      "shorter_responses": true,
+      "offer_deeper_explanation": true,
+      "reference_user_intent": true
+    }
+  },
   "hooks": {
     "check_secrets": {
       "enabled": true,

@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Claudia — The senior dev you don't have">
+<Layout title="Claudia — She catches what you miss">
 
   <!-- ===================== HERO — FULL BLEED ===================== -->
   <section class="relative min-h-screen overflow-hidden pt-14">
@@ -27,7 +27,7 @@ import Layout from "../layouts/Layout.astro";
           </div>
         </div>
         <h1 class="reveal reveal-delay-1 text-6xl sm:text-7xl lg:text-[5.5rem] font-extrabold leading-[0.9] tracking-[-0.04em]">
-          The senior<br />dev you<br />don't <span class="text-vermillion">have</span>
+          She catches<br />what you<br /><span class="text-vermillion">miss</span>
         </h1>
         <p class="reveal reveal-delay-2 mt-10 text-xl text-paper/50 leading-relaxed max-w-md font-light">
           You prompt. Claude codes.<br />Claudia makes sure it's actually good.
@@ -47,6 +47,8 @@ import Layout from "../layouts/Layout.astro";
           <a href="https://github.com/reganomalley/claudia" target="_blank" rel="noopener noreferrer" class="text-sm text-paper/40 hover:text-paper transition-colors">View source</a>
           <span class="text-paper/10">|</span>
           <a href="#how-she-works" class="text-sm text-paper/40 hover:text-paper transition-colors">How it works</a>
+          <span class="text-paper/10">|</span>
+          <a href="/start" class="text-sm text-vermillion/60 hover:text-vermillion transition-colors">New to this?</a>
         </div>
       </div>
     </div>
@@ -150,21 +152,20 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-  <!-- ===================== FULL-BLEED IMAGE BREAK ===================== -->
-  <section class="relative h-[50vh] sm:h-[60vh] overflow-hidden">
-    <img
-      src="/assets/logo-arms-crossed.jpeg"
-      alt="Claudia — arms crossed"
-      class="w-full h-full object-cover object-center"
-      loading="lazy"
-    />
-    <div class="absolute inset-0 bg-gradient-to-t from-void via-void/30 to-void/60"></div>
-    <div class="absolute bottom-0 left-0 right-0 px-6 pb-12">
-      <div class="max-w-7xl mx-auto">
-        <p class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.03em] leading-[0.95]">
-          She's watching<br />every file you write.
-        </p>
+  <!-- ===================== FULL-BLEED BREAK — EYE + TYPOGRAPHY ===================== -->
+  <section class="relative py-24 sm:py-32 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
+      <div class="reveal mb-10">
+        <img
+          src="/assets/icon-eye-bold.jpg"
+          alt=""
+          class="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover border-2 border-vermillion/20"
+          loading="lazy"
+        />
       </div>
+      <p class="reveal text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.03em] leading-[0.95]">
+        She's watching<br />every file you write.
+      </p>
     </div>
   </section>
 
@@ -266,7 +267,7 @@ import Layout from "../layouts/Layout.astro";
 
         <div class="reveal order-1 lg:order-2 relative">
           <div class="rounded-2xl overflow-hidden">
-            <img src="/assets/thinking-intense.jpeg" alt="Claudia thinking" class="w-full h-auto" loading="lazy" />
+            <img src="/assets/hands-keyboard.jpg" alt="Hands on keyboard" class="w-full h-auto" loading="lazy" />
           </div>
           <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-vermillion/10 rounded-full blur-3xl pointer-events-none"></div>
         </div>

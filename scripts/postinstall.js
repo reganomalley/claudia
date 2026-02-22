@@ -89,7 +89,7 @@ const lines = [
   ...icon,
   ``,
   `  ${w}${b}Claudia${r} ${d}v${version}${r}`,
-  `  ${d}The senior dev you don't have.${r}`,
+  `  ${d}She catches what you miss.${r}`,
   ``,
   setupMsg,
   ``,
