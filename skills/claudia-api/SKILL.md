@@ -1,12 +1,10 @@
 ---
-name: claudia-api
 description: >
   API design knowledge domain for Claudia. Use this skill when the user asks about API architecture,
   REST vs GraphQL, tRPC, gRPC, API versioning, pagination, rate limiting, error handling, webhook
   design, or API security. Triggers on phrases like "REST or GraphQL", "API design", "tRPC vs",
   "gRPC", "API versioning", "paginate", "rate limit", "webhook", "API error", "endpoint design",
   "OpenAPI", or "API gateway".
-version: 0.1.0
 ---
 
 # Claudia API Design Domain

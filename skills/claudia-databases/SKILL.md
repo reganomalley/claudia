@@ -1,12 +1,10 @@
 ---
-name: claudia-databases
 description: >
   Database knowledge domain for Claudia. Use this skill when the user asks about database
   selection, SQL vs NoSQL, data modeling, vector databases, time-series databases, graph
   databases, database scaling, indexing strategies, or migration planning. Triggers on
   phrases like "which database", "should I use Postgres", "MongoDB vs", "store embeddings",
   "time-series data", "database for", "SQL or NoSQL", "data model", or "database scaling".
-version: 0.1.0
 ---
 
 # Claudia Database Domain

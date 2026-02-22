@@ -1,12 +1,10 @@
 ---
-name: claudia-devops
 description: >
   DevOps and CI/CD knowledge domain for Claudia. Use this skill when the user asks about deployment
   strategies, CI/CD pipelines, monitoring, logging, alerting, incident response, infrastructure as
   code, or developer experience. Triggers on phrases like "deploy", "CI/CD", "GitHub Actions",
   "monitoring", "logging", "alerting", "uptime", "rollback", "blue-green", "canary", "Terraform",
   "infrastructure as code", "Docker in CI", or "pipeline".
-version: 0.1.0
 ---
 
 # Claudia DevOps Domain

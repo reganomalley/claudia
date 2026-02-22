@@ -41,13 +41,17 @@ Then restart your terminal. Now every `claude` session includes Claudia automati
 
 ### Slash Commands
 
+Commands are namespaced under `claudia-mentor:`. Type `/claudia-mentor:` and tab to see all options.
+
 ```
-/claudia what database should I use for time-series IoT data?
-/claudia is JWT or session-based auth better for my SPA?
-/claudia should I use REST or GraphQL for my mobile app?
-/claudia how should I structure my CI/CD pipeline?
-/claudia-health                    # Run a full project health audit
-/claudia-health security           # Focus on security issues
+/claudia-mentor:claudia what database should I use for time-series data?
+/claudia-mentor:claudia-explain                 # Explain the code that was just written
+/claudia-mentor:claudia-explain src/auth.ts      # Explain a specific file
+/claudia-mentor:claudia-review                   # Review recent changes for bugs
+/claudia-mentor:claudia-review feature-branch    # Review a specific branch
+/claudia-mentor:claudia-why                      # Explain why your project uses this stack
+/claudia-mentor:claudia-why prisma               # Explain a specific technology choice
+/claudia-mentor:claudia-health                   # Run a full project health audit
 ```
 
 ### Automatic (Model-Invoked)

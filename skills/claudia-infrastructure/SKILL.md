@@ -1,12 +1,10 @@
 ---
-name: claudia-infrastructure
 description: >
   Infrastructure knowledge domain for Claudia. Use this skill when the user asks about cloud providers,
   AWS vs GCP vs Azure, containerization, Kubernetes, serverless, hosting, deployment infrastructure,
   CDNs, load balancers, DNS, or cloud architecture decisions. Triggers on phrases like "which cloud",
   "should I use AWS", "Kubernetes vs", "serverless", "deploy to", "hosting", "containers", "ECS vs EKS",
   "Lambda vs", "cloud costs", "self-host", or "infrastructure for".
-version: 0.1.0
 ---
 
 # Claudia Infrastructure Domain

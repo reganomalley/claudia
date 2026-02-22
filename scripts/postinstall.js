@@ -14,13 +14,15 @@ ${v}   | |     ${r}
 ${v}   | |____ ${d}The senior dev you don't have.${r}
 ${v}    \\_____|${r}
 
-${d}  She's ready. Open any project with Claude Code${r}
-${d}  and she'll take it from here.${r}
+${d}  Commands:${r}
+${w}  /claudia-mentor:claudia${r}          ${d}ask anything${r}
+${w}  /claudia-mentor:claudia-explain${r}  ${d}explain the code${r}
+${w}  /claudia-mentor:claudia-review${r}   ${d}catch bugs${r}
+${w}  /claudia-mentor:claudia-why${r}      ${d}why this stack${r}
+${w}  /claudia-mentor:claudia-health${r}   ${d}project audit${r}
 
-${d}  Three ways she shows up:${r}
-${w}  1.${r} ${d}Automatic checks on every file write${r}
-${w}  2.${r} ${d}Jumps into conversation when you make tech decisions${r}
-${w}  3.${r} ${d}Ask directly:${r} ${v}/claudia${r} ${d}+ your question${r}
+${d}  Plus 7 automatic hooks and 10 knowledge domains.${r}
+${d}  She remembers your stack across sessions.${r}
 
 ${d}  Docs:${r}      ${w}https://getclaudia.dev${r}
 ${d}  Source:${r}    ${w}https://github.com/reganomalley/claudia${r}

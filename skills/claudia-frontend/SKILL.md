@@ -1,12 +1,10 @@
 ---
-name: claudia-frontend
 description: >
   Frontend architecture knowledge domain for Claudia. Use this skill when the user asks about frontend
   frameworks, React vs Vue vs Svelte, state management, SSR vs SPA vs SSG, component patterns,
   CSS architecture, bundlers, or frontend infrastructure. Triggers on phrases like "which framework",
   "React or Vue", "state management", "SSR vs SPA", "Next.js vs", "Tailwind vs", "component library",
   "bundle size", "hydration", "islands architecture", or "frontend for".
-version: 0.1.0
 ---
 
 # Claudia Frontend Architecture Domain

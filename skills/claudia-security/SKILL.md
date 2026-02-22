@@ -1,12 +1,10 @@
 ---
-name: claudia-security
 description: >
   Security knowledge domain for Claudia. Use this skill when the user asks about authentication,
   authorization, secrets management, encryption, sandboxing, TEEs, API security, OWASP,
   OAuth, JWT, session management, CORS, CSP, or any security-related architecture decision.
   Triggers on phrases like "is this secure", "how should I authenticate", "store passwords",
   "API keys", "encrypt", "sandbox", or "zero trust".
-version: 0.1.0
 ---
 
 # Claudia Security Domain

@@ -1,12 +1,10 @@
 ---
-name: claudia-performance
 description: >
   Performance knowledge domain for Claudia. Use this skill when the user asks about optimization,
   profiling, caching, bundle size, load times, database query performance, memory leaks, N+1 queries,
   or scaling bottlenecks. Triggers on phrases like "slow", "optimize", "performance", "caching",
   "bundle size", "lazy load", "N+1", "memory leak", "profiling", "bottleneck", "latency",
   "throughput", or "Core Web Vitals".
-version: 0.1.0
 ---
 
 # Claudia Performance Domain

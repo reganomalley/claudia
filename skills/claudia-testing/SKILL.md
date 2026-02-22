@@ -1,12 +1,10 @@
 ---
-name: claudia-testing
 description: >
   Testing strategy knowledge domain for Claudia. Use this skill when the user asks about testing
   approaches, what to test, test frameworks, unit vs integration vs e2e, mocking, TDD, test coverage,
   CI testing, or testing architecture. Triggers on phrases like "how to test", "should I test",
   "Jest vs", "unit test", "integration test", "e2e test", "test coverage", "mocking", "TDD",
   "testing strategy", "Playwright vs", "Vitest", or "test pyramid".
-version: 0.1.0
 ---
 
 # Claudia Testing Domain

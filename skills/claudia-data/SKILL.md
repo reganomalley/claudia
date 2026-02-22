@@ -1,12 +1,10 @@
 ---
-name: claudia-data
 description: >
   Data modeling knowledge domain for Claudia. Use this skill when the user asks about schema design,
   database migrations, indexing strategy, normalization, data relationships, ETL, data pipelines,
   or data architecture. Triggers on phrases like "schema design", "migration", "index", "normalize",
   "foreign key", "data model", "ETL", "data pipeline", "soft delete", "audit trail", "multi-tenant",
   "polymorphic", or "data architecture".
-version: 0.1.0
 ---
 
 # Claudia Data Modeling Domain

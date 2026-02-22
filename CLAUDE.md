@@ -1,21 +1,29 @@
 # Claudia - Proactive Mentor Plugin
 
 ## What This Is
-Claude Code plugin: technology mentor, security advisor, prompt coach. 10 knowledge domains, 7 hooks. MIT licensed.
+Claude Code plugin: technology mentor, security advisor, prompt coach. 10 knowledge domains, 7 hooks, 5 commands. MIT licensed. npm: `claudia-mentor`. Web: getclaudia.dev.
 
 ## Architecture
 - **Skills** (model-invocable): `claudia-mentor` (core brain/router), `claudia-databases`, `claudia-security`, `claudia-infrastructure`, `claudia-frontend`, `claudia-api`, `claudia-testing`, `claudia-performance`, `claudia-devops`, `claudia-data`
 - **Hooks** (PreToolUse): `check-secrets.sh` (blocks), `check-practices.py`, `check-deps.py`, `check-dockerfile.py`, `check-git-hygiene.py` (blocks .env + conflicts), `check-accessibility.py`, `check-license.py`
-- **Commands**: `/claudia` (direct questions), `/claudia-health` (project audit)
+- **Commands**: `claudia` (ask anything), `claudia-explain` (explain code), `claudia-review` (catch bugs), `claudia-why` (explain stack), `claudia-health` (project audit)
 - **Config**: `defaults.json` for personality/proactivity, user override via `~/.claude/claudia.json`
+- **Context persistence**: `~/.claude/claudia-context.json` stores stack detection + tech decisions across sessions
 
 ## Key Files
-- `skills/claudia-mentor/SKILL.md` -- personality, routing, stack detection, prompt coaching
+- `skills/claudia-mentor/SKILL.md` -- personality, routing, greeting, learning mode, context persistence
 - `hooks/hooks.json` -- hook registration (7 hooks)
-- `commands/claudia.md` -- slash command entry point
+- `commands/claudia.md` -- main question entry point
+- `commands/claudia-explain.md` -- code explanation for vibecoders
+- `commands/claudia-review.md` -- "almost right" bug catcher
+- `commands/claudia-why.md` -- stack decision explainer
 - `commands/claudia-health.md` -- health audit command
-- `scripts/create-domain.sh` -- domain scaffolding for contributors
 - `config/defaults.json` -- default personality + proactivity level
+
+## Plugin Registration
+- Commands are namespaced: `/claudia-mentor:claudia`, `/claudia-mentor:claudia-explain`, etc.
+- SKILL.md frontmatter must NOT have `name:` field (causes namespace-stripping bug)
+- Load via: `claude --plugin-dir ~/personal/claudia` or `claude --plugin-dir $(npm root -g)/claudia-mentor`
 
 ## Conventions
 - Hook scripts receive JSON on stdin (session_id, tool_name, tool_input)
@@ -24,3 +32,4 @@ Claude Code plugin: technology mentor, security advisor, prompt coach. 10 knowle
 - Use `${CLAUDE_PLUGIN_ROOT}` for all internal paths
 - Each domain: SKILL.md (~2000 words max) + references/ for deep content
 - Voice: opinionated, direct, explains why, uses decision trees and tables
+- Proactivity "high" = learning mode (teaches concepts, names patterns, quizzes gently)
