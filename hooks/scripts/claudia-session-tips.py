@@ -11,6 +11,7 @@ import os
 import random
 import subprocess
 import sys
+from datetime import date
 
 # Pool of startup tips for beginners
 STARTUP_TIPS = [
@@ -161,6 +162,63 @@ def load_config():
     return load_user_config()
 
 
+UPDATE_CHECK_FILE = os.path.expanduser("~/.claude/claudia_update_check.json")
+
+
+def check_for_update():
+    """Check npm for a newer version of claudia-mentor, once per day.
+
+    Returns a hint string if outdated, None otherwise.
+    """
+    today = date.today().isoformat()
+
+    # Read cached state
+    cached = {}
+    try:
+        with open(UPDATE_CHECK_FILE) as f:
+            cached = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError, IOError):
+        pass
+
+    # Read installed version from package.json
+    try:
+        pkg_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), "..", "..", "package.json"
+        )
+        with open(pkg_path) as f:
+            installed = json.load(f).get("version", "0.0.0")
+    except (FileNotFoundError, json.JSONDecodeError, IOError):
+        return None
+
+    # Use cache if checked today
+    if cached.get("last_check_date") == today:
+        latest = cached.get("latest", installed)
+    else:
+        # Ask npm for the latest published version
+        try:
+            result = subprocess.run(
+                ["npm", "view", "claudia-mentor", "version"],
+                capture_output=True, text=True, timeout=5,
+            )
+            if result.returncode != 0 or not result.stdout.strip():
+                return None
+            latest = result.stdout.strip()
+        except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+            return None
+
+        # Cache the result
+        try:
+            os.makedirs(os.path.dirname(UPDATE_CHECK_FILE), exist_ok=True)
+            with open(UPDATE_CHECK_FILE, "w") as f:
+                json.dump({"last_check_date": today, "latest": latest}, f)
+        except IOError:
+            pass
+
+    if latest != installed:
+        return f"Claudia v{latest} available (you have {installed}). Run: npm update -g claudia-mentor"
+    return None
+
+
 def main():
     try:
         input_data = json.loads(sys.stdin.read())
@@ -241,11 +299,22 @@ def main():
 
     # source == "clear": no tip needed
 
+    # Check for npm update on startup
+    update_hint = None
+    if source == "startup":
+        try:
+            update_hint = check_for_update()
+        except Exception:
+            pass
+
     # Combine greeting + tip if both exist
     parts = [p for p in [greeting, tip] if p]
-    if parts:
-        save_state(session_id, state)
-        result = {"additionalContext": "\n\n".join(parts)}
+    if parts or update_hint:
+        if parts:
+            save_state(session_id, state)
+        result = {}
+        if parts:
+            result["additionalContext"] = "\n\n".join(parts)
         # Build visible systemMessage: always show greeting line, plus tip if present
         visible_parts = []
         if greeting:
@@ -255,8 +324,10 @@ def main():
                 visible_parts.append("Claudia is here. She catches what you miss. Try /claudia:ask, /claudia:explain, /claudia:review")
         if tip:
             visible_parts.append(tip)
+        if update_hint:
+            visible_parts.append(update_hint)
         if visible_parts:
-            msg = " | ".join(visible_parts) if greeting and tip else visible_parts[0]
+            msg = " | ".join(visible_parts)
             result["systemMessage"] = f"\033[38;5;160m{msg}\033[0m"
         print(json.dumps(result))
 
