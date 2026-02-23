@@ -101,9 +101,9 @@ def main():
 
     if tip:
         save_state(session_id, state)
+        # Only systemMessage here -- additionalContext gets wiped by compaction
         output = json.dumps({
-            "additionalContext": tip,
-            "systemMessage": tip,
+            "systemMessage": f"\033[38;5;209m{tip}\033[0m",
         })
         print(output)
 

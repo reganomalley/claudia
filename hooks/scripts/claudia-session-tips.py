@@ -9,6 +9,7 @@ Advisory only (exit 0 with additionalContext), never blocks.
 import json
 import os
 import random
+import subprocess
 import sys
 
 # Pool of startup tips for beginners
@@ -29,6 +30,64 @@ COMPACT_TIP = (
     "Context was just compacted. Claude can still see your files — it just forgot the "
     "conversation details. If you need to re-explain something, that's normal."
 )
+
+
+def gather_project_context():
+    """Read claudia-context.json, milestones, and git state to rebuild context after compaction."""
+    parts = []
+
+    # Stack and decisions from context file
+    context_path = os.path.expanduser("~/.claude/claudia-context.json")
+    if os.path.exists(context_path):
+        try:
+            with open(context_path) as f:
+                ctx = json.load(f)
+            stack = ctx.get("stack", {})
+            decisions = ctx.get("decisions", [])
+            experience = ctx.get("experience", "intermediate")
+            if stack:
+                parts.append(f"Project stack: {json.dumps(stack)}")
+            if decisions:
+                parts.append("Decisions made this session: " + "; ".join(str(d) for d in decisions[-5:]))
+            if experience == "beginner":
+                parts.append("User experience level: beginner. Use simple language, explain jargon.")
+        except (json.JSONDecodeError, IOError):
+            pass
+
+    # Milestones achieved
+    milestones_path = os.path.expanduser("~/.claude/claudia-milestones.json")
+    if os.path.exists(milestones_path):
+        try:
+            with open(milestones_path) as f:
+                ms = json.load(f)
+            achieved = ms.get("achieved", [])
+            if achieved:
+                parts.append(f"Milestones achieved: {', '.join(achieved)}")
+        except (json.JSONDecodeError, IOError):
+            pass
+
+    # Recent git activity
+    try:
+        log = subprocess.run(
+            ["git", "log", "--oneline", "-5"],
+            capture_output=True, text=True, timeout=5
+        )
+        if log.returncode == 0 and log.stdout.strip():
+            parts.append(f"Recent commits:\n{log.stdout.strip()}")
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        pass
+
+    try:
+        status = subprocess.run(
+            ["git", "status", "--short"],
+            capture_output=True, text=True, timeout=5
+        )
+        if status.returncode == 0 and status.stdout.strip():
+            parts.append(f"Uncommitted changes:\n{status.stdout.strip()}")
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        pass
+
+    return "\n".join(parts) if parts else None
 
 # Beginner greeting — no command list, just reassurance
 BEGINNER_GREETING = (
@@ -161,15 +220,41 @@ def main():
             state.setdefault("shown_tips_history", []).append(tip_text)
             tip = f"\U0001f4a1 Claudia tip: {tip_text}"
 
-    elif source == "compact" and is_beginner:
-        if not state.get("shown_compact_tip"):
+    elif source == "compact":
+        # Re-inject project context after compaction (this survives because
+        # SessionStart fires AFTER compaction completes)
+        project_ctx = gather_project_context()
+        if project_ctx:
+            context_injection = (
+                "Claudia context recovery: The conversation was just compacted. "
+                "Here is what Claudia knows about the current project and session:\n\n"
+                + project_ctx
+                + "\n\nUse this context to stay grounded. Don't mention compaction unless the user asks."
+            )
+            # Prepend to greeting so it goes into additionalContext
+            greeting = context_injection
+
+        if is_beginner and not state.get("shown_compact_tip"):
             state["shown_compact_tip"] = True
             tip = f"\U0001f4a1 Claudia: {COMPACT_TIP}"
+        elif not is_beginner:
+            tip = "\U0001f4a1 Claudia: Context compacted. I've caught Claude up on your project."
 
     elif source == "resume":
+        # Re-inject context on resume too
+        project_ctx = gather_project_context()
+        if project_ctx:
+            context_injection = (
+                "Claudia context recovery: This is a resumed session. "
+                "Here is what Claudia knows about the current project:\n\n"
+                + project_ctx
+                + "\n\nUse this context to stay grounded."
+            )
+            greeting = context_injection
+
         if not state.get("shown_resume_tip"):
             state["shown_resume_tip"] = True
-            tip = "\U0001f4a1 Claudia: Welcome back. I'm still watching."
+            tip = "\U0001f4a1 Claudia: Welcome back. I've caught Claude up on your project."
 
     # source == "clear": no tip needed
 
@@ -188,7 +273,8 @@ def main():
         if tip:
             visible_parts.append(tip)
         if visible_parts:
-            result["systemMessage"] = " | ".join(visible_parts) if greeting and tip else visible_parts[0]
+            msg = " | ".join(visible_parts) if greeting and tip else visible_parts[0]
+            result["systemMessage"] = f"\033[38;5;209m{msg}\033[0m"
         print(json.dumps(result))
 
     sys.exit(0)
