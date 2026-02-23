@@ -108,6 +108,7 @@ def main():
 
     is_beginner = experience == "beginner"
     coaching_note = None
+    user_msg = None
 
     # --- Stuck detection ---
     # Gate: moderate+ for beginners, high for everyone else
@@ -124,6 +125,7 @@ def main():
                     "'What happened right before you got stuck?' "
                     "If they've been working on something, reference it specifically."
                 )
+                user_msg = "Claudia is helping Claude ask you the right questions."
                 break
 
     # --- Vague prompt coaching (high proactivity only) ---
@@ -138,12 +140,14 @@ def main():
                         "questions before diving in. For example: What file are you working on? "
                         "What did you expect to happen vs what actually happened?"
                     )
+                    user_msg = "Claudia is coaching Claude to ask you clarifying questions first."
                 elif pattern_type == "too-short":
                     coaching_note = (
                         "Claudia note: The user's prompt is very short and lacks context. "
                         "Gently ask them to elaborate — what specifically do they want to know? "
                         "What are they trying to build or fix?"
                     )
+                    user_msg = "Claudia is nudging Claude to help you be more specific."
                 elif pattern_type == "single-word":
                     # Single-word confirmations are fine in context, skip
                     sys.exit(0)
@@ -157,6 +161,7 @@ def main():
                     "a gentle nudge to be more specific. Before responding, consider asking: "
                     "What are you trying to accomplish? Is there a specific file or error involved?"
                 )
+                user_msg = "Claudia is nudging Claude to help you be more specific."
 
         # Check for ALL CAPS (frustration signal)
         if not coaching_note and prompt.isupper() and len(prompt) > 10:
@@ -164,17 +169,15 @@ def main():
                 "Claudia note: The user seems frustrated (all caps). Acknowledge their frustration "
                 "briefly, then help them break the problem down step by step. Stay calm and supportive."
             )
+            user_msg = "Claudia noticed you might be frustrated. She's telling Claude to slow down and help."
 
     if coaching_note:
         state["count"] += 1
         save_state(session_id, state)
-        # additionalContext guides Claude; systemMessage is visible to the user
-        visible = coaching_note.replace("Claudia note: ", "Claudia: ", 1)
-        output = json.dumps({
-            "additionalContext": coaching_note,
-            "systemMessage": visible,
-        })
-        print(output)
+        result = {"additionalContext": coaching_note}
+        if user_msg:
+            result["systemMessage"] = user_msg
+        print(json.dumps(result))
 
     sys.exit(0)
 

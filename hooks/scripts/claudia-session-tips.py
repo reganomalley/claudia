@@ -178,12 +178,10 @@ def main():
     if parts:
         save_state(session_id, state)
         # systemMessage shows tip to user; greeting is for Claude's context only
-        visible_parts = [p for p in [tip] if p]
-        output = json.dumps({
-            "additionalContext": "\n\n".join(parts),
-            "systemMessage": "\n".join(visible_parts) if visible_parts else None,
-        })
-        print(output)
+        result = {"additionalContext": "\n\n".join(parts)}
+        if tip:
+            result["systemMessage"] = tip
+        print(json.dumps(result))
 
     sys.exit(0)
 
