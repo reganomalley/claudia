@@ -99,15 +99,17 @@ with open('$STATE_FILE', 'w') as f:
             echo "[\"${WARNING_KEY}\"]" > "$STATE_FILE"
         fi
 
-        # Block with explanation
-        echo "Claudia: ${description} in ${FILE_PATH}." >&2
+        # Block with explanation (vermillion colored)
+        C="\033[38;5;209m"
+        R="\033[0m"
+        echo -e "${C}Claudia: ${description} in ${FILE_PATH}.${R}" >&2
         echo "" >&2
-        echo "Secrets should never be hardcoded in source files. Use:" >&2
+        echo -e "${C}Secrets should never be hardcoded in source files. Use:" >&2
         echo "  - Environment variables (.env file, gitignored)" >&2
         echo "  - A secret manager (AWS SSM, Vault, Doppler)" >&2
-        echo "  - CI/CD secrets for pipelines" >&2
+        echo -e "  - CI/CD secrets for pipelines${R}" >&2
         echo "" >&2
-        echo "If this is intentionally a test fixture or example, rename the file to include 'test', 'example', or 'fixture'." >&2
+        echo -e "${C}If this is intentionally a test fixture or example, rename the file to include 'test', 'example', or 'fixture'.${R}" >&2
         exit 2
     fi
 done
