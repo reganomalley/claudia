@@ -2,9 +2,10 @@
 """
 Claudia: claudia-prompt-coach.py
 UserPromptSubmit hook that fires before Claude processes a user message.
-Detects vague prompts and nudges Claude to ask clarifying questions.
+Detects stuck users and vague prompts, nudges Claude to help.
 Advisory only (exit 0 with additionalContext), never blocks.
-Only fires when proactivity is high.
+Stuck detection: moderate+ for beginners, high for everyone else.
+Vague prompt coaching: high proactivity only.
 """
 
 import json
@@ -12,9 +13,16 @@ import os
 import re
 import sys
 
+# Stuck patterns — user is lost and needs structured help
+STUCK_PATTERNS = [
+    r'^(help|stuck|idk|i don\'?t know|confused|lost)\s*[.!?]*$',
+    r'^(what do i do|where do i start|how do i even|i\'?m stuck|i\'?m lost|i\'?m confused)\s*[.!?]*$',
+    r'^(i have no idea|no clue|what now|now what)\s*[.!?]*$',
+]
+
 # Vague prompt patterns
 VAGUE_PATTERNS = [
-    (r'^(fix it|fix this|make it work|help|help me|do it|just do it)\s*[.!?]*$', "no-context"),
+    (r'^(fix it|fix this|make it work|help me|do it|just do it)\s*[.!?]*$', "no-context"),
     (r'^(it\'?s? broken|doesn\'?t work|not working|it broke|broken)\s*[.!?]*$', "no-context"),
     (r'^(what|why|how)\s*[.!?]*$', "too-short"),
     (r'^(yes|no|ok|okay|sure|yeah|yep|nah|nope)\s*[.!?]*$', "single-word"),
@@ -88,10 +96,6 @@ def main():
 
     proactivity, experience = load_config()
 
-    # Only fire on high proactivity
-    if proactivity != "high":
-        sys.exit(0)
-
     # Skip slash commands — user is using the system correctly
     if prompt.startswith("/"):
         sys.exit(0)
@@ -105,44 +109,61 @@ def main():
     is_beginner = experience == "beginner"
     coaching_note = None
 
-    # Check for vague patterns
-    for pattern, pattern_type in VAGUE_PATTERNS:
-        if re.match(pattern, prompt, re.IGNORECASE):
-            if pattern_type == "no-context":
-                coaching_note = (
-                    "Claudia note: The user's prompt is vague — they said something like "
-                    f'"{prompt}" with no specific context. As a beginner, they may not know '
-                    "how to ask for what they need. Help them by asking 1-2 clarifying "
-                    "questions before diving in. For example: What file are you working on? "
-                    "What did you expect to happen vs what actually happened?"
-                )
-            elif pattern_type == "too-short":
-                coaching_note = (
-                    "Claudia note: The user's prompt is very short and lacks context. "
-                    "Gently ask them to elaborate — what specifically do they want to know? "
-                    "What are they trying to build or fix?"
-                )
-            elif pattern_type == "single-word":
-                # Single-word confirmations are fine in context, skip
-                sys.exit(0)
-            break
+    # --- Stuck detection ---
+    # Gate: moderate+ for beginners, high for everyone else
+    stuck_enabled = (is_beginner and proactivity in ("moderate", "high")) or proactivity == "high"
 
-    # Check for very short prompts (< 15 chars) that aren't slash commands
-    if not coaching_note and len(prompt) < 15 and is_beginner:
-        # Don't flag single-word confirmations
-        if not re.match(r'^(yes|no|ok|okay|sure|yeah|yep|nah|nope|thanks|ty|thx)\b', prompt, re.IGNORECASE):
+    if stuck_enabled:
+        for pattern in STUCK_PATTERNS:
+            if re.match(pattern, prompt, re.IGNORECASE):
+                coaching_note = (
+                    "Claudia note: The user seems stuck. Don't overwhelm them. "
+                    "Ask ONE clarifying question to understand what they're trying to do. "
+                    "Then suggest ONE small, concrete next step. Keep it to 2-3 sentences. "
+                    "Examples of good questions: 'What are you trying to build?' or "
+                    "'What happened right before you got stuck?' "
+                    "If they've been working on something, reference it specifically."
+                )
+                break
+
+    # --- Vague prompt coaching (high proactivity only) ---
+    if not coaching_note and proactivity == "high":
+        for pattern, pattern_type in VAGUE_PATTERNS:
+            if re.match(pattern, prompt, re.IGNORECASE):
+                if pattern_type == "no-context":
+                    coaching_note = (
+                        "Claudia note: The user's prompt is vague — they said something like "
+                        f'"{prompt}" with no specific context. As a beginner, they may not know '
+                        "how to ask for what they need. Help them by asking 1-2 clarifying "
+                        "questions before diving in. For example: What file are you working on? "
+                        "What did you expect to happen vs what actually happened?"
+                    )
+                elif pattern_type == "too-short":
+                    coaching_note = (
+                        "Claudia note: The user's prompt is very short and lacks context. "
+                        "Gently ask them to elaborate — what specifically do they want to know? "
+                        "What are they trying to build or fix?"
+                    )
+                elif pattern_type == "single-word":
+                    # Single-word confirmations are fine in context, skip
+                    sys.exit(0)
+                break
+
+        # Check for very short prompts (< 15 chars) that aren't slash commands
+        if not coaching_note and len(prompt) < 15 and is_beginner:
+            if not re.match(r'^(yes|no|ok|okay|sure|yeah|yep|nah|nope|thanks|ty|thx)\b', prompt, re.IGNORECASE):
+                coaching_note = (
+                    "Claudia note: The user's prompt is quite short. They might benefit from "
+                    "a gentle nudge to be more specific. Before responding, consider asking: "
+                    "What are you trying to accomplish? Is there a specific file or error involved?"
+                )
+
+        # Check for ALL CAPS (frustration signal)
+        if not coaching_note and prompt.isupper() and len(prompt) > 10:
             coaching_note = (
-                "Claudia note: The user's prompt is quite short. They might benefit from "
-                "a gentle nudge to be more specific. Before responding, consider asking: "
-                "What are you trying to accomplish? Is there a specific file or error involved?"
+                "Claudia note: The user seems frustrated (all caps). Acknowledge their frustration "
+                "briefly, then help them break the problem down step by step. Stay calm and supportive."
             )
-
-    # Check for ALL CAPS (frustration signal)
-    if not coaching_note and prompt.isupper() and len(prompt) > 10:
-        coaching_note = (
-            "Claudia note: The user seems frustrated (all caps). Acknowledge their frustration "
-            "briefly, then help them break the problem down step by step. Stay calm and supportive."
-        )
 
     if coaching_note:
         state["count"] += 1

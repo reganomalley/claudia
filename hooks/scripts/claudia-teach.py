@@ -3,6 +3,7 @@
 Claudia: claudia-teach.py
 Stop hook that fires after every Claude response.
 Scans for technology keywords and offers teaching moments for beginners.
+Also reveals commands contextually for beginners (progressive reveal).
 Advisory only (exit 0 with additionalContext), never blocks.
 Session-aware dedup to avoid repeating the same keyword tip.
 """
@@ -76,28 +77,96 @@ ERROR_PATTERNS = [
     (r'\bReferenceError\b', "a reference error — usually a typo or missing variable"),
 ]
 
+# Contextual command reveals for beginners
+COMMAND_REVEALS = {
+    "file_written": {
+        "patterns": [
+            r"(?:I've |I have )?(?:created|wrote|written|saved|generated)\s+[`'\"]?\S+\.\w+",
+            r"(?:new file|writing to|saved to)\s+[`'\"]?\S+\.\w+",
+        ],
+        "command": "/claudia:explain",
+        "tip": "Want to understand what I just wrote? Try `/claudia:explain [filename]`",
+    },
+    "error_appeared": {
+        "patterns": [
+            r'\b(?:error|Error|ERROR)\b',
+            r'\b(?:failed|Failed|FAILED)\b',
+            r'\btraceback\b',
+        ],
+        "command": "/claudia:wtf",
+        "tip": "Got an error you don't understand? Try `/claudia:wtf` and I'll break it down",
+    },
+    "git_activity": {
+        "patterns": [
+            r'\bgit (?:commit|push|pull|merge|rebase)\b',
+            r'\b(?:committed|pushed|merged)\b',
+            r'\bpull request\b',
+        ],
+        "command": "/claudia:review",
+        "tip": "Want me to check your changes before committing? Try `/claudia:review`",
+    },
+    "multiple_files": {
+        "patterns": [
+            r'(?:created|wrote|updated)\s+\d+\s+files',
+            r'(?:src|lib|components)/',
+        ],
+        "command": "/claudia:where",
+        "tip": "Losing track of your project? Try `/claudia:where` for a guided tour",
+    },
+    "tech_question": {
+        "patterns": [
+            r'\bshould (?:I|we) use\b',
+            r'\bwhich (?:database|framework|library|tool)\b',
+            r'\bwhat\'?s the (?:best|right) way\b',
+        ],
+        "command": "/claudia:ask",
+        "tip": "Got a tech question? Try `/claudia:ask` for architecture advice",
+    },
+    "project_growing": {
+        "patterns": [
+            r'\bpackage\.json\b.*\bdependenc',
+            r'\b(?:npm|yarn|pnpm) install\b',
+            r'\bnode_modules\b',
+        ],
+        "command": "/claudia:health",
+        "tip": "Project growing? Try `/claudia:health` for a full checkup",
+    },
+}
+
 
 def get_state_file(session_id):
     return os.path.expanduser(f"~/.claude/claudia_teach_state_{session_id}.json")
 
 
 def load_state(session_id):
+    """Load state with backward-compatible migration from flat set to dict."""
     state_file = get_state_file(session_id)
     if os.path.exists(state_file):
         try:
             with open(state_file) as f:
-                return set(json.load(f))
+                data = json.load(f)
+                # Migration: old format was a flat list (set of shown keywords)
+                if isinstance(data, list):
+                    return {
+                        "shown_keywords": data,
+                        "revealed_commands": [],
+                    }
+                # New format: dict with shown_keywords and revealed_commands
+                if isinstance(data, dict):
+                    data.setdefault("shown_keywords", [])
+                    data.setdefault("revealed_commands", [])
+                    return data
         except (json.JSONDecodeError, IOError):
-            return set()
-    return set()
+            pass
+    return {"shown_keywords": [], "revealed_commands": []}
 
 
-def save_state(session_id, shown):
+def save_state(session_id, state):
     state_file = get_state_file(session_id)
     try:
         os.makedirs(os.path.dirname(state_file), exist_ok=True)
         with open(state_file, "w") as f:
-            json.dump(list(shown), f)
+            json.dump(state, f)
     except IOError:
         pass
 
@@ -153,7 +222,9 @@ def main():
     if not is_beginner and proactivity != "high":
         sys.exit(0)
 
-    shown = load_state(session_id)
+    state = load_state(session_id)
+    shown_keywords = set(state["shown_keywords"])
+    revealed_commands = set(state["revealed_commands"])
     tips = []
 
     # Scan for technology keywords
@@ -162,8 +233,8 @@ def main():
             # Word-boundary match, case-insensitive
             pattern = r'\b' + re.escape(keyword) + r'\b'
             if re.search(pattern, message, re.IGNORECASE):
-                if keyword.lower() not in shown:
-                    shown.add(keyword.lower())
+                if keyword.lower() not in shown_keywords:
+                    shown_keywords.add(keyword.lower())
                     tips.append(
                         f"I noticed we're talking about {keyword} ({description}). "
                         f"Want me to explain more? Just say `/claudia:explain {keyword.lower()}`"
@@ -178,19 +249,40 @@ def main():
         for pattern, description in ERROR_PATTERNS:
             if re.search(pattern, message, re.IGNORECASE):
                 error_key = f"error-{description}"
-                if error_key not in shown:
-                    shown.add(error_key)
+                if error_key not in shown_keywords:
+                    shown_keywords.add(error_key)
                     tips.append(
                         f"That looks like {description}. "
                         f"If you're not sure what it means, say `/claudia:explain` and paste the error."
                     )
                     break
 
+    # Progressive command reveals (beginners only, max 1 per response)
+    if is_beginner:
+        for reveal_key, reveal in COMMAND_REVEALS.items():
+            command = reveal["command"]
+            if command in revealed_commands:
+                continue
+            for pattern in reveal["patterns"]:
+                if re.search(pattern, message, re.IGNORECASE):
+                    revealed_commands.add(command)
+                    tips.append(reveal["tip"])
+                    break
+            # Only one command reveal per response
+            if len(tips) > (1 if tips else 0):
+                break
+
     if tips:
-        save_state(session_id, shown)
+        state["shown_keywords"] = list(shown_keywords)
+        state["revealed_commands"] = list(revealed_commands)
+        save_state(session_id, state)
         tip_text = "\n".join(f"\U0001f4a1 Claudia: {tip}" for tip in tips)
         output = json.dumps({"additionalContext": tip_text})
         print(output)
+    elif shown_keywords != set(state["shown_keywords"]) or revealed_commands != set(state["revealed_commands"]):
+        state["shown_keywords"] = list(shown_keywords)
+        state["revealed_commands"] = list(revealed_commands)
+        save_state(session_id, state)
 
     sys.exit(0)
 

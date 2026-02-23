@@ -30,6 +30,47 @@ COMPACT_TIP = (
     "conversation details. If you need to re-explain something, that's normal."
 )
 
+# Beginner greeting — no command list, just reassurance
+BEGINNER_GREETING = (
+    "IMPORTANT — Claudia plugin is loaded. On this very first response, "
+    "before answering the user, display this exact greeting block:\n\n"
+    "```\n"
+    "         \u25c9 \u25c9\n"
+    "        \u256d\u2524 \u251c\u256e\n"
+    "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524   \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n"
+    "\u2502                                     \u2502\n"
+    "\u2502  Claudia is here.                   \u2502\n"
+    "\u2502  Just build. I'm watching.          \u2502\n"
+    "\u2502                                     \u2502\n"
+    "\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\n"
+    "```\n\n"
+    "Display this greeting exactly as shown, then answer whatever the user asked."
+)
+
+# Full greeting for non-beginners
+FULL_GREETING = (
+    "IMPORTANT — Claudia plugin is loaded. On this very first response, "
+    "before answering the user, display this exact greeting block:\n\n"
+    "```\n"
+    "         \u25c9 \u25c9\n"
+    "        \u256d\u2524 \u251c\u256e\n"
+    "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524   \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n"
+    "\u2502                                     \u2502\n"
+    "\u2502  Claudia is here.                   \u2502\n"
+    "\u2502  She catches what you miss.         \u2502\n"
+    "\u2502                                     \u2502\n"
+    "\u2502  /claudia:ask    \u2014 ask me anything  \u2502\n"
+    "\u2502  /claudia:explain \u2014 explain code    \u2502\n"
+    "\u2502  /claudia:review \u2014 review changes   \u2502\n"
+    "\u2502  /claudia:setup  \u2014 first-time setup \u2502\n"
+    "\u2502                                     \u2502\n"
+    "\u2502  Or just build. I'm watching.       \u2502\n"
+    "\u2502                                     \u2502\n"
+    "\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\n"
+    "```\n\n"
+    "Display this greeting exactly as shown, then answer whatever the user asked."
+)
+
 
 def get_state_file(session_id):
     return os.path.expanduser(f"~/.claude/claudia_session_state_{session_id}.json")
@@ -106,28 +147,7 @@ def main():
         # Always inject the greeting instruction on fresh startup
         if not state.get("shown_greeting"):
             state["shown_greeting"] = True
-            greeting = (
-                "IMPORTANT — Claudia plugin is loaded. On this very first response, "
-                "before answering the user, display this exact greeting block:\n\n"
-                "```\n"
-                "         \u25c9 \u25c9\n"
-                "        \u256d\u2524 \u251c\u256e\n"
-                "\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524   \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n"
-                "\u2502                                     \u2502\n"
-                "\u2502  Claudia is here.                   \u2502\n"
-                "\u2502  She catches what you miss.         \u2502\n"
-                "\u2502                                     \u2502\n"
-                "\u2502  /claudia:ask    \u2014 ask me anything  \u2502\n"
-                "\u2502  /claudia:explain \u2014 explain code    \u2502\n"
-                "\u2502  /claudia:review \u2014 review changes   \u2502\n"
-                "\u2502  /claudia:setup  \u2014 first-time setup \u2502\n"
-                "\u2502                                     \u2502\n"
-                "\u2502  Or just build. I'm watching.       \u2502\n"
-                "\u2502                                     \u2502\n"
-                "\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\n"
-                "```\n\n"
-                "Display this greeting exactly as shown, then answer whatever the user asked."
-            )
+            greeting = BEGINNER_GREETING if is_beginner else FULL_GREETING
 
         # Beginner tip after greeting
         if is_beginner and not state.get("shown_startup_tip"):

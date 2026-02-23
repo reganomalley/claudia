@@ -1,5 +1,5 @@
 {
-  "description": "Claudia mentor hooks: security, anti-patterns, dependencies, Docker, git hygiene, accessibility, license compliance, teaching moments, compaction tips, session tips, and prompt coaching",
+  "description": "Claudia mentor hooks: security, anti-patterns, dependencies, Docker, git hygiene, accessibility, license compliance, teaching moments, compaction tips, session tips, prompt coaching, run suggestions, next steps, and milestones",
   "hooks": {
     "PreToolUse": [
       {
@@ -79,6 +79,33 @@
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-teach.py",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-run-suggest.py",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-next-steps.py",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-milestones.py",
             "timeout": 10
           }
         ]

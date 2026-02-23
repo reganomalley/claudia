@@ -50,6 +50,24 @@
       "enabled": true,
       "action": "advisory",
       "min_proactivity": "high"
+    },
+    "claudia_run_suggest": {
+      "enabled": true,
+      "action": "advisory",
+      "gate": "beginner OR high proactivity",
+      "dedup": "once per file type per session"
+    },
+    "claudia_next_steps": {
+      "enabled": true,
+      "action": "advisory",
+      "beginner_only": true,
+      "max_per_session": 3
+    },
+    "claudia_milestones": {
+      "enabled": true,
+      "action": "advisory",
+      "beginner_only": true,
+      "state": "persistent (cross-session)"
     }
   },
   "teaching_keywords": {
@@ -64,7 +82,11 @@
   },
   "prompt_coaching": {
     "max_per_session": 3,
-    "detects": ["vague prompts", "very short prompts", "all-caps frustration"],
-    "skips": ["slash commands", "single-word confirmations"]
+    "detects": ["stuck users", "vague prompts", "very short prompts", "all-caps frustration"],
+    "skips": ["slash commands", "single-word confirmations"],
+    "stuck_detection": {
+      "gate": "moderate+ for beginners, high for everyone else",
+      "behavior": "Ask ONE clarifying question, suggest ONE small next step"
+    }
   }
 }

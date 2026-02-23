@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+"""
+Claudia: claudia-milestones.py
+Stop hook that celebrates beginner milestones.
+Advisory only (exit 0 with additionalContext), never blocks.
+Gate: beginner only. Persistent state (cross-session).
+"""
+
+import json
+import os
+import re
+import sys
+
+# Milestone definitions: key, detection pattern, celebration message
+MILESTONES = {
+    "first_file": {
+        "patterns": [
+            r"(?:I've |I have )?(?:created|wrote|written|saved|generated)\s+[`'\"]?\S+\.\w+",
+            r"(?:new file|writing to|saved to)\s+[`'\"]?\S+\.\w+",
+        ],
+        "message": "You just created your first file. That's real code in the real world.",
+    },
+    "first_error_fixed": {
+        "patterns": [
+            r"(?:I've |I have )?(?:fixed|resolved|corrected|patched)\s+(?:the |this |that )?(?:error|bug|issue|problem)",
+            r"(?:error|bug|issue) (?:is |has been )?(?:fixed|resolved|corrected)",
+            r"should (?:work|be fixed) now",
+        ],
+        "message": "First bug squashed. Welcome to the club.",
+    },
+    "first_commit": {
+        "patterns": [
+            r"(?:I've |I have )?(?:committed|created a commit|made a commit)",
+            r"git commit",
+            r"committed (?:the |your )?changes",
+        ],
+        "message": "First commit. Your code has a save point now.",
+    },
+    "first_project_run": {
+        "patterns": [
+            r"(?:server|app|application|project) (?:is )?running",
+            r"(?:running|started) (?:on|at) (?:http|localhost|port)",
+            r"npm (?:run )?(?:dev|start)",
+            r"python3?\s+\S+\.py",
+            r"node\s+\S+\.js",
+        ],
+        "message": "Your project is running. You built something that works.",
+    },
+    "ten_files": {
+        "patterns": [],  # Special detection: count file mentions
+        "message": "10+ files. This isn't a toy -- it's a real project.",
+    },
+}
+
+STATE_FILE = os.path.expanduser("~/.claude/claudia-milestones.json")
+
+
+def load_state():
+    if os.path.exists(STATE_FILE):
+        try:
+            with open(STATE_FILE) as f:
+                return json.load(f)
+        except (json.JSONDecodeError, IOError):
+            return {"achieved": [], "file_count": 0}
+    return {"achieved": [], "file_count": 0}
+
+
+def save_state(state):
+    try:
+        os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
+        with open(STATE_FILE, "w") as f:
+            json.dump(state, f)
+    except IOError:
+        pass
+
+
+def load_config():
+    experience = "intermediate"
+    context_path = os.path.expanduser("~/.claude/claudia-context.json")
+    if os.path.exists(context_path):
+        try:
+            with open(context_path) as f:
+                data = json.load(f)
+                experience = data.get("experience", experience)
+        except (json.JSONDecodeError, IOError):
+            pass
+    return experience
+
+
+def count_new_files(message):
+    """Count file creation mentions in the message."""
+    patterns = [
+        r"(?:created|wrote|written|saved|generated)\s+[`'\"]?(\S+\.\w+)",
+        r"(?:new file|writing to|saved to)\s+[`'\"]?(\S+\.\w+)",
+    ]
+    files = set()
+    for pattern in patterns:
+        for match in re.finditer(pattern, message, re.IGNORECASE):
+            files.add(match.group(1))
+    return len(files)
+
+
+def main():
+    try:
+        input_data = json.loads(sys.stdin.read())
+    except json.JSONDecodeError:
+        sys.exit(0)
+
+    message = input_data.get("last_assistant_message", "")
+
+    if not message:
+        sys.exit(0)
+
+    experience = load_config()
+
+    # Gate: beginner only
+    if experience != "beginner":
+        sys.exit(0)
+
+    state = load_state()
+    achieved = set(state.get("achieved", []))
+    celebration = None
+
+    # Track file count for ten_files milestone
+    new_files = count_new_files(message)
+    if new_files > 0:
+        state["file_count"] = state.get("file_count", 0) + new_files
+
+    # Check ten_files milestone
+    if "ten_files" not in achieved and state.get("file_count", 0) >= 10:
+        achieved.add("ten_files")
+        celebration = MILESTONES["ten_files"]["message"]
+
+    # Check pattern-based milestones (first match wins)
+    if not celebration:
+        for key, milestone in MILESTONES.items():
+            if key in achieved or key == "ten_files":
+                continue
+            for pattern in milestone["patterns"]:
+                if re.search(pattern, message, re.IGNORECASE):
+                    achieved.add(key)
+                    celebration = milestone["message"]
+                    break
+            if celebration:
+                break
+
+    if celebration:
+        state["achieved"] = list(achieved)
+        save_state(state)
+        output = json.dumps({"additionalContext": f"Claudia: {celebration}"})
+        print(output)
+
+    # Save state even without celebration (for file_count tracking)
+    elif new_files > 0:
+        save_state(state)
+
+    sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
