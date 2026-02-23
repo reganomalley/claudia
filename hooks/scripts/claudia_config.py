@@ -66,8 +66,38 @@ def load_suppress_topics():
     return []
 
 
+def load_suppress_hooks():
+    """Load suppress_hooks list from ~/.claude/claudia.json.
+
+    Returns:
+        set of lowercase hook name strings to suppress (empty if not set or file missing).
+    """
+    config_path = os.path.expanduser("~/.claude/claudia.json")
+    if os.path.exists(config_path):
+        try:
+            with open(config_path) as f:
+                data = json.load(f)
+                hooks = data.get("suppress_hooks", [])
+                if isinstance(hooks, list):
+                    return {h.lower() for h in hooks if isinstance(h, str)}
+        except (json.JSONDecodeError, IOError):
+            pass
+    return set()
+
+
+def dismiss_hint(hook_name):
+    """Return a user-visible dismiss hint and Claude-visible instruction."""
+    user_hint = f'(Say "silence {hook_name}" to turn this off)'
+    claude_hint = (
+        f'If the user asks to silence or stop {hook_name} tips, '
+        f'add "{hook_name}" to the "suppress_hooks" list in ~/.claude/claudia.json '
+        f'(create the file/key if missing).'
+    )
+    return user_hint, claude_hint
+
+
 def load_user_config():
-    """Load proactivity from ~/.claude/claudia.json, experience from context.
+    """Load proactivity and experience from ~/.claude/claudia.json, fallback to context.
 
     Returns:
         (proactivity, experience) tuple with string values.
@@ -77,17 +107,22 @@ def load_user_config():
     experience = "intermediate"
 
     config_path = os.path.expanduser("~/.claude/claudia.json")
+    experience_set = False
     if os.path.exists(config_path):
         try:
             with open(config_path) as f:
                 data = json.load(f)
                 proactivity = data.get("proactivity", proactivity)
+                if "experience" in data:
+                    experience = data["experience"]
+                    experience_set = True
         except (json.JSONDecodeError, IOError):
             pass
 
-    # Experience comes from project context (tries project-scoped first, then global)
-    ctx = load_project_context()
-    experience = ctx.get("experience", experience)
+    # Experience falls back to project context if not set in claudia.json
+    if not experience_set:
+        ctx = load_project_context()
+        experience = ctx.get("experience", experience)
 
     return proactivity, experience
 

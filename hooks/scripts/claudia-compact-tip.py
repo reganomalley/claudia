@@ -37,7 +37,7 @@ def save_state(session_id, state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config
+from claudia_config import load_user_config, load_suppress_hooks
 
 
 def load_config():
@@ -55,6 +55,10 @@ def main():
 
     proactivity, experience = load_config()
     is_beginner = experience == "beginner"
+
+    # Bail if hook is suppressed
+    if "compact-tip" in load_suppress_hooks():
+        sys.exit(0)
 
     # Non-beginners at moderate or low proactivity: skip entirely
     if not is_beginner:

@@ -76,7 +76,7 @@ def save_state(session_id, state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config
+from claudia_config import load_user_config, dismiss_hint
 
 
 def load_config():
@@ -98,6 +98,10 @@ def check(input_data, proactivity, experience):
     state = load_state(session_id)
     shown_types = set(state.get("shown_types", []))
 
+    user_hint, claude_hint = dismiss_hint("run-suggest")
+    hint = "\n" + user_hint
+    ctx_hint = "\n" + claude_hint
+
     # Check for package.json mentions
     if "package.json" not in shown_types and re.search(PACKAGE_JSON_PATTERN, message, re.IGNORECASE):
         shown_types.add("package.json")
@@ -105,7 +109,7 @@ def check(input_data, proactivity, experience):
         save_state(session_id, state)
         suggestion = RUN_SUGGESTIONS["package.json"][1]
         msg = f"Claudia: {suggestion}"
-        return {"additionalContext": msg, "systemMessage": f"\033[38;5;160m{msg}\033[0m"}
+        return {"additionalContext": msg + ctx_hint, "systemMessage": f"\033[38;5;160m{msg}{hint}\033[0m"}
 
     # Check for file creation patterns
     for pattern in FILE_PATTERNS:
@@ -119,7 +123,7 @@ def check(input_data, proactivity, experience):
                 save_state(session_id, state)
                 suggestion = RUN_SUGGESTIONS[ext][1].format(filename=filename)
                 msg = f"Claudia: {suggestion}"
-                return {"additionalContext": msg, "systemMessage": f"\033[38;5;160m{msg}\033[0m"}
+                return {"additionalContext": msg + ctx_hint, "systemMessage": f"\033[38;5;160m{msg}{hint}\033[0m"}
 
     return None
 

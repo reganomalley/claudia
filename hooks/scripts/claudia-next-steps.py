@@ -14,24 +14,27 @@ import time
 
 # Completion signals
 COMPLETION_PATTERNS = [
-    r"I've created",
-    r"I have created",
-    r"I've written",
-    r"I've built",
-    r"I've set up",
-    r"I've added",
-    r"I've updated",
-    r"I've fixed",
-    r"I've implemented",
-    r"Done[.!]",
-    r"Here's your",
-    r"Here is your",
-    r"All set[.!]",
-    r"That's done",
-    r"It's ready",
-    r"The [\w\s]+ is ready",
-    r"Your [\w\s]+ is ready",
+    r"^I've created",
+    r"^I have created",
+    r"^I've written",
+    r"^I've built",
+    r"^I've set up",
+    r"^I've added",
+    r"^I've updated",
+    r"^I've fixed",
+    r"^I've implemented",
+    r"^Done[.!]",
+    r"^Here's your",
+    r"^Here is your",
+    r"^All set[.!]",
+    r"^That's done",
+    r"^It's ready",
+    r"^The [\w\s]+ is ready",
+    r"^Your [\w\s]+ is ready",
 ]
+
+# Long messages are summaries, not single-action completions
+MAX_COMPLETION_LENGTH = 800
 
 # File type -> contextual next steps
 NEXT_STEPS = {
@@ -123,7 +126,7 @@ def save_state(session_id, state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config
+from claudia_config import load_user_config, dismiss_hint
 
 
 def load_config():
@@ -147,8 +150,12 @@ def check(input_data, proactivity, experience):
     if state["count"] >= 3:
         return None
 
+    # Long messages are summaries/changelogs, not single-action completions
+    if len(message) > MAX_COMPLETION_LENGTH:
+        return None
+
     is_completion = any(
-        re.search(pattern, message, re.IGNORECASE)
+        re.search(pattern, message, re.IGNORECASE | re.MULTILINE)
         for pattern in COMPLETION_PATTERNS
     )
 
@@ -184,9 +191,15 @@ def check(input_data, proactivity, experience):
     suggestion_text = "Claudia: What's next? Here are some ideas:\n" + "\n".join(
         f"  - {step}" for step in formatted
     )
+    system_msg = suggestion_text
+    context = suggestion_text
+    if state["count"] % 3 == 0:
+        user_hint, claude_hint = dismiss_hint("next-steps")
+        system_msg += "\n" + user_hint
+        context += "\n" + claude_hint
     return {
-        "additionalContext": suggestion_text,
-        "systemMessage": f"\033[38;5;160m{suggestion_text}\033[0m",
+        "additionalContext": context,
+        "systemMessage": f"\033[38;5;160m{system_msg}\033[0m",
     }
 
 

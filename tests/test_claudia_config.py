@@ -91,6 +91,39 @@ class TestLoadUserConfig:
         _, experience = claudia_config.load_user_config()
         assert experience == "beginner"
 
+    def test_experience_from_claudia_json(self, tmp_path, monkeypatch):
+        """experience in claudia.json takes priority over context files."""
+        monkeypatch.setenv("HOME", str(tmp_path))
+        monkeypatch.chdir(tmp_path)
+        claude_dir = tmp_path / ".claude"
+        claude_dir.mkdir()
+        (claude_dir / "claudia.json").write_text(
+            json.dumps({"proactivity": "high", "experience": "beginner"})
+        )
+        (claude_dir / "claudia-context.json").write_text(
+            json.dumps({"experience": "experienced"})
+        )
+
+        proactivity, experience = claudia_config.load_user_config()
+        assert proactivity == "high"
+        assert experience == "beginner"
+
+    def test_experience_falls_back_to_context(self, tmp_path, monkeypatch):
+        """Without experience in claudia.json, falls back to context."""
+        monkeypatch.setenv("HOME", str(tmp_path))
+        monkeypatch.chdir(tmp_path)
+        claude_dir = tmp_path / ".claude"
+        claude_dir.mkdir()
+        (claude_dir / "claudia.json").write_text(
+            json.dumps({"proactivity": "high"})
+        )
+        (claude_dir / "claudia-context.json").write_text(
+            json.dumps({"experience": "experienced"})
+        )
+
+        _, experience = claudia_config.load_user_config()
+        assert experience == "experienced"
+
     def test_corrupt_config_returns_defaults(self, tmp_path, monkeypatch):
         monkeypatch.setenv("HOME", str(tmp_path))
         monkeypatch.chdir(tmp_path)
@@ -184,3 +217,64 @@ class TestLoadRegistry:
 
         result = claudia_config.load_registry()
         assert "key1" in result["projects"]
+
+
+class TestLoadSuppressHooks:
+    """load_suppress_hooks() — reads suppress_hooks list from claudia.json."""
+
+    def test_returns_set(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("HOME", str(tmp_path))
+        claude_dir = tmp_path / ".claude"
+        claude_dir.mkdir()
+        (claude_dir / "claudia.json").write_text(
+            json.dumps({"suppress_hooks": ["next-steps", "Milestones"]})
+        )
+
+        result = claudia_config.load_suppress_hooks()
+        assert isinstance(result, set)
+        assert "next-steps" in result
+        assert "milestones" in result  # lowercased
+
+    def test_empty_when_missing(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("HOME", str(tmp_path))
+        result = claudia_config.load_suppress_hooks()
+        assert result == set()
+
+    def test_empty_when_no_key(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("HOME", str(tmp_path))
+        claude_dir = tmp_path / ".claude"
+        claude_dir.mkdir()
+        (claude_dir / "claudia.json").write_text(json.dumps({"proactivity": "high"}))
+
+        result = claudia_config.load_suppress_hooks()
+        assert result == set()
+
+    def test_handles_corrupt_json(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("HOME", str(tmp_path))
+        claude_dir = tmp_path / ".claude"
+        claude_dir.mkdir()
+        (claude_dir / "claudia.json").write_text("not json!!!")
+
+        result = claudia_config.load_suppress_hooks()
+        assert result == set()
+
+    def test_handles_non_list(self, tmp_path, monkeypatch):
+        monkeypatch.setenv("HOME", str(tmp_path))
+        claude_dir = tmp_path / ".claude"
+        claude_dir.mkdir()
+        (claude_dir / "claudia.json").write_text(
+            json.dumps({"suppress_hooks": "not-a-list"})
+        )
+
+        result = claudia_config.load_suppress_hooks()
+        assert result == set()
+
+
+class TestDismissHint:
+    """dismiss_hint() — returns formatted dismiss message."""
+
+    def test_format(self):
+        user_hint, claude_hint = claudia_config.dismiss_hint("next-steps")
+        assert "silence next-steps" in user_hint
+        assert "suppress_hooks" in claude_hint
+        assert "claudia.json" in claude_hint

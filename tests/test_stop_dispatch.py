@@ -127,6 +127,51 @@ class TestPriorityOrder:
             assert "python3" in context.lower() or "run" in context.lower() or "Docker" in context
 
 
+class TestSuppressHooks:
+    """suppress_hooks should skip hooks in dispatch."""
+
+    def test_suppressed_hook_skipped(self, run_hook, tmp_path):
+        """When milestones is suppressed, it should not fire."""
+        claude_dir = tmp_path / ".claude"
+        claude_dir.mkdir(exist_ok=True)
+        # Set up beginner config with milestones suppressed
+        (claude_dir / "claudia.json").write_text(
+            json.dumps({"proactivity": "moderate", "suppress_hooks": ["milestones"]})
+        )
+        (claude_dir / "claudia-context.json").write_text(
+            json.dumps({"experience": "beginner"})
+        )
+        # Fresh session — "I've created" would normally trigger first_file milestone
+        data = make_stop_input("I've created main.js with the basic setup.")
+        code, stdout, _ = run_hook("claudia-stop-dispatch.py", data)
+        assert code == 0
+        # If there's output, it should NOT be a milestone celebration
+        if stdout.strip():
+            output = json.loads(stdout)
+            ctx = output.get("additionalContext", "")
+            assert "first file" not in ctx.lower()
+
+    def test_suppressed_teach_skipped(self, run_hook, tmp_path):
+        """When teach is suppressed, keyword tips should not fire."""
+        claude_dir = tmp_path / ".claude"
+        claude_dir.mkdir(exist_ok=True)
+        (claude_dir / "claudia.json").write_text(
+            json.dumps({"proactivity": "high", "suppress_hooks": ["teach"]})
+        )
+        (claude_dir / "claudia-context.json").write_text(
+            json.dumps({"experience": "beginner"})
+        )
+        # Exhaust milestones and run-suggest so teach would be next
+        (claude_dir / "claudia-milestones.json").write_text(
+            json.dumps({"achieved": ["first_file", "first_error_fixed", "first_commit", "first_project_run", "ten_files"], "file_count": 20})
+        )
+        data = make_stop_input("You should consider using Docker for containerization.")
+        code, stdout, _ = run_hook("claudia-stop-dispatch.py", data)
+        assert code == 0
+        # Should be silent since teach is suppressed and no other hook matches
+        assert stdout.strip() == ""
+
+
 class TestSingleOutput:
     """Only one hook should produce output per dispatch."""
 

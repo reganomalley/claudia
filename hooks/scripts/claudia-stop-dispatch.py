@@ -12,7 +12,7 @@ import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config, load_suppress_topics
+from claudia_config import load_user_config, load_suppress_topics, load_suppress_hooks
 
 # Import check() from each Stop hook module
 import importlib
@@ -57,9 +57,21 @@ def main():
     session_id = input_data.get("session_id", "default")
     proactivity, experience = load_user_config()
     input_data["suppress_topics"] = load_suppress_topics()
+    suppress_hooks = load_suppress_hooks()
+
+    # Map module names to hook names for suppress check
+    MODULE_TO_HOOK = {
+        "claudia-milestones": "milestones",
+        "claudia-run-suggest": "run-suggest",
+        "claudia-next-steps": "next-steps",
+        "claudia-teach": "teach",
+    }
 
     # Try each hook in order; first with output wins
     for module_name in HOOK_MODULES:
+        hook_name = MODULE_TO_HOOK.get(module_name, module_name)
+        if hook_name in suppress_hooks:
+            continue
         try:
             mod = _import_hook(module_name)
             result = mod.check(input_data, proactivity, experience)

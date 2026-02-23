@@ -64,7 +64,7 @@ def save_state(session_id, state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config
+from claudia_config import load_user_config, load_suppress_hooks, dismiss_hint
 
 
 def load_config():
@@ -84,6 +84,10 @@ def main():
         sys.exit(0)
 
     proactivity, experience = load_config()
+
+    # Bail if hook is suppressed
+    if "prompt-coach" in load_suppress_hooks():
+        sys.exit(0)
 
     # Skip slash commands — user is using the system correctly
     if prompt.startswith("/"):
@@ -144,7 +148,7 @@ def main():
 
         # Check for very short prompts (< 15 chars) that aren't slash commands
         if not coaching_note and len(prompt) < 15 and is_beginner:
-            if not re.match(r'^(yes|no|ok|okay|sure|yeah|yep|nah|nope|thanks|ty|thx)\b', prompt, re.IGNORECASE):
+            if not re.match(r'^(yes|no|ok|okay|sure|yeah|yep|nah|nope|thanks|ty|thx|commit this|push it|push this|run tests|run it|do this|ship it|test it|build it|deploy it|lint it|format it|save it|merge it|revert it|undo that)\b', prompt, re.IGNORECASE):
                 coaching_note = (
                     "Claudia note: The user's prompt is quite short. They might benefit from "
                     "a gentle nudge to be more specific. Before responding, consider asking: "
@@ -174,7 +178,12 @@ def main():
         save_state(session_id, state)
         result = {"additionalContext": coaching_note}
         if user_msg:
-            result["systemMessage"] = f"\033[38;5;160m{user_msg}\033[0m"
+            system_msg = user_msg
+            if state["count"] % 2 == 0:
+                user_hint, claude_hint = dismiss_hint("prompt-coach")
+                system_msg += "\n" + user_hint
+                result["additionalContext"] += "\n" + claude_hint
+            result["systemMessage"] = f"\033[38;5;160m{system_msg}\033[0m"
         print(json.dumps(result))
 
     sys.exit(0)

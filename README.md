@@ -4,7 +4,7 @@
 
 A Claude Code plugin that acts as your technology mentor, security advisor, and prompt coach. Claudia fills the gaps between writing code and making good technology decisions.
 
-**10 knowledge domains. 15 hooks. 11 commands. 234 tests. Beginner-friendly.**
+**10 knowledge domains. 15 hooks. 11 commands. 264 tests. Beginner-friendly.**
 
 ## What Claudia Does
 
@@ -87,7 +87,7 @@ Claudia automatically activates when you:
 
 ## Beginner Mode
 
-Set `"experience": "beginner"` in `~/.claude/claudia-context.json` (or run `/claudia:setup`) and Claudia adapts:
+Set `"experience": "beginner"` in `~/.claude/claudia.json` (or `~/.claude/claudia-context.json`, or run `/claudia:setup`) and Claudia adapts:
 
 - **Simplified greeting** -- No command list on startup. Just "Claudia is here. Just build. I'm watching."
 - **Stuck detection** -- Type "I'm stuck" or "help" and she asks one clarifying question, then suggests one small next step
@@ -166,14 +166,18 @@ Override Claudia's personality and proactivity level:
 ```json
 {
   "proactivity": "high",
+  "experience": "beginner",
   "personality": {
     "tone": "casual"
   },
-  "suppress_topics": ["Netlify", "hosting"]
+  "suppress_topics": ["Netlify", "hosting"],
+  "suppress_hooks": ["next-steps", "milestones"]
 }
 ```
 
 `suppress_topics` silences teach tips for specific keywords (e.g. `"Netlify"`) or entire categories (e.g. `"hosting"`). Case-insensitive. Each tip includes a dismiss hint showing how to add it.
+
+`suppress_hooks` silences entire proactive hooks by name. Valid names: `teach`, `prompt-coach`, `next-steps`, `run-suggest`, `milestones`, `session-tips`, `compact-tip`. Each hook occasionally shows a dismiss hint telling you how.
 
 ### Per-project (`.claudia.json` in project root)
 

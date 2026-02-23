@@ -94,7 +94,7 @@ def save_state(state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config
+from claudia_config import load_user_config, dismiss_hint
 
 
 def load_config():
@@ -156,7 +156,8 @@ def check(input_data, proactivity, experience):
         state["achieved"] = list(achieved)
         save_state(state)
         msg = f"Claudia: {celebration}"
-        return {"additionalContext": msg, "systemMessage": f"\033[38;5;160m{msg}\033[0m"}
+        user_hint, claude_hint = dismiss_hint("milestones")
+        return {"additionalContext": msg + "\n" + claude_hint, "systemMessage": f"\033[38;5;160m{msg}\n{user_hint}\033[0m"}
 
     # Save state even without celebration (for file_count tracking)
     if new_files > 0:

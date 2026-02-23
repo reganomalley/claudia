@@ -154,7 +154,7 @@ def save_state(session_id, state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config, load_project_context
+from claudia_config import load_user_config, load_project_context, load_suppress_hooks
 
 
 def load_config():
@@ -172,6 +172,10 @@ def main():
 
     proactivity, experience = load_config()
     is_beginner = experience == "beginner"
+
+    # Bail if hook is suppressed
+    if "session-tips" in load_suppress_hooks():
+        sys.exit(0)
 
     # Low proactivity: skip tips, but still show greeting on startup
     if proactivity == "low" and source != "startup":

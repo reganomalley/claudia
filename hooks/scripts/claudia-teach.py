@@ -237,7 +237,7 @@ def save_state(session_id, state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config
+from claudia_config import load_user_config, dismiss_hint
 
 
 def load_config():
@@ -321,8 +321,14 @@ def check(input_data, proactivity, experience):
         state["revealed_commands"] = list(revealed_commands)
         save_state(session_id, state)
         tip_text = "\n".join(f"Claudia: {tip}" for tip in tips)
-        colored = "\n".join(f"\033[38;5;160m{line}\033[0m" for line in tip_text.split("\n"))
-        return {"additionalContext": tip_text, "systemMessage": colored}
+        system_text = tip_text
+        context = tip_text
+        if len(shown_keywords) % 3 == 0:
+            user_hint, claude_hint = dismiss_hint("teach")
+            system_text += "\n" + user_hint
+            context += "\n" + claude_hint
+        colored = "\n".join(f"\033[38;5;160m{line}\033[0m" for line in system_text.split("\n"))
+        return {"additionalContext": context, "systemMessage": colored}
 
     if shown_keywords != set(state["shown_keywords"]) or revealed_commands != set(state["revealed_commands"]):
         state["shown_keywords"] = list(shown_keywords)
