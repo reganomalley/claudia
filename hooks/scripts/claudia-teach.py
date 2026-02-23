@@ -237,7 +237,7 @@ def save_state(session_id, state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config, dismiss_hint
+from claudia_config import load_user_config, dismiss_hint, load_profile, update_profile
 
 
 def load_config():
@@ -269,22 +269,42 @@ def check(input_data, proactivity, experience):
     suppress_topics = input_data.get("suppress_topics", [])
     suppressed = {t.lower() for t in suppress_topics if isinstance(t, str)}
 
+    # Load profile for dismissed topics and cross-session history
+    profile = load_profile()
+    dismissed = {t.lower() for t in profile.get("dismissed_topics", [])}
+    history = profile.get("topic_history", {})
+    dismissed_cmds = {c.lower() for c in profile.get("dismissed_commands", [])}
+    history_updated = False
+
     # Scan for technology keywords
     for category, keywords in KEYWORDS.items():
-        if category.lower() in suppressed:
+        if category.lower() in suppressed or category.lower() in dismissed:
             continue
         for keyword, description in keywords.items():
-            if keyword.lower() in suppressed:
+            kw_lower = keyword.lower()
+            if kw_lower in suppressed or kw_lower in dismissed:
+                continue
+            # Auto-cooldown: skip after 3 cross-session shows
+            kw_history = history.get(kw_lower, {})
+            if kw_history.get("shown", 0) >= 3:
                 continue
             pattern = r'\b' + re.escape(keyword) + r'\b'
             if re.search(pattern, message, re.IGNORECASE):
-                if keyword.lower() not in shown_keywords:
-                    shown_keywords.add(keyword.lower())
+                if kw_lower not in shown_keywords:
+                    shown_keywords.add(kw_lower)
                     tips.append(
                         f"I noticed we're talking about {keyword} ({description}). "
-                        f"Want me to explain more? Just say `/claudia:explain {keyword.lower()}`\n"
-                        f"(Say \"stop tips about {keyword}\" to silence this)"
+                        f"Want me to explain more? Just say `/claudia:explain {kw_lower}`\n"
+                        f"(Say \"stop tips about {keyword}\" to silence this)\n"
+                        f"(say 'I know' to stop tips about this topic)"
                     )
+                    # Update cross-session topic history
+                    from datetime import date
+                    entry = history.get(kw_lower, {"shown": 0})
+                    entry["shown"] = entry.get("shown", 0) + 1
+                    entry["last"] = str(date.today())
+                    history[kw_lower] = entry
+                    history_updated = True
                     break
         if tips:
             break
@@ -306,7 +326,7 @@ def check(input_data, proactivity, experience):
     if is_beginner:
         for reveal_key, reveal in COMMAND_REVEALS.items():
             command = reveal["command"]
-            if command in revealed_commands:
+            if command in revealed_commands or command.lower() in dismissed_cmds:
                 continue
             for pattern in reveal["patterns"]:
                 if re.search(pattern, message, re.IGNORECASE):
@@ -320,6 +340,8 @@ def check(input_data, proactivity, experience):
         state["shown_keywords"] = list(shown_keywords)
         state["revealed_commands"] = list(revealed_commands)
         save_state(session_id, state)
+        if history_updated:
+            update_profile({"topic_history": history})
         tip_text = "\n".join(f"Claudia: {tip}" for tip in tips)
         system_text = tip_text
         context = tip_text + (
@@ -333,6 +355,9 @@ def check(input_data, proactivity, experience):
             context += "\n" + claude_hint
         colored = "\n".join(f"\033[38;5;160m{line}\033[0m" for line in system_text.split("\n"))
         return {"additionalContext": context, "systemMessage": colored}
+
+    if history_updated:
+        update_profile({"topic_history": history})
 
     if shown_keywords != set(state["shown_keywords"]) or revealed_commands != set(state["revealed_commands"]):
         state["shown_keywords"] = list(shown_keywords)

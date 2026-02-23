@@ -126,7 +126,7 @@ def save_state(session_id, state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config, dismiss_hint
+from claudia_config import load_user_config, dismiss_hint, load_profile
 
 
 def load_config():
@@ -178,12 +178,23 @@ def check(input_data, proactivity, experience):
     else:
         steps = NEXT_STEPS["default"]
 
+    # Filter out steps referencing dismissed commands
+    profile = load_profile()
+    dismissed_cmds = {c.lower() for c in profile.get("dismissed_commands", [])}
+
     formatted = []
     for step in steps[:3]:
         if filename:
-            formatted.append(step.format(filename=filename))
+            step_text = step.format(filename=filename)
         else:
-            formatted.append(step.replace(" {filename}", "").replace("{filename}", "the file"))
+            step_text = step.replace(" {filename}", "").replace("{filename}", "the file")
+        # Skip if step references a dismissed command
+        if any(cmd in step_text.lower() for cmd in dismissed_cmds):
+            continue
+        formatted.append(step_text)
+
+    if not formatted:
+        return None
 
     state["count"] += 1
     save_state(session_id, state)

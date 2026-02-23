@@ -283,3 +283,49 @@ def load_registry():
         except (json.JSONDecodeError, IOError):
             pass
     return {"version": 1, "projects": {}}
+
+
+# --- User Proficiency Profile ---
+
+def _profile_path():
+    return os.path.expanduser("~/.claude/claudia-profile.json")
+
+
+def load_profile():
+    """Load user proficiency profile. Seeds from claudia-context.json on first load."""
+    path = _profile_path()
+    if os.path.exists(path):
+        try:
+            with open(path) as f:
+                data = json.load(f)
+                data.setdefault("dismissed_topics", [])
+                data.setdefault("dismissed_commands", [])
+                data.setdefault("topic_history", {})
+                data.setdefault("level", "intermediate")
+                return data
+        except (json.JSONDecodeError, IOError):
+            pass
+
+    # Migration: seed from existing experience
+    ctx = load_project_context()
+    level = ctx.get("experience", "intermediate")
+    return {
+        "level": level,
+        "dismissed_topics": [],
+        "dismissed_commands": [],
+        "topic_history": {},
+    }
+
+
+def update_profile(updates):
+    """Merge updates into profile and save."""
+    profile = load_profile()
+    profile.update(updates)
+    path = _profile_path()
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as f:
+            json.dump(profile, f, indent=2)
+    except IOError:
+        pass
+    return profile

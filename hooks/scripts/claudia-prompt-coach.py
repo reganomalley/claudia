@@ -64,7 +64,7 @@ def save_state(session_id, state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config, load_suppress_hooks, dismiss_hint
+from claudia_config import load_user_config, load_suppress_hooks, dismiss_hint, load_profile, update_profile
 
 
 def load_config():
@@ -91,6 +91,41 @@ def main():
 
     # Skip slash commands — user is using the system correctly
     if prompt.startswith("/"):
+        sys.exit(0)
+
+    # --- "I know" dismissal (runs at any proactivity — user-initiated) ---
+    iknow_match = re.match(
+        r'^(?:i know|i already know|stop (?:telling|teaching) me about|'
+        r'i get it|don\'t explain|no more tips about)\s*(.+?)?\s*[.!?]*$',
+        prompt, re.IGNORECASE
+    )
+
+    if iknow_match:
+        topic = iknow_match.group(1)
+        if topic:
+            topic_lower = topic.strip().lower()
+            profile = load_profile()
+            dismissed = profile.get("dismissed_topics", [])
+            if topic_lower not in dismissed:
+                dismissed.append(topic_lower)
+                update_profile({"dismissed_topics": dismissed})
+            coaching_note = (
+                f"Claudia note: The user dismissed the topic '{topic_lower}'. "
+                f"Acknowledge briefly (e.g., 'Got it, no more {topic_lower} tips') "
+                f"and continue with whatever they were working on."
+            )
+            user_msg = f"Claudia: Got it. No more tips about {topic_lower}."
+        else:
+            coaching_note = (
+                "Claudia note: The user said 'I know' without specifying a topic. "
+                "Ask them which topic they want to dismiss, or just acknowledge and move on."
+            )
+            user_msg = "Claudia: Which topic should I stop tips about?"
+
+        result = {"additionalContext": coaching_note}
+        if user_msg:
+            result["systemMessage"] = f"\033[38;5;160m{user_msg}\033[0m"
+        print(json.dumps(result))
         sys.exit(0)
 
     state = load_state(session_id)

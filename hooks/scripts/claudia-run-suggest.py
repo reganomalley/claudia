@@ -76,7 +76,17 @@ def save_state(session_id, state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config, dismiss_hint
+from claudia_config import load_user_config, dismiss_hint, load_profile
+
+# Map file extensions to tech keywords for dismissed topic matching
+EXT_TO_TECH = {
+    "py": "python",
+    "js": "node",
+    "ts": "typescript",
+    "sh": "bash",
+    "html": "html",
+    "package.json": "node",
+}
 
 
 def load_config():
@@ -98,12 +108,16 @@ def check(input_data, proactivity, experience):
     state = load_state(session_id)
     shown_types = set(state.get("shown_types", []))
 
+    # Load profile for dismissed topics
+    profile = load_profile()
+    dismissed = {t.lower() for t in profile.get("dismissed_topics", [])}
+
     user_hint, claude_hint = dismiss_hint("run-suggest")
     hint = "\n" + user_hint
     ctx_hint = "\n" + claude_hint
 
     # Check for package.json mentions
-    if "package.json" not in shown_types and re.search(PACKAGE_JSON_PATTERN, message, re.IGNORECASE):
+    if "package.json" not in shown_types and EXT_TO_TECH.get("package.json", "") not in dismissed and re.search(PACKAGE_JSON_PATTERN, message, re.IGNORECASE):
         shown_types.add("package.json")
         state["shown_types"] = list(shown_types)
         save_state(session_id, state)
@@ -117,7 +131,8 @@ def check(input_data, proactivity, experience):
         for match in matches:
             filename = match.group(1)
             ext = match.group(2).lower()
-            if ext in RUN_SUGGESTIONS and ext not in shown_types:
+            tech = EXT_TO_TECH.get(ext, ext)
+            if ext in RUN_SUGGESTIONS and ext not in shown_types and tech not in dismissed:
                 shown_types.add(ext)
                 state["shown_types"] = list(shown_types)
                 save_state(session_id, state)

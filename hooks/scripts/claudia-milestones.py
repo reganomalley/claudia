@@ -94,7 +94,7 @@ def save_state(state):
 
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config, dismiss_hint
+from claudia_config import load_user_config, dismiss_hint, load_profile
 
 
 def load_config():
@@ -122,7 +122,10 @@ def check(input_data, proactivity, experience):
     if not message:
         return None
 
-    if experience != "beginner":
+    # Use profile level if available, falling back to config experience
+    profile = load_profile()
+    effective_level = profile.get("level", experience)
+    if effective_level != "beginner":
         return None
 
     state = load_state()

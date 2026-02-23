@@ -137,6 +137,18 @@ Example: "In index.html, add a footer that shows the current year. Use the same 
 }
 ```
 
+**User profile** (`~/.claude/claudia-profile.json`) -- persistent proficiency profile:
+- If it exists, update the `level` field to match their experience
+- If it doesn't exist, create it:
+```json
+{
+  "level": "beginner|intermediate|experienced",
+  "dismissed_topics": [],
+  "dismissed_commands": [],
+  "topic_history": {}
+}
+```
+
 **Project-scoped context** -- if inside a git project (not `~`), also write project-specific data:
 - Determine the project key: run `python3 -c "import hashlib, os; print(hashlib.md5(os.getcwd().encode()).hexdigest()[:8])"`
 - Write `~/.claude/claudia-projects/{key}.json` with:
