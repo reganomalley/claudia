@@ -18,12 +18,19 @@ STUCK_PATTERNS = [
     r'^(help|stuck|idk|i don\'?t know|confused|lost)\s*[.!?]*$',
     r'^(what do i do|where do i start|how do i even|i\'?m stuck|i\'?m lost|i\'?m confused)\s*[.!?]*$',
     r'^(i have no idea|no clue|what now|now what)\s*[.!?]*$',
+    r'^(i give up|this is impossible|nothing works|everything is broken)\s*[.!?]*$',
+    r'^(can you help|please help|help me)\s*[.!?]*$',
+    r'^(i don\'?t understand|i don\'?t get it|makes no sense)\s*[.!?]*$',
+    r'^(where am i|what happened|what went wrong)\s*[.!?]*$',
 ]
 
 # Vague prompt patterns
 VAGUE_PATTERNS = [
     (r'^(fix it|fix this|make it work|help me|do it|just do it)\s*[.!?]*$', "no-context"),
     (r'^(it\'?s? broken|doesn\'?t work|not working|it broke|broken)\s*[.!?]*$', "no-context"),
+    (r'^(change it|update it|redo it|do it again|try again)\s*[.!?]*$', "no-context"),
+    (r'^(it\'?s? wrong|that\'?s wrong|wrong|bad|no good)\s*[.!?]*$', "no-context"),
+    (r'^(make it better|improve it|clean it up)\s*[.!?]*$', "no-context"),
     (r'^(what|why|how)\s*[.!?]*$', "too-short"),
     (r'^(yes|no|ok|okay|sure|yeah|yep|nah|nope)\s*[.!?]*$', "single-word"),
 ]
@@ -152,6 +159,15 @@ def main():
                 "briefly, then help them break the problem down step by step. Stay calm and supportive."
             )
             user_msg = "Claudia noticed you might be frustrated. She's telling Claude to slow down and help."
+
+        # Check for repeated punctuation (frustration/emphasis)
+        if not coaching_note and re.search(r'[!?]{3,}', prompt):
+            coaching_note = (
+                "Claudia note: The user seems emphatic or frustrated. Take a step back — "
+                "summarize what you understand about their problem, confirm you're on the same page, "
+                "then propose ONE concrete next step."
+            )
+            user_msg = "Claudia is telling Claude to check in with you before continuing."
 
     if coaching_note:
         state["count"] += 1

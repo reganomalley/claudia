@@ -93,6 +93,17 @@ code, pre {
   border-radius: 2px;
 }
 
+/* Mascot float animation */
+.mascot-float {
+  animation: mascot-float 4s ease-in-out infinite;
+}
+
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(1deg); }
+  75% { transform: translateY(4px) rotate(-1deg); }
+}
+
 /* Image parallax hint */
 .parallax-img {
   will-change: transform;
