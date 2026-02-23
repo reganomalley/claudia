@@ -4,7 +4,7 @@
 
 A Claude Code plugin that acts as your technology mentor, security advisor, and prompt coach. Claudia fills the gaps between writing code and making good technology decisions.
 
-**10 knowledge domains. 14 hooks. 11 commands. 205+ tests. Beginner-friendly.**
+**10 knowledge domains. 15 hooks. 11 commands. 234 tests. Beginner-friendly.**
 
 ## What Claudia Does
 
@@ -60,7 +60,7 @@ Claudia automatically activates when you:
 
 ### Hooks (Always Active)
 
-**7 file-check hooks** (run on every file write):
+**8 file-check hooks** (run on every file write):
 
 | Hook | Type | What it catches |
 |------|------|-----------------|
@@ -71,6 +71,7 @@ Claudia automatically activates when you:
 | Git hygiene | blocks | .env writes, merge conflict markers. Warns on large binaries |
 | Accessibility | warns | Missing alt text, unlabeled inputs, icon-only buttons, div click handlers |
 | License compliance | warns | GPL/AGPL dependencies in permissive-licensed projects |
+| CSS anti-patterns | warns | `!important` overuse, magic numbers, deep nesting, inline styles in templates |
 
 **7 proactive hooks** (watch your conversation):
 
