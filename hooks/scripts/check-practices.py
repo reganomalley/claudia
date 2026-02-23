@@ -159,7 +159,7 @@ def main():
         save_state(session_id, shown)
         # Advisory output via JSON on stdout (systemMessage)
         message = "Claudia noticed some patterns worth reviewing:\n" + "\n".join(warnings)
-        output = json.dumps({"systemMessage": f"\033[38;5;209m{message}\033[0m"})
+        output = json.dumps({"systemMessage": f"\033[38;5;160m{message}\033[0m"})
         print(output)
 
     sys.exit(0)

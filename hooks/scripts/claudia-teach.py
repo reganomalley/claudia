@@ -312,7 +312,7 @@ def check(input_data, proactivity, experience):
         state["revealed_commands"] = list(revealed_commands)
         save_state(session_id, state)
         tip_text = "\n".join(f"Claudia: {tip}" for tip in tips)
-        colored = "\n".join(f"\033[38;5;209m{line}\033[0m" for line in tip_text.split("\n"))
+        colored = "\n".join(f"\033[38;5;160m{line}\033[0m" for line in tip_text.split("\n"))
         return {"additionalContext": tip_text, "systemMessage": colored}
 
     if shown_keywords != set(state["shown_keywords"]) or revealed_commands != set(state["revealed_commands"]):

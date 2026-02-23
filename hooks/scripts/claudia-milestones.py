@@ -156,7 +156,7 @@ def check(input_data, proactivity, experience):
         state["achieved"] = list(achieved)
         save_state(state)
         msg = f"Claudia: {celebration}"
-        return {"additionalContext": msg, "systemMessage": f"\033[38;5;209m{msg}\033[0m"}
+        return {"additionalContext": msg, "systemMessage": f"\033[38;5;160m{msg}\033[0m"}
 
     # Save state even without celebration (for file_count tracking)
     if new_files > 0:

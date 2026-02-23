@@ -174,7 +174,7 @@ def main():
         save_state(session_id, state)
         result = {"additionalContext": coaching_note}
         if user_msg:
-            result["systemMessage"] = f"\033[38;5;209m{user_msg}\033[0m"
+            result["systemMessage"] = f"\033[38;5;160m{user_msg}\033[0m"
         print(json.dumps(result))
 
     sys.exit(0)

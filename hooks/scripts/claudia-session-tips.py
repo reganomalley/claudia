@@ -253,7 +253,7 @@ def main():
             visible_parts.append(tip)
         if visible_parts:
             msg = " | ".join(visible_parts) if greeting and tip else visible_parts[0]
-            result["systemMessage"] = f"\033[38;5;209m{msg}\033[0m"
+            result["systemMessage"] = f"\033[38;5;160m{msg}\033[0m"
         print(json.dumps(result))
 
     sys.exit(0)

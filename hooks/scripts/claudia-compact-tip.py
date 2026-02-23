@@ -85,7 +85,7 @@ def main():
         save_state(session_id, state)
         # Only systemMessage here -- additionalContext gets wiped by compaction
         output = json.dumps({
-            "systemMessage": f"\033[38;5;209m{tip}\033[0m",
+            "systemMessage": f"\033[38;5;160m{tip}\033[0m",
         })
         print(output)
 

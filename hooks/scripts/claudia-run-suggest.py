@@ -105,7 +105,7 @@ def check(input_data, proactivity, experience):
         save_state(session_id, state)
         suggestion = RUN_SUGGESTIONS["package.json"][1]
         msg = f"Claudia: {suggestion}"
-        return {"additionalContext": msg, "systemMessage": f"\033[38;5;209m{msg}\033[0m"}
+        return {"additionalContext": msg, "systemMessage": f"\033[38;5;160m{msg}\033[0m"}
 
     # Check for file creation patterns
     for pattern in FILE_PATTERNS:
@@ -119,7 +119,7 @@ def check(input_data, proactivity, experience):
                 save_state(session_id, state)
                 suggestion = RUN_SUGGESTIONS[ext][1].format(filename=filename)
                 msg = f"Claudia: {suggestion}"
-                return {"additionalContext": msg, "systemMessage": f"\033[38;5;209m{msg}\033[0m"}
+                return {"additionalContext": msg, "systemMessage": f"\033[38;5;160m{msg}\033[0m"}
 
     return None
 

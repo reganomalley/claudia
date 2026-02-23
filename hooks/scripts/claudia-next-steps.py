@@ -186,7 +186,7 @@ def check(input_data, proactivity, experience):
     )
     return {
         "additionalContext": suggestion_text,
-        "systemMessage": f"\033[38;5;209m{suggestion_text}\033[0m",
+        "systemMessage": f"\033[38;5;160m{suggestion_text}\033[0m",
     }
 
 

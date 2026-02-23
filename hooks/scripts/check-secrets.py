@@ -105,7 +105,7 @@ def main():
     if found:
         save_state(session_id, shown)
 
-        C = "\033[38;5;209m"
+        C = "\033[38;5;160m"
         R = "\033[0m"
         if len(found) == 1:
             print(f"{C}Claudia: {found[0]} in {file_path}.{R}", file=sys.stderr)

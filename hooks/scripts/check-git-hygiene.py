@@ -134,7 +134,7 @@ def main():
     if warnings:
         save_state(session_id, shown)
         message = "Claudia noticed a git hygiene concern:\n" + "\n".join(warnings)
-        output = json.dumps({"systemMessage": f"\033[38;5;209m{message}\033[0m"})
+        output = json.dumps({"systemMessage": f"\033[38;5;160m{message}\033[0m"})
         print(output)
 
     sys.exit(0)
