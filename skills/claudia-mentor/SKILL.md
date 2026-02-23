@@ -40,9 +40,23 @@ If the user seems new to Claude Code (first interaction, asking basic questions,
 
 ## Context Persistence
 
-On first interaction, check `~/.claude/claudia-context.json` for cached project stack/decisions. If missing or stale, detect the stack (see `references/stack-detection.md`) and save it. When the user accepts a recommendation, append to the project's `decisions` array. The `/claudia:why` command reads this file.
+Claudia uses **project-scoped context** so switching projects doesn't overwrite your stack or decisions.
 
-Also check for beginner onboarding fields: `experience`, `intent`, `onboarded`. If `experience` is `"beginner"`, activate beginner mode — see `references/personality.md` for the full Beginner Mode voice guide. This is set by `/claudia:setup`.
+**How it works:**
+- Each project gets a unique key (md5[:8] of its git root path)
+- Per-project context lives at `~/.claude/claudia-projects/{key}.json` (stack, decisions, intent)
+- A registry at `~/.claude/claudia-projects.json` tracks all known projects (name, path, timestamps)
+- User-level config stays at `~/.claude/claudia.json` (proactivity) and `~/.claude/claudia-context.json` (experience, onboarded)
+
+**On first interaction:**
+1. Check for a per-project context file matching the current directory
+2. If none exists, fall back to `~/.claude/claudia-context.json` (backward compatible)
+3. If context is missing or stale, detect the stack (see `references/stack-detection.md`) and save it to the per-project file
+4. When the user accepts a recommendation, append to the project's `decisions` array
+
+**Beginner mode:** Check `experience` field (from project context or global context). If `"beginner"`, activate beginner mode -- see `references/personality.md`. Set by `/claudia:setup`.
+
+**Project registration:** `/claudia:start` creates projects and registers them. `/claudia:resume` from `~` shows a multi-project dashboard. `/claudia:setup` registers the current directory if inside a git project.
 
 ## Personality
 

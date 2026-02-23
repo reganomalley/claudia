@@ -200,30 +200,12 @@ def save_state(session_id, state):
         pass
 
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from claudia_config import load_user_config
+
+
 def load_config():
-    """Load proactivity from ~/.claude/claudia.json, experience from claudia-context.json."""
-    proactivity = "moderate"
-    experience = "intermediate"
-
-    config_path = os.path.expanduser("~/.claude/claudia.json")
-    if os.path.exists(config_path):
-        try:
-            with open(config_path) as f:
-                data = json.load(f)
-                proactivity = data.get("proactivity", proactivity)
-        except (json.JSONDecodeError, IOError):
-            pass
-
-    context_path = os.path.expanduser("~/.claude/claudia-context.json")
-    if os.path.exists(context_path):
-        try:
-            with open(context_path) as f:
-                data = json.load(f)
-                experience = data.get("experience", experience)
-        except (json.JSONDecodeError, IOError):
-            pass
-
-    return proactivity, experience
+    return load_user_config()
 
 
 def main():

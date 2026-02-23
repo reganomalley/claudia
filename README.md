@@ -2,7 +2,7 @@
 
 A Claude Code plugin that acts as your technology mentor, security advisor, and prompt coach. Claudia fills the gaps between writing code and making good technology decisions.
 
-**10 knowledge domains. 7 automated hooks. Context-aware advice.**
+**10 knowledge domains. 14 hooks. 10 commands. Beginner-friendly.**
 
 ## What Claudia Does
 
@@ -11,7 +11,8 @@ A Claude Code plugin that acts as your technology mentor, security advisor, and 
 - **Anti-pattern detection** -- Warns about common mistakes across code, Docker, dependencies, accessibility, and git hygiene
 - **Prompt coaching** -- Detects vague prompts and suggests improvements to get better results from Claude
 - **Context-aware** -- Reads your package.json, configs, and stack to give specific advice, not generic recommendations
-- **Project health audits** -- `/claudia-health` scans your project for security, testing, dependency, and architecture issues
+- **Project health audits** -- `/claudia:health` scans your project for security, testing, dependency, and architecture issues
+- **Beginner mode** -- Simplified greeting, stuck detection, run suggestions, milestone celebrations, progressive command reveal
 
 ## Install
 
@@ -27,17 +28,23 @@ To verify, type `/claudia:ask are you there?` inside Claude Code.
 
 ### Slash Commands
 
-Commands are namespaced under `claudia-mentor:`. Type `/claudia-mentor:` and tab to see all options.
+Type `/claudia:` and tab to see all options.
 
 ```
 /claudia:ask what database should I use for time-series data?
-/claudia:explain                 # Explain the code that was just written
+/claudia:explain                  # Explain code, a technology, or a concept
 /claudia:explain src/auth.ts      # Explain a specific file
 /claudia:review                   # Review recent changes for bugs
 /claudia:review feature-branch    # Review a specific branch
 /claudia:why                      # Explain why your project uses this stack
 /claudia:why prisma               # Explain a specific technology choice
 /claudia:health                   # Run a full project health audit
+/claudia:wtf                      # Break down an error: What / Why / Fix
+/claudia:where                    # Guided tour of your project structure
+/claudia:resume                   # Pick up where you left off
+/claudia:shortcuts                # Keyboard shortcut reference
+/claudia:setup                    # First-time onboarding
+/claudia:start                    # Create a new project from scratch
 ```
 
 ### Automatic (Model-Invoked)
@@ -51,45 +58,40 @@ Claudia automatically activates when you:
 
 ### Hooks (Always Active)
 
-**Secret detection** (blocks):
-- AWS access keys, OpenAI/Stripe keys, GitHub tokens, GitLab PATs, Slack tokens
-- Hardcoded passwords, secrets, and API keys
-- Database connection strings with credentials
-- Private keys
+**7 file-check hooks** (run on every file write):
 
-**Anti-pattern warnings** (advisory):
-- `eval()` usage, `document.write()`, `innerHTML`
-- `console.log` in production code
-- Empty catch blocks
-- HTTP URLs (non-HTTPS), disabled SSL verification
-- SQL string concatenation
-- `chmod 777`
-- TODO/FIXME markers in new code
+| Hook | Type | What it catches |
+|------|------|-----------------|
+| Secret detection | blocks | AWS keys, API tokens, passwords, private keys, connection strings |
+| Bad practices | warns | `eval()`, empty catch, `console.log` in prod, SQL concat, `chmod 777` |
+| Dependency audit | warns | Deprecated, compromised, or trivial packages |
+| Dockerfile lint | warns | Running as root, large images, secrets in ENV, missing multi-stage |
+| Git hygiene | blocks | .env writes, merge conflict markers. Warns on large binaries |
+| Accessibility | warns | Missing alt text, unlabeled inputs, icon-only buttons, div click handlers |
+| License compliance | warns | GPL/AGPL dependencies in permissive-licensed projects |
 
-**Dependency audit** (advisory):
-- Deprecated packages (moment, request, gulp)
-- Compromised packages (colors, faker, event-stream)
-- Trivial packages (is-odd, is-even, left-pad)
+**7 proactive hooks** (watch your conversation):
 
-**Dockerfile lint** (advisory):
-- Running as root, large base images, `:latest` tag
-- Missing multi-stage builds, secrets in ENV
-- npm install without --production
+| Hook | Event | What it does |
+|------|-------|--------------|
+| Teach | Stop | Explains tech keywords, reveals commands contextually |
+| Compact tip | PreCompact | Tips on context compaction |
+| Session tips | SessionStart | Rotating tips, beginner-simplified greeting |
+| Prompt coach | UserPromptSubmit | Stuck detection, vague prompt coaching |
+| Run suggest | Stop | Tells beginners how to run created files |
+| Next steps | Stop | Suggests 2-3 contextual next actions |
+| Milestones | Stop | Celebrates achievements (persistent across sessions) |
 
-**Git hygiene** (blocks/advisory):
-- Writing to .env files (blocks)
-- Merge conflict markers in code (blocks)
-- Large binary files (advisory)
+## Beginner Mode
 
-**Accessibility** (advisory):
-- Images without alt text
-- Inputs without labels
-- Icon-only buttons without aria-label
-- Click handlers on non-interactive elements
-- Positive tabIndex values
+Set `"experience": "beginner"` in `~/.claude/claudia-context.json` (or run `/claudia:setup`) and Claudia adapts:
 
-**License compliance** (advisory):
-- Copyleft dependencies (GPL, AGPL, SSPL) in permissive-licensed projects
+- **Simplified greeting** -- No command list on startup. Just "Claudia is here. Just build. I'm watching."
+- **Stuck detection** -- Type "I'm stuck" or "help" and she asks one clarifying question, then suggests one small next step
+- **Run suggestions** -- After a file is created, she tells you how to run it
+- **Next-step suggestions** -- When Claude finishes a task, she suggests what to try next
+- **Milestones** -- Celebrates first file, first bug fix, first commit. Persists across sessions
+- **Progressive command reveal** -- Commands appear when relevant, not all at once
 
 ## Knowledge Domains
 
@@ -212,9 +214,9 @@ This creates the directory structure and template files. Fill in the SKILL.md, a
 
 Hooks run locally with the same permissions as Claude Code. Malicious hooks could read files, exfiltrate data, or modify code silently.
 
-- **All hook/script PRs require maintainer review** — markdown-only reference PRs are lower risk
-- **No network calls in hooks** — no fetching URLs, no phoning home, local filesystem only
-- **No obfuscated code** — every line must be readable and understandable
+- **All hook/script PRs require maintainer review** -- markdown-only reference PRs are lower risk
+- **No network calls in hooks** -- no fetching URLs, no phoning home, local filesystem only
+- **No obfuscated code** -- every line must be readable and understandable
 - Hook PRs get a dedicated security review with line-by-line diff and sandboxed testing
 
 ### Writing Guidelines

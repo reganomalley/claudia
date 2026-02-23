@@ -1,7 +1,7 @@
 ---
 description: Quick reference of keyboard shortcuts for Claude Code, the terminal, and Claudia commands
 argument-hint:
-allowed-tools: []
+allowed-tools: [Read]
 ---
 
 # Claudia: Keyboard Shortcuts

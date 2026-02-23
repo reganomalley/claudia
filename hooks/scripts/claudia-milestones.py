@@ -93,16 +93,12 @@ def save_state(state):
         pass
 
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from claudia_config import load_user_config
+
+
 def load_config():
-    experience = "intermediate"
-    context_path = os.path.expanduser("~/.claude/claudia-context.json")
-    if os.path.exists(context_path):
-        try:
-            with open(context_path) as f:
-                data = json.load(f)
-                experience = data.get("experience", experience)
-        except (json.JSONDecodeError, IOError):
-            pass
+    _, experience = load_user_config()
     return experience
 
 

@@ -88,5 +88,15 @@
       "gate": "moderate+ for beginners, high for everyone else",
       "behavior": "Ask ONE clarifying question, suggest ONE small next step"
     }
+  },
+  "project_scoping": {
+    "registry": "~/.claude/claudia-projects.json",
+    "per_project_dir": "~/.claude/claudia-projects/",
+    "project_key": "md5(git_root_path)[:8]",
+    "per_project_file": "{key}.json contains project_key, name, path, intent, stack, decisions",
+    "registry_file": "version + projects map (key -> name, path, last_active, created)",
+    "backward_compat": "Falls back to ~/.claude/claudia-context.json if no project-scoped file exists",
+    "created_by": ["/claudia:start", "/claudia:setup"],
+    "read_by": ["all proactive hooks via claudia_config.py", "/claudia:resume", "/claudia:why"]
   }
 }

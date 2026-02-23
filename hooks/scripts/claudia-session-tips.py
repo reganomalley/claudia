@@ -35,26 +35,21 @@ COMPACT_TIP = (
 
 
 def gather_project_context():
-    """Read claudia-context.json, milestones, and git state to rebuild context after compaction."""
+    """Read project context, milestones, and git state to rebuild context after compaction."""
     parts = []
 
-    # Stack and decisions from context file
-    context_path = os.path.expanduser("~/.claude/claudia-context.json")
-    if os.path.exists(context_path):
-        try:
-            with open(context_path) as f:
-                ctx = json.load(f)
-            stack = ctx.get("stack", {})
-            decisions = ctx.get("decisions", [])
-            experience = ctx.get("experience", "intermediate")
-            if stack:
-                parts.append(f"Project stack: {json.dumps(stack)}")
-            if decisions:
-                parts.append("Decisions made this session: " + "; ".join(str(d) for d in decisions[-5:]))
-            if experience == "beginner":
-                parts.append("User experience level: beginner. Use simple language, explain jargon.")
-        except (json.JSONDecodeError, IOError):
-            pass
+    # Stack and decisions from project-scoped context (falls back to global)
+    ctx = load_project_context()
+    if ctx:
+        stack = ctx.get("stack", {})
+        decisions = ctx.get("decisions", [])
+        experience = ctx.get("experience", "intermediate")
+        if stack:
+            parts.append(f"Project stack: {json.dumps(stack)}")
+        if decisions:
+            parts.append("Decisions made this session: " + "; ".join(str(d) for d in decisions[-5:]))
+        if experience == "beginner":
+            parts.append("User experience level: beginner. Use simple language, explain jargon.")
 
     # Milestones achieved
     milestones_path = os.path.expanduser("~/.claude/claudia-milestones.json")
@@ -158,30 +153,12 @@ def save_state(session_id, state):
         pass
 
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from claudia_config import load_user_config, load_project_context
+
+
 def load_config():
-    """Load proactivity from ~/.claude/claudia.json, experience from claudia-context.json."""
-    proactivity = "moderate"
-    experience = "intermediate"
-
-    config_path = os.path.expanduser("~/.claude/claudia.json")
-    if os.path.exists(config_path):
-        try:
-            with open(config_path) as f:
-                data = json.load(f)
-                proactivity = data.get("proactivity", proactivity)
-        except (json.JSONDecodeError, IOError):
-            pass
-
-    context_path = os.path.expanduser("~/.claude/claudia-context.json")
-    if os.path.exists(context_path):
-        try:
-            with open(context_path) as f:
-                data = json.load(f)
-                experience = data.get("experience", experience)
-        except (json.JSONDecodeError, IOError):
-            pass
-
-    return proactivity, experience
+    return load_user_config()
 
 
 def main():
