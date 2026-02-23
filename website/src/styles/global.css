@@ -2,15 +2,15 @@
 
 /* Brand Colors */
 :root {
-  --vermillion: #d70000;
+  --brand: #d70000;
   --void: #0A0A0A;
   --paper: #FAFAF8;
-  --signal: #FF6B35;
+  --signal: #E04030;
   --soft-gray: #2A2A2E;
 }
 
 @theme {
-  --color-vermillion: var(--vermillion);
+  --color-brand: var(--brand);
   --color-void: var(--void);
   --color-paper: var(--paper);
   --color-signal: var(--signal);
@@ -33,7 +33,7 @@ code, pre {
 }
 
 ::selection {
-  background-color: var(--vermillion);
+  background-color: var(--brand);
   color: var(--paper);
 }
 
@@ -71,14 +71,14 @@ code, pre {
 .cursor::after {
   content: "▋";
   animation: blink 1s step-end infinite;
-  color: var(--vermillion);
+  color: var(--brand);
 }
 
 @keyframes blink {
   50% { opacity: 0; }
 }
 
-/* Vermillion accent line */
+/* Brand accent line */
 .accent-line {
   position: relative;
 }
@@ -89,7 +89,7 @@ code, pre {
   top: 0;
   width: 3px;
   height: 100%;
-  background: var(--vermillion);
+  background: var(--brand);
   border-radius: 2px;
 }
 

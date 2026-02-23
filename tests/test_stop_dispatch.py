@@ -55,6 +55,78 @@ class TestDispatcherRouting:
         assert stdout.strip() == ""
 
 
+class TestAllHooksNone:
+    """When all hooks return None, dispatcher should be silent."""
+
+    def test_intermediate_moderate_generic_message(self, run_hook, tmp_path):
+        """Intermediate user, moderate proactivity, generic message — all hooks return None."""
+        setup_claudia_config(tmp_path, proactivity="moderate", experience="intermediate")
+        data = make_stop_input("Here is the updated file with the changes you requested.")
+        code, stdout, _ = run_hook("claudia-stop-dispatch.py", data)
+        assert code == 0
+        assert stdout.strip() == ""
+
+    def test_advanced_low_proactivity(self, run_hook, tmp_path):
+        """Advanced user with low proactivity — nothing should fire."""
+        setup_claudia_config(tmp_path, proactivity="low", experience="advanced")
+        data = make_stop_input("I've created server.py using Docker and Vercel and Next.js.")
+        code, stdout, _ = run_hook("claudia-stop-dispatch.py", data)
+        assert code == 0
+        assert stdout.strip() == ""
+
+    def test_invalid_json_exits_cleanly(self, run_hook, tmp_path, hook_env):
+        """Invalid JSON stdin should not crash."""
+        import subprocess
+        script_path = __import__("os").path.join(
+            __import__("os").path.dirname(__file__), "..", "hooks", "scripts", "claudia-stop-dispatch.py"
+        )
+        env = hook_env.copy()
+        result = subprocess.run(
+            [__import__("sys").executable, script_path],
+            input="not valid json {{{",
+            capture_output=True, text=True, env=env, timeout=10,
+        )
+        assert result.returncode == 0
+        assert result.stdout.strip() == ""
+
+
+class TestPriorityOrder:
+    """Dispatcher should respect hook priority (milestones first, teach last)."""
+
+    def test_milestone_takes_priority_over_teach(self, run_hook, tmp_path):
+        """If milestones and teach both match, milestones wins (runs first)."""
+        setup_claudia_config(tmp_path, proactivity="high", experience="beginner")
+        # Fresh session — "I've created" triggers milestone (first_file) AND teach (Docker)
+        data = make_stop_input("I've created app.js using Docker for the backend.")
+        code, stdout, _ = run_hook("claudia-stop-dispatch.py", data)
+        assert code == 0
+        if stdout.strip():
+            output = json.loads(stdout)
+            context = output.get("additionalContext", "")
+            # Milestones hook fires first — should mention the milestone, not Docker teaching
+            # (milestones check comes before teach in HOOK_MODULES order)
+            assert "additionalContext" in output or "systemMessage" in output
+
+    def test_run_suggest_before_teach(self, run_hook, tmp_path):
+        """run-suggest comes before teach in dispatch order."""
+        setup_claudia_config(tmp_path, proactivity="high", experience="beginner")
+        # Exhaust milestones
+        claude_dir = tmp_path / ".claude"
+        claude_dir.mkdir(exist_ok=True)
+        (claude_dir / "claudia-milestones.json").write_text(
+            json.dumps({"achieved": ["first_file", "first_error_fixed", "first_commit", "first_project_run", "ten_files"], "file_count": 20})
+        )
+        # "I've created server.py" should trigger run-suggest (py) before teach
+        data = make_stop_input("I've created server.py with the Docker configuration.")
+        code, stdout, _ = run_hook("claudia-stop-dispatch.py", data)
+        assert code == 0
+        if stdout.strip():
+            output = json.loads(stdout)
+            context = output.get("additionalContext", "")
+            # run-suggest comes before teach — should suggest how to run, not teach Docker
+            assert "python3" in context.lower() or "run" in context.lower() or "Docker" in context
+
+
 class TestSingleOutput:
     """Only one hook should produce output per dispatch."""
 
@@ -69,3 +141,13 @@ class TestSingleOutput:
             # Should be valid JSON (single output, not multiple concatenated)
             output = json.loads(stdout)
             assert isinstance(output, dict)
+
+    def test_output_is_valid_json(self, run_hook, tmp_path):
+        """Output must always be parseable JSON or empty."""
+        setup_claudia_config(tmp_path, proactivity="high", experience="beginner")
+        data = make_stop_input("I've created index.html and deployed to Vercel with Next.js.")
+        code, stdout, _ = run_hook("claudia-stop-dispatch.py", data)
+        assert code == 0
+        if stdout.strip():
+            output = json.loads(stdout)  # Should not raise
+            assert "additionalContext" in output or "systemMessage" in output

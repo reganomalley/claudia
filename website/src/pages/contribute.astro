@@ -8,12 +8,12 @@ import Layout from "../layouts/Layout.astro";
       <div class="reveal mb-6">
         <img src="/assets/claudia-mascot.png" alt="" class="w-16 h-16 object-contain" />
       </div>
-      <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Open source</p>
+      <p class="reveal font-mono text-xs text-brand tracking-widest uppercase mb-4">Open source</p>
       <h1 class="reveal text-4xl sm:text-5xl font-extrabold tracking-[-0.03em] leading-[1.05]">
         Know something?<br />Teach it to Claudia.
       </h1>
       <p class="reveal mt-5 text-paper/40 text-lg font-light max-w-lg">
-        Contributing means writing a markdown file. That's it. No code review, no tests, no build step. If you can explain something about technology, you can make Claudia smarter.
+        Contributing means writing a markdown file. That's it. If you can explain something about technology, you can make Claudia smarter.
       </p>
     </div>
   </section>
@@ -31,13 +31,13 @@ import Layout from "../layouts/Layout.astro";
           { title: "Add a whole new topic", time: "~4 hours", desc: "Use the scaffolding tool to create a full knowledge domain. Own a subject — architecture, mobile, ML, whatever you know." },
           { title: "Build a new automatic check", time: "~4 hours", desc: "Write a script that catches an issue every time Claude writes a file. Security, quality, accessibility — anything that should never slip through." },
         ].map((item) => (
-          <div class="reveal bg-white/[0.02] border border-white/[0.04] rounded-lg p-6 hover:border-vermillion/20 transition-colors group">
+          <div class="reveal bg-white/[0.02] border border-white/[0.04] rounded-lg p-6 hover:border-brand/20 transition-colors group">
             <div class="flex items-start justify-between gap-4">
               <div>
-                <h3 class="text-base font-semibold text-paper/90 group-hover:text-vermillion transition-colors">{item.title}</h3>
+                <h3 class="text-base font-semibold text-paper/90 group-hover:text-brand transition-colors">{item.title}</h3>
                 <p class="mt-2 text-sm text-paper/35 leading-relaxed">{item.desc}</p>
               </div>
-              <span class="shrink-0 text-[11px] font-mono text-vermillion/60 bg-vermillion/[0.08] px-2.5 py-1 rounded-full">{item.time}</span>
+              <span class="shrink-0 text-[11px] font-mono text-brand/60 bg-brand/[0.08] px-2.5 py-1 rounded-full">{item.time}</span>
             </div>
           </div>
         ))}
@@ -78,14 +78,14 @@ import Layout from "../layouts/Layout.astro";
           { title: "Use tables and decision trees", desc: "A comparison table is worth a thousand words. If someone is choosing between two things, make a table." },
         ].map((g) => (
           <div class="reveal bg-void p-7">
-            <h3 class="text-sm font-semibold text-vermillion">{g.title}</h3>
+            <h3 class="text-sm font-semibold text-brand">{g.title}</h3>
             <p class="mt-2 text-xs text-paper/35 leading-relaxed">{g.desc}</p>
           </div>
         ))}
         <div class="reveal bg-void p-7 sm:col-span-2">
-          <h3 class="text-sm font-semibold text-vermillion">Keep it tight</h3>
+          <h3 class="text-sm font-semibold text-brand">Keep it tight</h3>
           <p class="mt-2 text-xs text-paper/35 leading-relaxed">
-            The main file loads into Claude's memory every time. Keep it under 2000 words. Put deep dives, reference tables, and long examples into the <code class="text-vermillion/60">references/</code> folder — those only load when needed.
+            The main file loads into Claude's memory every time. Keep it under 2000 words. Put deep dives, reference tables, and long examples into the <code class="text-brand/60">references/</code> folder — those only load when needed.
           </p>
         </div>
       </div>
@@ -117,10 +117,39 @@ import Layout from "../layouts/Layout.astro";
             <p class="text-sm text-paper/50"><strong class="text-paper/70">No obfuscated code.</strong> Every line should be readable. If a reviewer can't understand what a script does, it doesn't ship.</p>
           </div>
           <div class="flex items-start gap-3">
-            <span class="shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-vermillion/20 text-vermillion">How</span>
+            <span class="shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-brand/20 text-brand">How</span>
             <p class="text-sm text-paper/50">Hook PRs get a dedicated security review. We diff every line against the existing script, check for exfil patterns, and test in a sandboxed environment before merging.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testing -->
+  <section class="pb-28 px-6">
+    <div class="max-w-4xl mx-auto">
+      <p class="reveal font-mono text-xs text-[#28c840] tracking-widest uppercase mb-8">Testing</p>
+
+      <div class="reveal border border-[#28c840]/20 bg-[#28c840]/[0.03] rounded-xl p-8">
+        <h3 class="text-lg font-semibold text-paper/90 mb-4">212+ tests and CI</h3>
+        <p class="text-sm text-paper/40 leading-relaxed mb-6">
+          Every hook has unit tests. CI runs on every push and PR against Python 3.9 and 3.12. If you're adding or modifying a hook, run the suite locally before opening a PR:
+        </p>
+
+        <div class="rounded-xl overflow-hidden border border-white/[0.08]">
+          <div class="bg-[#1a1a1e] px-4 py-3 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
+          </div>
+          <pre class="bg-[#141417] px-6 py-5 text-[13px] font-mono leading-[1.9] overflow-x-auto"><code><span class="text-[#28c840]">pip install</span> <span class="text-paper/60">pytest</span>
+<span class="text-[#28c840]">pytest</span> <span class="text-paper/60">tests/ -v</span>
+<span class="text-paper/25"># 212 passed in ~3 seconds</span></code></pre>
+        </div>
+
+        <p class="text-xs text-paper/30 mt-4">
+          Tests use subprocess execution — the same way Claude Code runs hooks. No mocking of the scripts themselves.
+        </p>
       </div>
     </div>
   </section>
@@ -132,7 +161,7 @@ import Layout from "../layouts/Layout.astro";
         href="https://github.com/reganomalley/claudia"
         target="_blank"
         rel="noopener noreferrer"
-        class="reveal inline-flex items-center gap-2 bg-vermillion hover:bg-vermillion/90 text-paper text-sm font-medium px-6 py-2.5 rounded-lg transition-colors"
+        class="reveal inline-flex items-center gap-2 bg-brand hover:bg-brand/90 text-paper text-sm font-medium px-6 py-2.5 rounded-lg transition-colors"
       >
         Start contributing
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -1,0 +1,159 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Claudia — Changelog" description="What's new in Claudia. Release notes and version history.">
+  <section class="pt-32 pb-20 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="reveal mb-6">
+        <img src="/assets/claudia-mascot.png" alt="" class="w-16 h-16 object-contain" />
+      </div>
+      <p class="reveal font-mono text-xs text-brand tracking-widest uppercase mb-4">Changelog</p>
+      <h1 class="reveal text-4xl sm:text-5xl font-extrabold tracking-[-0.03em] leading-[1.05]">
+        What's new
+      </h1>
+      <p class="reveal mt-5 text-paper/40 text-lg font-light max-w-lg">
+        Every release, documented. Newest first.
+      </p>
+    </div>
+  </section>
+
+  <!-- v0.7.0 -->
+  <section class="pb-20 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="reveal flex items-baseline gap-4 mb-8">
+        <span class="font-mono text-2xl font-bold text-brand">v0.7.0</span>
+        <span class="text-sm text-paper/30">February 2026</span>
+      </div>
+
+      <div class="space-y-4 stagger">
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-[#28c840]/15 text-[#28c840]">New</span>
+            <h3 class="text-sm font-semibold text-paper/80">212+ unit tests with CI</h3>
+          </div>
+          <p class="text-xs text-paper/30 leading-relaxed">Full pytest suite covering all 14 hooks. GitHub Actions CI runs on every push against Python 3.9 and 3.12. Subprocess-based testing matches real Claude Code invocation.</p>
+        </div>
+
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-[#28c840]/15 text-[#28c840]">New</span>
+            <h3 class="text-sm font-semibold text-paper/80">Stop hook consolidation</h3>
+          </div>
+          <p class="text-xs text-paper/30 leading-relaxed">4 Stop hooks (milestones, run-suggest, next-steps, teach) consolidated into a single dispatcher. One subprocess per Claude response instead of four. Each hook exposes a <code class="text-paper/50">check()</code> function called in-process.</p>
+        </div>
+
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-[#febc2e]/15 text-[#febc2e]">Fixed</span>
+            <h3 class="text-sm font-semibold text-paper/80">Secret detection rewritten in Python</h3>
+          </div>
+          <p class="text-xs text-paper/30 leading-relaxed">Replaced <code class="text-paper/50">check-secrets.sh</code> (which used <code class="text-paper/50">grep -P</code>) with <code class="text-paper/50">check-secrets.py</code>. Fixes silent failures on macOS where BSD grep lacks Perl regex support.</p>
+        </div>
+
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-[#febc2e]/15 text-[#febc2e]">Fixed</span>
+            <h3 class="text-sm font-semibold text-paper/80">Multi-secret detection</h3>
+          </div>
+          <p class="text-xs text-paper/30 leading-relaxed">Secret scanner now reports ALL matching secret types in a file, not just the first. A file with both an AWS key and a Postgres URI now blocks with both warnings.</p>
+        </div>
+
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-brand/20 text-brand">Changed</span>
+            <h3 class="text-sm font-semibold text-paper/80">Terminal color: deep red</h3>
+          </div>
+          <p class="text-xs text-paper/30 leading-relaxed">Claudia's terminal output color changed from ANSI 209 (vermillion/orange) to ANSI 160 (deep red, <code class="text-paper/50">#d70000</code>). Consistent across all 14 hook scripts.</p>
+        </div>
+
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-brand/20 text-brand">Changed</span>
+            <h3 class="text-sm font-semibold text-paper/80">CSS anti-pattern detection</h3>
+          </div>
+          <p class="text-xs text-paper/30 leading-relaxed">New PreToolUse hook catches <code class="text-paper/50">!important</code> abuse, hardcoded colors, <code class="text-paper/50">z-index: 9999</code>, and other CSS anti-patterns in file writes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- v0.5.0 -->
+  <section class="pb-20 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="reveal flex items-baseline gap-4 mb-8">
+        <span class="font-mono text-2xl font-bold text-paper/40">v0.5.0</span>
+        <span class="text-sm text-paper/30">February 2026</span>
+      </div>
+
+      <div class="space-y-4 stagger">
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-[#28c840]/15 text-[#28c840]">New</span>
+            <h3 class="text-sm font-semibold text-paper/80">Beginner mode</h3>
+          </div>
+          <p class="text-xs text-paper/30 leading-relaxed">Stuck detection, run suggestions, next-step suggestions (max 3/session), milestone celebrations (persistent cross-session), progressive command reveal, and simplified greeting.</p>
+        </div>
+
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-[#28c840]/15 text-[#28c840]">New</span>
+            <h3 class="text-sm font-semibold text-paper/80">Prompt coaching</h3>
+          </div>
+          <p class="text-xs text-paper/30 leading-relaxed">Detects vague prompts like "fix it" and suggests specific rewrites. Catches stuck patterns ("I'm stuck", "idk", "where do I start").</p>
+        </div>
+
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-[#28c840]/15 text-[#28c840]">New</span>
+            <h3 class="text-sm font-semibold text-paper/80">Commands: wtf, where, resume</h3>
+          </div>
+          <p class="text-xs text-paper/30 leading-relaxed"><code class="text-paper/50">/claudia:wtf</code> breaks down errors (What/Why/Fix). <code class="text-paper/50">/claudia:where</code> gives guided project tours. <code class="text-paper/50">/claudia:resume</code> picks up where you left off using git history and session notes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- v0.4.0 -->
+  <section class="pb-20 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="reveal flex items-baseline gap-4 mb-8">
+        <span class="font-mono text-2xl font-bold text-paper/40">v0.4.0</span>
+        <span class="text-sm text-paper/30">January 2026</span>
+      </div>
+
+      <div class="space-y-4 stagger">
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-[#28c840]/15 text-[#28c840]">New</span>
+            <h3 class="text-sm font-semibold text-paper/80">Initial public release</h3>
+          </div>
+          <p class="text-xs text-paper/30 leading-relaxed">10 knowledge domains, 14 hooks (7 code guardrails + 7 proactive), 8 commands. Keyword teaching, session tips, compaction tips. Published to npm as <code class="text-paper/50">claudia-mentor</code>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Source link -->
+  <section class="pb-20 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <p class="text-sm font-medium text-paper/70">Want to see the full commit history?</p>
+          <p class="text-xs text-paper/30 mt-1">Every change is tracked on GitHub.</p>
+        </div>
+        <a
+          href="https://github.com/reganomalley/claudia/commits/main"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-sm text-paper/50 hover:text-brand transition-colors shrink-0"
+        >
+          View commits
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

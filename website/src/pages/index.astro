@@ -27,7 +27,7 @@ import Layout from "../layouts/Layout.astro";
           </div>
         </div>
         <h1 class="reveal reveal-delay-1 text-6xl sm:text-7xl lg:text-[5.5rem] font-extrabold leading-[0.9] tracking-[-0.04em]">
-          She catches<br />what you<br /><span class="text-vermillion">miss</span>
+          She catches<br />what you<br /><span class="text-brand">miss</span>
         </h1>
         <p class="reveal reveal-delay-2 mt-10 text-xl text-paper/50 leading-relaxed max-w-md font-light">
           You prompt. Claude codes.<br />Claudia makes sure it's actually good.
@@ -36,7 +36,7 @@ import Layout from "../layouts/Layout.astro";
         <div class="reveal reveal-delay-3 mt-12">
           <div class="inline-flex items-center gap-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl px-5 py-3.5">
             <code id="install-cmd" class="text-sm font-mono text-paper/80 select-all">npm i -g claudia-mentor</code>
-            <button id="copy-btn" aria-label="Copy" class="p-1 rounded text-paper/30 hover:text-vermillion transition-colors cursor-pointer">
+            <button id="copy-btn" aria-label="Copy" class="p-1 rounded text-paper/30 hover:text-brand transition-colors cursor-pointer">
               <svg class="w-4 h-4" id="copy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
               <svg class="w-4 h-4 hidden" id="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
             </button>
@@ -48,14 +48,14 @@ import Layout from "../layouts/Layout.astro";
           <span class="text-paper/10">|</span>
           <a href="#how-she-works" class="text-sm text-paper/40 hover:text-paper transition-colors">How it works</a>
           <span class="text-paper/10">|</span>
-          <a href="/start" class="text-sm text-vermillion/60 hover:text-vermillion transition-colors">New to this?</a>
+          <a href="/start" class="text-sm text-brand/60 hover:text-brand transition-colors">New to this?</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ===================== MARQUEE ===================== -->
-  <section class="border-y border-white/[0.06] bg-vermillion overflow-hidden py-4">
+  <section class="border-y border-white/[0.06] bg-brand overflow-hidden py-4">
     <div class="marquee-track">
       <div class="marquee-content">
         {Array(8).fill(0).map(() => (
@@ -74,7 +74,7 @@ import Layout from "../layouts/Layout.astro";
   <section id="how-she-works" class="py-32 sm:py-40">
     <div class="max-w-7xl mx-auto px-6">
       <div class="max-w-2xl mb-20">
-        <p class="reveal font-mono text-[11px] text-vermillion tracking-[0.25em] uppercase mb-4">How she works</p>
+        <p class="reveal font-mono text-[11px] text-brand tracking-[0.25em] uppercase mb-4">How she works</p>
         <h2 class="reveal text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[0.95] tracking-[-0.03em]">
           Three ways<br />she shows up
         </h2>
@@ -86,19 +86,19 @@ import Layout from "../layouts/Layout.astro";
       <!-- Numbered cards -->
       <div class="grid md:grid-cols-3 gap-0 stagger">
         <div class="reveal border-l border-white/[0.06] pl-8 pr-6 py-2">
-          <span class="block text-6xl font-extrabold text-vermillion/20 leading-none mb-4">01</span>
+          <span class="block text-6xl font-extrabold text-brand/20 leading-none mb-4">01</span>
           <h3 class="text-lg font-semibold text-paper/90 mb-3">Automatic checks</h3>
           <p class="text-sm text-paper/40 leading-relaxed">Every time Claude writes a file, Claudia scans it. Leaked API keys get blocked. Bad patterns get flagged. You see what's wrong and how to fix it.</p>
         </div>
         <div class="reveal border-l border-white/[0.06] pl-8 pr-6 py-2">
-          <span class="block text-6xl font-extrabold text-vermillion/20 leading-none mb-4">02</span>
+          <span class="block text-6xl font-extrabold text-brand/20 leading-none mb-4">02</span>
           <h3 class="text-lg font-semibold text-paper/90 mb-3">She joins your conversation</h3>
           <p class="text-sm text-paper/40 leading-relaxed">Say "I'll use MongoDB for this" and Claudia jumps in: "Actually, Postgres handles this better — here's why." Claude sees her advice and adjusts.</p>
         </div>
         <div class="reveal border-l border-white/[0.06] pl-8 pr-6 py-2">
-          <span class="block text-6xl font-extrabold text-vermillion/20 leading-none mb-4">03</span>
+          <span class="block text-6xl font-extrabold text-brand/20 leading-none mb-4">03</span>
           <h3 class="text-lg font-semibold text-paper/90 mb-3">Ask her directly</h3>
-          <p class="text-sm text-paper/40 leading-relaxed">11 commands — <code class="text-vermillion/70 text-xs">/claudia:ask</code>, <code class="text-vermillion/70 text-xs">explain</code>, <code class="text-vermillion/70 text-xs">review</code>, <code class="text-vermillion/70 text-xs">why</code>, <code class="text-vermillion/70 text-xs">health</code>, <code class="text-vermillion/70 text-xs">wtf</code>, <code class="text-vermillion/70 text-xs">where</code>, <code class="text-vermillion/70 text-xs">resume</code>, <code class="text-vermillion/70 text-xs">setup</code>, <code class="text-vermillion/70 text-xs">start</code>, <code class="text-vermillion/70 text-xs">shortcuts</code>. She gives you the answer, the tradeoffs, and the reasoning.</p>
+          <p class="text-sm text-paper/40 leading-relaxed">11 commands — <code class="text-brand/70 text-xs">/claudia:ask</code>, <code class="text-brand/70 text-xs">explain</code>, <code class="text-brand/70 text-xs">review</code>, <code class="text-brand/70 text-xs">why</code>, <code class="text-brand/70 text-xs">health</code>, <code class="text-brand/70 text-xs">wtf</code>, <code class="text-brand/70 text-xs">where</code>, <code class="text-brand/70 text-xs">resume</code>, <code class="text-brand/70 text-xs">setup</code>, <code class="text-brand/70 text-xs">start</code>, <code class="text-brand/70 text-xs">shortcuts</code>. She gives you the answer, the tradeoffs, and the reasoning.</p>
         </div>
       </div>
     </div>
@@ -109,9 +109,9 @@ import Layout from "../layouts/Layout.astro";
     <div class="absolute inset-0 bg-gradient-to-b from-void via-soft-gray/30 to-void pointer-events-none"></div>
     <div class="relative max-w-7xl mx-auto px-6">
       <div class="max-w-xl mb-16">
-        <p class="reveal font-mono text-[11px] text-vermillion tracking-[0.25em] uppercase mb-4">Automatic protection</p>
+        <p class="reveal font-mono text-[11px] text-brand tracking-[0.25em] uppercase mb-4">Automatic protection</p>
         <h2 class="reveal text-4xl sm:text-5xl font-extrabold leading-[0.95] tracking-[-0.03em]">
-          You didn't know this<br />was dangerous. <span class="text-vermillion">She did.</span>
+          You didn't know this<br />was dangerous. <span class="text-brand">She did.</span>
         </h2>
       </div>
 
@@ -174,12 +174,12 @@ import Layout from "../layouts/Layout.astro";
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-[0.4fr_0.6fr] gap-20">
         <div>
-          <p class="reveal font-mono text-[11px] text-vermillion tracking-[0.25em] uppercase mb-4">14 hooks. Always on.</p>
+          <p class="reveal font-mono text-[11px] text-brand tracking-[0.25em] uppercase mb-4">15 hooks. Always on.</p>
           <h2 class="reveal text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
             You don't have to<br />remember any of this
           </h2>
           <p class="reveal mt-5 text-paper/40 leading-relaxed">
-            7 hooks guard every file Claude writes. 7 more watch your session and teach you as you go. You never run them — they just work.
+            8 hooks guard every file Claude writes. 7 more watch your session and teach you as you go. You never run them — they just work.
           </p>
         </div>
 
@@ -194,6 +194,7 @@ import Layout from "../layouts/Layout.astro";
               { name: "Docker mistakes", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Running as root, using :latest, missing optimizations" },
               { name: "Accessibility gaps", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Images without alt text, buttons without labels" },
               { name: "License conflicts", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "GPL code sneaking into your MIT project" },
+              { name: "CSS anti-patterns", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "!important abuse, hardcoded colors, z-index arms races" },
             ].map((h) => (
               <div class="reveal flex items-start gap-4 py-4 border-b border-white/[0.04]">
                 <span class={`shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full ${h.color}`}>{h.badge}</span>
@@ -233,7 +234,7 @@ import Layout from "../layouts/Layout.astro";
   <!-- ===================== ASK HER ANYTHING — HORIZONTAL SCROLL ===================== -->
   <section class="py-32 sm:py-40 border-t border-white/[0.06]">
     <div class="max-w-7xl mx-auto px-6 mb-12">
-      <p class="reveal font-mono text-[11px] text-vermillion tracking-[0.25em] uppercase mb-4">Ask her anything</p>
+      <p class="reveal font-mono text-[11px] text-brand tracking-[0.25em] uppercase mb-4">Ask her anything</p>
       <h2 class="reveal text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[0.95] tracking-[-0.03em]">
         You don't need the answer.<br /><span class="text-paper/25">Just the question.</span>
       </h2>
@@ -254,10 +255,10 @@ import Layout from "../layouts/Layout.astro";
           { q: "How should I structure this data?", detail: "Schema design, migrations without downtime, indexes that actually help.", topic: "Data Modeling" },
           { q: "How do I ask Claude for what I actually want?", detail: "Claudia detects vague prompts and rewrites them into instructions that get results.", topic: "Prompt Coaching" },
         ].map((d) => (
-          <div class="reveal w-72 shrink-0 bg-white/[0.03] border border-white/[0.06] rounded-xl p-6 hover:border-vermillion/20 transition-colors group">
-            <p class="text-sm font-medium text-paper/80 group-hover:text-vermillion transition-colors leading-snug">"{d.q}"</p>
+          <div class="reveal w-72 shrink-0 bg-white/[0.03] border border-white/[0.06] rounded-xl p-6 hover:border-brand/20 transition-colors group">
+            <p class="text-sm font-medium text-paper/80 group-hover:text-brand transition-colors leading-snug">"{d.q}"</p>
             <p class="mt-4 text-xs text-paper/30 leading-relaxed">{d.detail}</p>
-            <p class="mt-4 text-[10px] font-mono text-vermillion/30 uppercase tracking-widest">{d.topic}</p>
+            <p class="mt-4 text-[10px] font-mono text-brand/30 uppercase tracking-widest">{d.topic}</p>
           </div>
         ))}
       </div>
@@ -269,9 +270,9 @@ import Layout from "../layouts/Layout.astro";
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-[0.55fr_0.45fr] gap-20 items-center">
         <div class="order-2 lg:order-1">
-          <p class="reveal font-mono text-[11px] text-vermillion tracking-[0.25em] uppercase mb-4">Better prompts = better code</p>
+          <p class="reveal font-mono text-[11px] text-brand tracking-[0.25em] uppercase mb-4">Better prompts = better code</p>
           <h2 class="reveal text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[0.95] tracking-[-0.03em]">
-            The difference<br />between "fix the<br />auth" and <span class="text-vermillion">getting<br />what you want</span>
+            The difference<br />between "fix the<br />auth" and <span class="text-brand">getting<br />what you want</span>
           </h2>
           <p class="reveal mt-6 text-paper/40 leading-relaxed">
             Most vibe coders leave 80% of Claude's power on the table because they don't know how to ask. Claudia notices when your prompt is too vague and shows you how to rewrite it.
@@ -280,10 +281,10 @@ import Layout from "../layouts/Layout.astro";
           <div class="reveal mt-10 space-y-4">
             <div class="border border-white/[0.06] rounded-xl p-5">
               <p class="text-[10px] font-mono text-paper/25 uppercase tracking-[0.2em] mb-3">What you typed</p>
-              <p class="text-base text-paper/40 line-through decoration-vermillion/30 decoration-2">"Fix the auth"</p>
+              <p class="text-base text-paper/40 line-through decoration-brand/30 decoration-2">"Fix the auth"</p>
             </div>
-            <div class="border border-vermillion/20 bg-vermillion/[0.03] rounded-xl p-5">
-              <p class="text-[10px] font-mono text-vermillion/50 uppercase tracking-[0.2em] mb-3">What Claudia suggests</p>
+            <div class="border border-brand/20 bg-brand/[0.03] rounded-xl p-5">
+              <p class="text-[10px] font-mono text-brand/50 uppercase tracking-[0.2em] mb-3">What Claudia suggests</p>
               <p class="text-base text-paper/70 leading-relaxed">"Refactor the auth middleware to use async/await, add error handling for expired tokens, and return 401 responses with JSON error codes."</p>
             </div>
           </div>
@@ -293,7 +294,7 @@ import Layout from "../layouts/Layout.astro";
           <div class="rounded-2xl overflow-hidden">
             <img src="/assets/hands-keyboard.jpg" alt="Hands on keyboard" class="w-full h-auto" loading="lazy" />
           </div>
-          <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-vermillion/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-brand/10 rounded-full blur-3xl pointer-events-none"></div>
         </div>
       </div>
     </div>
@@ -304,9 +305,9 @@ import Layout from "../layouts/Layout.astro";
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-[0.45fr_0.55fr] gap-20 items-start">
         <div>
-          <p class="reveal font-mono text-[11px] text-vermillion tracking-[0.25em] uppercase mb-4">Never coded before?</p>
+          <p class="reveal font-mono text-[11px] text-brand tracking-[0.25em] uppercase mb-4">Never coded before?</p>
           <h2 class="reveal text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[0.95] tracking-[-0.03em]">
-            She meets you<br />where <span class="text-vermillion">you</span> are
+            She meets you<br />where <span class="text-brand">you</span> are
           </h2>
           <p class="reveal mt-6 text-paper/40 leading-relaxed max-w-md">
             Set experience to "beginner" and Claudia transforms. No command lists. No jargon. She waits until you need her, then shows up with exactly the right thing.
@@ -347,7 +348,7 @@ import Layout from "../layouts/Layout.astro";
 
   <!-- ===================== FINAL CTA — BOLD ===================== -->
   <section class="relative py-32 sm:py-40 overflow-hidden">
-    <div class="absolute inset-0 bg-vermillion"></div>
+    <div class="absolute inset-0 bg-brand"></div>
 
     <div class="relative max-w-7xl mx-auto px-6 text-center">
       <h2 class="reveal text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-[-0.04em] leading-[0.9] text-void">
@@ -357,7 +358,7 @@ import Layout from "../layouts/Layout.astro";
 
       <div class="reveal mt-12 inline-flex flex-col items-center gap-4">
         <div class="bg-void/90 backdrop-blur rounded-xl px-6 py-4 font-mono text-sm text-paper/80">
-          <span class="text-vermillion mr-2">$</span>npm i -g claudia-mentor
+          <span class="text-brand mr-2">$</span>npm i -g claudia-mentor
         </div>
         <a
           href="https://github.com/reganomalley/claudia"

@@ -6,7 +6,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "Proactive technology mentor for Claude Code. 10 knowledge domains. 14 hooks. 11 commands." } = Astro.props;
+const { title, description = "Proactive technology mentor for Claude Code. 10 knowledge domains. 15 hooks. 11 commands." } = Astro.props;
 ---
 
 <!doctype html>
@@ -33,7 +33,7 @@ const { title, description = "Proactive technology mentor for Claude Code. 10 kn
     <!-- Nav -->
     <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-void/80 border-b border-white/[0.06]">
       <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-2 font-mono font-bold text-sm tracking-tight hover:text-vermillion transition-colors">
+        <a href="/" class="flex items-center gap-2 font-mono font-bold text-sm tracking-tight hover:text-brand transition-colors">
           claudia
           <img
             id="claudia-hang"
@@ -49,6 +49,7 @@ const { title, description = "Proactive technology mentor for Claude Code. 10 kn
           <a href="/start" class="text-xs text-paper/50 hover:text-paper transition-colors">Start</a>
           <a href="/docs" class="text-xs text-paper/50 hover:text-paper transition-colors">Docs</a>
           <a href="/contribute" class="text-xs text-paper/50 hover:text-paper transition-colors">Contribute</a>
+          <a href="/changelog" class="text-xs text-paper/50 hover:text-paper transition-colors">Changelog</a>
           <a
             href="https://github.com/reganomalley/claudia"
             target="_blank"
@@ -83,6 +84,7 @@ const { title, description = "Proactive technology mentor for Claude Code. 10 kn
               <a href="/docs" class="block text-sm text-paper/50 hover:text-paper transition-colors">Documentation</a>
               <a href="/contribute" class="block text-sm text-paper/50 hover:text-paper transition-colors">Contribute</a>
               <a href="/shortcuts" class="block text-sm text-paper/50 hover:text-paper transition-colors">Shortcuts</a>
+              <a href="/changelog" class="block text-sm text-paper/50 hover:text-paper transition-colors">Changelog</a>
               <a href="https://github.com/reganomalley/claudia" target="_blank" rel="noopener noreferrer" class="block text-sm text-paper/50 hover:text-paper transition-colors">GitHub</a>
               <a href="https://www.npmjs.com/package/claudia-mentor" target="_blank" rel="noopener noreferrer" class="block text-sm text-paper/50 hover:text-paper transition-colors">npm</a>
             </div>
