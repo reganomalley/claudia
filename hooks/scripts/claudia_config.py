@@ -47,6 +47,25 @@ def resolve_project():
 
 # --- User Config ---
 
+def load_suppress_topics():
+    """Load suppress_topics list from ~/.claude/claudia.json.
+
+    Returns:
+        list of topic strings to suppress (empty if not set or file missing).
+    """
+    config_path = os.path.expanduser("~/.claude/claudia.json")
+    if os.path.exists(config_path):
+        try:
+            with open(config_path) as f:
+                data = json.load(f)
+                topics = data.get("suppress_topics", [])
+                if isinstance(topics, list):
+                    return topics
+        except (json.JSONDecodeError, IOError):
+            pass
+    return []
+
+
 def load_user_config():
     """Load proactivity from ~/.claude/claudia.json, experience from context.
 

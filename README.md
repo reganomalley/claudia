@@ -168,9 +168,12 @@ Override Claudia's personality and proactivity level:
   "proactivity": "high",
   "personality": {
     "tone": "casual"
-  }
+  },
+  "suppress_topics": ["Netlify", "hosting"]
 }
 ```
+
+`suppress_topics` silences teach tips for specific keywords (e.g. `"Netlify"`) or entire categories (e.g. `"hosting"`). Case-insensitive. Each tip includes a dismiss hint showing how to add it.
 
 ### Per-project (`.claudia.json` in project root)
 

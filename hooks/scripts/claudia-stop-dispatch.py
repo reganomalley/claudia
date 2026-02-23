@@ -12,7 +12,7 @@ import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from claudia_config import load_user_config
+from claudia_config import load_user_config, load_suppress_topics
 
 # Import check() from each Stop hook module
 import importlib
@@ -56,6 +56,7 @@ def main():
 
     session_id = input_data.get("session_id", "default")
     proactivity, experience = load_user_config()
+    input_data["suppress_topics"] = load_suppress_topics()
 
     # Try each hook in order; first with output wins
     for module_name in HOOK_MODULES:

@@ -265,16 +265,25 @@ def check(input_data, proactivity, experience):
     revealed_commands = set(state["revealed_commands"])
     tips = []
 
+    # Build suppressed topics set (case-insensitive)
+    suppress_topics = input_data.get("suppress_topics", [])
+    suppressed = {t.lower() for t in suppress_topics if isinstance(t, str)}
+
     # Scan for technology keywords
     for category, keywords in KEYWORDS.items():
+        if category.lower() in suppressed:
+            continue
         for keyword, description in keywords.items():
+            if keyword.lower() in suppressed:
+                continue
             pattern = r'\b' + re.escape(keyword) + r'\b'
             if re.search(pattern, message, re.IGNORECASE):
                 if keyword.lower() not in shown_keywords:
                     shown_keywords.add(keyword.lower())
                     tips.append(
                         f"I noticed we're talking about {keyword} ({description}). "
-                        f"Want me to explain more? Just say `/claudia:explain {keyword.lower()}`"
+                        f"Want me to explain more? Just say `/claudia:explain {keyword.lower()}`\n"
+                        f"(To stop tips about {keyword}, add \"{keyword}\" to \"suppress_topics\" in ~/.claude/claudia.json)"
                     )
                     break
         if tips:
