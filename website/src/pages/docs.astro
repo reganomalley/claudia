@@ -73,8 +73,13 @@ import Layout from "../layouts/Layout.astro";
           </p>
           <div class="bg-black/40 rounded-lg p-4 font-mono text-sm space-y-1">
             <div><span class="text-vermillion">/claudia:ask</span> <span class="text-paper/50">what database should I use for time-series data?</span></div>
-            <div><span class="text-vermillion">/claudia:review</span> <span class="text-paper/50">(reviews your recent changes for bugs)</span></div>
             <div><span class="text-vermillion">/claudia:explain</span> <span class="text-paper/50">(explains the code that was just written)</span></div>
+            <div><span class="text-vermillion">/claudia:review</span> <span class="text-paper/50">(reviews your recent changes for bugs)</span></div>
+            <div><span class="text-vermillion">/claudia:why</span> <span class="text-paper/50">(explains why your project uses its tech stack)</span></div>
+            <div><span class="text-vermillion">/claudia:health</span> <span class="text-paper/50">(runs a full project audit)</span></div>
+            <div><span class="text-vermillion">/claudia:wtf</span> <span class="text-paper/50">(breaks down an error: what / why / how to fix)</span></div>
+            <div><span class="text-vermillion">/claudia:where</span> <span class="text-paper/50">(guided tour of your project structure)</span></div>
+            <div><span class="text-vermillion">/claudia:resume</span> <span class="text-paper/50">(picks up where you left off)</span></div>
           </div>
         </div>
       </div>
@@ -145,7 +150,7 @@ import Layout from "../layouts/Layout.astro";
         What she catches
       </h2>
       <p class="reveal text-paper/40 text-lg font-light mb-12">
-        7 hooks that run automatically. You don't configure them.
+        7 checks that run automatically on every file write. Plus 7 proactive hooks that watch your conversation.
       </p>
 
       <div class="space-y-4 stagger">
@@ -197,6 +202,51 @@ import Layout from "../layouts/Layout.astro";
             <h3 class="text-sm font-semibold text-paper/80">License compliance</h3>
             <p class="text-xs text-paper/30 mt-1">Catches GPL/AGPL dependencies sneaking into your MIT-licensed project.</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beginner Mode -->
+  <section id="beginner-mode" class="pb-28 px-6">
+    <div class="max-w-4xl mx-auto">
+      <p class="reveal font-mono text-xs text-vermillion tracking-widest uppercase mb-4">Beginner mode</p>
+      <h2 class="reveal text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] mb-4">
+        Never coded before? She adapts.
+      </h2>
+      <p class="reveal text-paper/40 text-lg font-light mb-12">
+        Set <code class="text-paper/60">experience: "beginner"</code> in your context file and Claudia changes how she shows up.
+      </p>
+
+      <div class="reveal bg-black/40 rounded-xl p-6 font-mono text-sm mb-10">
+        <div class="text-paper/30 mb-3">~/.claude/claudia-context.json</div>
+        <pre class="text-paper/70"><code>{'{\n  "experience": "beginner"\n}'}</code></pre>
+      </div>
+
+      <div class="space-y-4 stagger">
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Simplified greeting</h3>
+          <p class="text-xs text-paper/30">No command list on startup. Just "Claudia is here. Just build. I'm watching." Commands get revealed when they're relevant.</p>
+        </div>
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Stuck detection</h3>
+          <p class="text-xs text-paper/30">Type "I'm stuck", "help", "idk", or "where do I start" and Claudia asks one clarifying question, then suggests one small next step.</p>
+        </div>
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Run suggestions</h3>
+          <p class="text-xs text-paper/30">After Claude creates a file, Claudia tells you how to run it: <code class="text-paper/50">open index.html</code>, <code class="text-paper/50">python3 app.py</code>, <code class="text-paper/50">npm install</code>.</p>
+        </div>
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Next-step suggestions</h3>
+          <p class="text-xs text-paper/30">When Claude finishes a task, Claudia suggests 2-3 contextual things you could try next. No dead ends.</p>
+        </div>
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Milestones</h3>
+          <p class="text-xs text-paper/30">Celebrates real achievements: first file created, first bug fixed, first commit, first project running, 10+ files. Persists across sessions.</p>
+        </div>
+        <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+          <h3 class="text-sm font-semibold text-paper/80 mb-1">Progressive command reveal</h3>
+          <p class="text-xs text-paper/30">Commands appear only when relevant. Error? She mentions <code class="text-paper/50">/claudia:wtf</code>. File created? <code class="text-paper/50">/claudia:explain</code>. Growing project? <code class="text-paper/50">/claudia:where</code>.</p>
         </div>
       </div>
     </div>

@@ -275,6 +275,52 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
+  <!-- ===================== BEGINNER MODE ===================== -->
+  <section class="py-32 sm:py-40 border-t border-white/[0.06]">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-[0.45fr_0.55fr] gap-20 items-start">
+        <div>
+          <p class="reveal font-mono text-[11px] text-vermillion tracking-[0.25em] uppercase mb-4">Never coded before?</p>
+          <h2 class="reveal text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[0.95] tracking-[-0.03em]">
+            She meets you<br />where <span class="text-vermillion">you</span> are
+          </h2>
+          <p class="reveal mt-6 text-paper/40 leading-relaxed max-w-md">
+            Set experience to "beginner" and Claudia transforms. No command lists. No jargon. She waits until you need her, then shows up with exactly the right thing.
+          </p>
+          <div class="reveal mt-8">
+            <div class="bg-black/40 rounded-lg p-4 font-mono text-sm">
+              <span class="text-paper/30">~/.claude/claudia-context.json</span>
+              <pre class="text-paper/60 mt-2"><code>{'{ "experience": "beginner" }'}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4 stagger">
+          <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+            <h3 class="text-sm font-semibold text-paper/80 mb-1">Stuck detection</h3>
+            <p class="text-xs text-paper/30">Type "I'm stuck" or "idk" and she asks one clarifying question, then gives you one small next step. No overwhelm.</p>
+          </div>
+          <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+            <h3 class="text-sm font-semibold text-paper/80 mb-1">Run suggestions</h3>
+            <p class="text-xs text-paper/30">Claude creates a file, Claudia tells you how to run it. <code class="text-paper/50">open index.html</code>, <code class="text-paper/50">python3 app.py</code> — the stuff you wouldn't know to type.</p>
+          </div>
+          <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+            <h3 class="text-sm font-semibold text-paper/80 mb-1">Milestones</h3>
+            <p class="text-xs text-paper/30">"First commit. Your code has a save point now." She notices when you hit real milestones and tells you what they mean.</p>
+          </div>
+          <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+            <h3 class="text-sm font-semibold text-paper/80 mb-1">Progressive reveal</h3>
+            <p class="text-xs text-paper/30">Commands appear only when they're relevant. Write a file, she mentions <code class="text-paper/50">/claudia:explain</code>. Hit an error, she mentions <code class="text-paper/50">/claudia:wtf</code>. No firehose.</p>
+          </div>
+          <div class="reveal border border-white/[0.06] bg-white/[0.015] rounded-xl p-6">
+            <h3 class="text-sm font-semibold text-paper/80 mb-1">Next-step suggestions</h3>
+            <p class="text-xs text-paper/30">After Claude finishes something, Claudia suggests 2-3 things you could do next. No dead ends.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== FINAL CTA — BOLD ===================== -->
   <section class="relative py-32 sm:py-40 overflow-hidden">
     <div class="absolute inset-0 bg-vermillion"></div>
