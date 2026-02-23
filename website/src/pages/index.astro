@@ -98,7 +98,7 @@ import Layout from "../layouts/Layout.astro";
         <div class="reveal border-l border-white/[0.06] pl-8 pr-6 py-2">
           <span class="block text-6xl font-extrabold text-vermillion/20 leading-none mb-4">03</span>
           <h3 class="text-lg font-semibold text-paper/90 mb-3">Ask her directly</h3>
-          <p class="text-sm text-paper/40 leading-relaxed">Type <code class="text-vermillion/70 text-xs">/claudia</code> + any question. She gives you the answer, the tradeoffs, and the reasoning.</p>
+          <p class="text-sm text-paper/40 leading-relaxed">8 commands — <code class="text-vermillion/70 text-xs">/claudia:ask</code>, <code class="text-vermillion/70 text-xs">explain</code>, <code class="text-vermillion/70 text-xs">review</code>, <code class="text-vermillion/70 text-xs">why</code>, <code class="text-vermillion/70 text-xs">health</code>, <code class="text-vermillion/70 text-xs">wtf</code>, <code class="text-vermillion/70 text-xs">where</code>, <code class="text-vermillion/70 text-xs">resume</code>. She gives you the answer, the tradeoffs, and the reasoning.</p>
         </div>
       </div>
     </div>
@@ -174,33 +174,57 @@ import Layout from "../layouts/Layout.astro";
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid lg:grid-cols-[0.4fr_0.6fr] gap-20">
         <div>
-          <p class="reveal font-mono text-[11px] text-vermillion tracking-[0.25em] uppercase mb-4">7 automatic checks</p>
+          <p class="reveal font-mono text-[11px] text-vermillion tracking-[0.25em] uppercase mb-4">14 hooks. Always on.</p>
           <h2 class="reveal text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
             You don't have to<br />remember any of this
           </h2>
           <p class="reveal mt-5 text-paper/40 leading-relaxed">
-            Every time Claude writes a file, it passes through Claudia's checks. Some things get blocked. Most get flagged with an explanation. All of them teach you something.
+            7 hooks guard every file Claude writes. 7 more watch your session and teach you as you go. You never run them — they just work.
           </p>
         </div>
 
-        <div class="space-y-0 stagger">
-          {[
-            { name: "Leaked secrets", badge: "Stops it", color: "bg-[#ff5f57]/20 text-[#ff5f57]", desc: "API keys, passwords, and tokens that should never be in code" },
-            { name: "Broken git", badge: "Stops it", color: "bg-[#ff5f57]/20 text-[#ff5f57]", desc: "Writing to .env, leaving merge conflict markers" },
-            { name: "Bad code patterns", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "eval(), empty catch blocks, console.log in production" },
-            { name: "Sketchy dependencies", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Deprecated, hacked, or pointlessly small packages" },
-            { name: "Docker mistakes", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Running as root, using :latest, missing optimizations" },
-            { name: "Accessibility gaps", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Images without alt text, buttons without labels" },
-            { name: "License conflicts", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "GPL code sneaking into your MIT project" },
-          ].map((h) => (
-            <div class="reveal flex items-start gap-4 py-4 border-b border-white/[0.04]">
-              <span class={`shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full ${h.color}`}>{h.badge}</span>
-              <div>
-                <span class="text-sm font-medium text-paper/80">{h.name}</span>
-                <span class="text-sm text-paper/30 ml-2">{h.desc}</span>
+        <div>
+          <p class="reveal font-mono text-[10px] text-paper/25 uppercase tracking-[0.2em] mb-4">Code guardrails</p>
+          <div class="space-y-0 stagger">
+            {[
+              { name: "Leaked secrets", badge: "Stops it", color: "bg-[#ff5f57]/20 text-[#ff5f57]", desc: "API keys, passwords, and tokens that should never be in code" },
+              { name: "Broken git", badge: "Stops it", color: "bg-[#ff5f57]/20 text-[#ff5f57]", desc: "Writing to .env, leaving merge conflict markers" },
+              { name: "Bad code patterns", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "eval(), empty catch blocks, console.log in production" },
+              { name: "Sketchy dependencies", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Deprecated, hacked, or pointlessly small packages" },
+              { name: "Docker mistakes", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Running as root, using :latest, missing optimizations" },
+              { name: "Accessibility gaps", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "Images without alt text, buttons without labels" },
+              { name: "License conflicts", badge: "Warns you", color: "bg-[#febc2e]/15 text-[#febc2e]", desc: "GPL code sneaking into your MIT project" },
+            ].map((h) => (
+              <div class="reveal flex items-start gap-4 py-4 border-b border-white/[0.04]">
+                <span class={`shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full ${h.color}`}>{h.badge}</span>
+                <div>
+                  <span class="text-sm font-medium text-paper/80">{h.name}</span>
+                  <span class="text-sm text-paper/30 ml-2">{h.desc}</span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          <p class="reveal font-mono text-[10px] text-paper/25 uppercase tracking-[0.2em] mt-10 mb-4">Proactive coaching</p>
+          <div class="space-y-0 stagger">
+            {[
+              { name: "Keyword teaching", badge: "Teaches", color: "bg-[#28c840]/15 text-[#28c840]", desc: "Spots unfamiliar tech in Claude's output and offers plain-English explanations" },
+              { name: "Prompt coaching", badge: "Coaches", color: "bg-[#28c840]/15 text-[#28c840]", desc: "Detects vague prompts like \"fix it\" and shows you how to ask better" },
+              { name: "Session greeting", badge: "Greets", color: "bg-[#28c840]/15 text-[#28c840]", desc: "Welcomes you on startup with a rotating tip and your current context" },
+              { name: "Compaction tips", badge: "Teaches", color: "bg-[#28c840]/15 text-[#28c840]", desc: "Explains what just happened when Claude auto-compacts your conversation" },
+              { name: "Run suggestions", badge: "Helps", color: "bg-[#28c840]/15 text-[#28c840]", desc: "Claude creates a file, Claudia tells you how to run it" },
+              { name: "Next steps", badge: "Guides", color: "bg-[#28c840]/15 text-[#28c840]", desc: "Suggests 2-3 things you could do next so you never hit a dead end" },
+              { name: "Milestones", badge: "Cheers", color: "bg-[#28c840]/15 text-[#28c840]", desc: "Notices your first commit, first deploy, first test — and tells you what they mean" },
+            ].map((h) => (
+              <div class="reveal flex items-start gap-4 py-4 border-b border-white/[0.04]">
+                <span class={`shrink-0 mt-0.5 text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full ${h.color}`}>{h.badge}</span>
+                <div>
+                  <span class="text-sm font-medium text-paper/80">{h.name}</span>
+                  <span class="text-sm text-paper/30 ml-2">{h.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
