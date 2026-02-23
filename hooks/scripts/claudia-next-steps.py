@@ -131,38 +131,29 @@ def load_config():
     return experience
 
 
-def main():
-    try:
-        input_data = json.loads(sys.stdin.read())
-    except json.JSONDecodeError:
-        sys.exit(0)
-
+def check(input_data, proactivity, experience):
+    """Run next-steps logic. Returns output dict or None."""
     session_id = input_data.get("session_id", "default")
     message = input_data.get("last_assistant_message", "")
 
     if not message:
-        sys.exit(0)
+        return None
 
-    experience = load_config()
-
-    # Gate: beginner only
     if experience != "beginner":
-        sys.exit(0)
+        return None
 
     state = load_state(session_id)
 
-    # Max 3 suggestion moments per session
     if state["count"] >= 3:
-        sys.exit(0)
+        return None
 
-    # Check for completion signals
     is_completion = any(
         re.search(pattern, message, re.IGNORECASE)
         for pattern in COMPLETION_PATTERNS
     )
 
     if not is_completion:
-        sys.exit(0)
+        return None
 
     # Find mentioned files to determine context
     file_matches = re.findall(FILENAME_PATTERN, message)
@@ -175,13 +166,11 @@ def main():
             filename = fname
             break
 
-    # Get appropriate next steps
     if ext and ext in NEXT_STEPS:
         steps = NEXT_STEPS[ext]
     else:
         steps = NEXT_STEPS["default"]
 
-    # Format steps with filename if available
     formatted = []
     for step in steps[:3]:
         if filename:
@@ -189,20 +178,30 @@ def main():
         else:
             formatted.append(step.replace(" {filename}", "").replace("{filename}", "the file"))
 
-    if not stop_lock_acquire(session_id):
-        sys.exit(0)
-
     state["count"] += 1
     save_state(session_id, state)
 
     suggestion_text = "Claudia: What's next? Here are some ideas:\n" + "\n".join(
         f"  - {step}" for step in formatted
     )
-    output = json.dumps({
+    return {
         "additionalContext": suggestion_text,
         "systemMessage": f"\033[38;5;209m{suggestion_text}\033[0m",
-    })
-    print(output)
+    }
+
+
+def main():
+    try:
+        input_data = json.loads(sys.stdin.read())
+    except json.JSONDecodeError:
+        sys.exit(0)
+
+    _, experience = load_user_config()
+    session_id = input_data.get("session_id", "default")
+    result = check(input_data, None, experience)
+    if result and stop_lock_acquire(session_id):
+        print(json.dumps(result))
+
     sys.exit(0)
 
 

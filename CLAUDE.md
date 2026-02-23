@@ -5,7 +5,7 @@ Claude Code plugin: technology mentor, security advisor, prompt coach. 10 knowle
 
 ## Architecture
 - **Skills** (model-invocable): `claudia-mentor` (core brain/router), `claudia-databases`, `claudia-security`, `claudia-infrastructure`, `claudia-frontend`, `claudia-api`, `claudia-testing`, `claudia-performance`, `claudia-devops`, `claudia-data`
-- **Hooks** (PreToolUse, 7): `check-secrets.sh` (blocks), `check-practices.py`, `check-deps.py`, `check-dockerfile.py`, `check-git-hygiene.py` (blocks .env + conflicts), `check-accessibility.py`, `check-license.py`
+- **Hooks** (PreToolUse, 7): `check-secrets.py` (blocks), `check-practices.py`, `check-deps.py`, `check-dockerfile.py`, `check-git-hygiene.py` (blocks .env + conflicts), `check-accessibility.py`, `check-license.py`
 - **Hooks** (proactive, 7): `claudia-teach.py` (Stop — keyword teaching + progressive command reveal), `claudia-compact-tip.py` (PreCompact — Esc+Esc tip), `claudia-session-tips.py` (SessionStart — rotating tips, beginner-simplified greeting), `claudia-prompt-coach.py` (UserPromptSubmit — stuck detection + vague prompt coaching), `claudia-run-suggest.py` (Stop — how to run created files), `claudia-next-steps.py` (Stop — contextual next actions), `claudia-milestones.py` (Stop — persistent milestone celebrations)
 - **Commands** (11): `ask`, `explain`, `review`, `why`, `health`, `wtf`, `where`, `resume`, `setup`, `start`, `shortcuts`
 - **Shared config**: `hooks/scripts/claudia_config.py` — project resolution, user config, project-scoped context

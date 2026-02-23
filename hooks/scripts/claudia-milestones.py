@@ -115,22 +115,15 @@ def count_new_files(message):
     return len(files)
 
 
-def main():
-    try:
-        input_data = json.loads(sys.stdin.read())
-    except json.JSONDecodeError:
-        sys.exit(0)
-
+def check(input_data, proactivity, experience):
+    """Run milestones logic. Returns output dict or None."""
     message = input_data.get("last_assistant_message", "")
 
     if not message:
-        sys.exit(0)
+        return None
 
-    experience = load_config()
-
-    # Gate: beginner only
     if experience != "beginner":
-        sys.exit(0)
+        return None
 
     state = load_state()
     achieved = set(state.get("achieved", []))
@@ -162,18 +155,27 @@ def main():
     if celebration:
         state["achieved"] = list(achieved)
         save_state(state)
-        session_id = input_data.get("session_id", "default")
-        if stop_lock_acquire(session_id):
-            msg = f"Claudia: {celebration}"
-            output = json.dumps({
-                "additionalContext": msg,
-                "systemMessage": f"\033[38;5;209m{msg}\033[0m",
-            })
-            print(output)
+        msg = f"Claudia: {celebration}"
+        return {"additionalContext": msg, "systemMessage": f"\033[38;5;209m{msg}\033[0m"}
 
     # Save state even without celebration (for file_count tracking)
-    elif new_files > 0:
+    if new_files > 0:
         save_state(state)
+
+    return None
+
+
+def main():
+    try:
+        input_data = json.loads(sys.stdin.read())
+    except json.JSONDecodeError:
+        sys.exit(0)
+
+    _, experience = load_user_config()
+    session_id = input_data.get("session_id", "default")
+    result = check(input_data, None, experience)
+    if result and stop_lock_acquire(session_id):
+        print(json.dumps(result))
 
     sys.exit(0)
 

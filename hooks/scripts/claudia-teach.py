@@ -244,30 +244,21 @@ def load_config():
     return load_user_config()
 
 
-def main():
-    try:
-        input_data = json.loads(sys.stdin.read())
-    except json.JSONDecodeError:
-        sys.exit(0)
-
+def check(input_data, proactivity, experience):
+    """Run teach logic. Returns output dict or None."""
     session_id = input_data.get("session_id", "default")
     message = input_data.get("last_assistant_message", "")
 
     if not message:
-        sys.exit(0)
+        return None
 
-    # Check proactivity and experience
-    proactivity, experience = load_config()
-
-    # Only fire on moderate or high proactivity
     if proactivity == "low":
-        sys.exit(0)
+        return None
 
     is_beginner = experience == "beginner"
 
-    # Non-beginners only get teaching on high proactivity
     if not is_beginner and proactivity != "high":
-        sys.exit(0)
+        return None
 
     state = load_state(session_id)
     shown_keywords = set(state["shown_keywords"])
@@ -277,7 +268,6 @@ def main():
     # Scan for technology keywords
     for category, keywords in KEYWORDS.items():
         for keyword, description in keywords.items():
-            # Word-boundary match, case-insensitive
             pattern = r'\b' + re.escape(keyword) + r'\b'
             if re.search(pattern, message, re.IGNORECASE):
                 if keyword.lower() not in shown_keywords:
@@ -286,7 +276,6 @@ def main():
                         f"I noticed we're talking about {keyword} ({description}). "
                         f"Want me to explain more? Just say `/claudia:explain {keyword.lower()}`"
                     )
-                    # Only one keyword tip per response to avoid noise
                     break
         if tips:
             break
@@ -315,7 +304,6 @@ def main():
                     revealed_commands.add(command)
                     tips.append(reveal["tip"])
                     break
-            # Only one command reveal per response
             if len(tips) > (1 if tips else 0):
                 break
 
@@ -323,18 +311,29 @@ def main():
         state["shown_keywords"] = list(shown_keywords)
         state["revealed_commands"] = list(revealed_commands)
         save_state(session_id, state)
-        if stop_lock_acquire(session_id):
-            tip_text = "\n".join(f"Claudia: {tip}" for tip in tips)
-            colored = "\n".join(f"\033[38;5;209m{line}\033[0m" for line in tip_text.split("\n"))
-            output = json.dumps({
-                "additionalContext": tip_text,
-                "systemMessage": colored,
-            })
-            print(output)
-    elif shown_keywords != set(state["shown_keywords"]) or revealed_commands != set(state["revealed_commands"]):
+        tip_text = "\n".join(f"Claudia: {tip}" for tip in tips)
+        colored = "\n".join(f"\033[38;5;209m{line}\033[0m" for line in tip_text.split("\n"))
+        return {"additionalContext": tip_text, "systemMessage": colored}
+
+    if shown_keywords != set(state["shown_keywords"]) or revealed_commands != set(state["revealed_commands"]):
         state["shown_keywords"] = list(shown_keywords)
         state["revealed_commands"] = list(revealed_commands)
         save_state(session_id, state)
+
+    return None
+
+
+def main():
+    try:
+        input_data = json.loads(sys.stdin.read())
+    except json.JSONDecodeError:
+        sys.exit(0)
+
+    proactivity, experience = load_config()
+    session_id = input_data.get("session_id", "default")
+    result = check(input_data, proactivity, experience)
+    if result and stop_lock_acquire(session_id):
+        print(json.dumps(result))
 
     sys.exit(0)
 

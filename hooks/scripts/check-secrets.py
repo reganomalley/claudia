@@ -93,29 +93,34 @@ def main():
         sys.exit(0)
 
     shown = load_state(session_id)
+    found = []
 
     for pattern, description, secret_type in SECRET_PATTERNS:
         if re.search(pattern, content):
             warning_key = f"{file_path}-{secret_type}"
-            if warning_key in shown:
-                # Already warned in this session, allow
-                sys.exit(0)
+            if warning_key not in shown:
+                shown.add(warning_key)
+                found.append(description)
 
-            shown.add(warning_key)
-            save_state(session_id, shown)
+    if found:
+        save_state(session_id, shown)
 
-            # Block with explanation (vermillion colored)
-            C = "\033[38;5;209m"
-            R = "\033[0m"
-            print(f"{C}Claudia: {description} in {file_path}.{R}", file=sys.stderr)
-            print("", file=sys.stderr)
-            print(f"{C}Secrets should never be hardcoded in source files. Use:", file=sys.stderr)
-            print("  - Environment variables (.env file, gitignored)", file=sys.stderr)
-            print("  - A secret manager (AWS SSM, Vault, Doppler)", file=sys.stderr)
-            print(f"  - CI/CD secrets for pipelines{R}", file=sys.stderr)
-            print("", file=sys.stderr)
-            print(f"{C}If this is intentionally a test fixture or example, rename the file to include 'test', 'example', or 'fixture'.{R}", file=sys.stderr)
-            sys.exit(2)
+        C = "\033[38;5;209m"
+        R = "\033[0m"
+        if len(found) == 1:
+            print(f"{C}Claudia: {found[0]} in {file_path}.{R}", file=sys.stderr)
+        else:
+            print(f"{C}Claudia: Multiple secrets detected in {file_path}:{R}", file=sys.stderr)
+            for desc in found:
+                print(f"{C}  - {desc}{R}", file=sys.stderr)
+        print("", file=sys.stderr)
+        print(f"{C}Secrets should never be hardcoded in source files. Use:", file=sys.stderr)
+        print("  - Environment variables (.env file, gitignored)", file=sys.stderr)
+        print("  - A secret manager (AWS SSM, Vault, Doppler)", file=sys.stderr)
+        print(f"  - CI/CD secrets for pipelines{R}", file=sys.stderr)
+        print("", file=sys.stderr)
+        print(f"{C}If this is intentionally a test fixture or example, rename the file to include 'test', 'example', or 'fixture'.{R}", file=sys.stderr)
+        sys.exit(2)
 
     sys.exit(0)
 

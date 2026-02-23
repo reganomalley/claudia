@@ -97,6 +97,16 @@ class TestSecretDetection:
         assert code == 2
         assert "MySQL" in stderr
 
+    def test_multiple_secrets_all_reported(self, run_hook):
+        """A file with multiple secret types should report all of them."""
+        content = 'key = "AKIAIOSFODNN7EXAMPLE"\nuri = "mongodb://admin:password@host.com"'
+        data = make_pretool_input("Write", "/app/config.js", content)
+        code, _, stderr = run_hook("check-secrets.py", data)
+        assert code == 2
+        assert "AWS" in stderr
+        assert "MongoDB" in stderr
+        assert "Multiple" in stderr
+
 
 class TestFileSkipping:
     """Test/example files should be skipped."""

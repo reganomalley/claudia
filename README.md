@@ -1,8 +1,10 @@
 # Claudia: Proactive Mentor Plugin for Claude Code
 
+[![Tests](https://github.com/reganomalley/claudia/actions/workflows/test.yml/badge.svg)](https://github.com/reganomalley/claudia/actions/workflows/test.yml)
+
 A Claude Code plugin that acts as your technology mentor, security advisor, and prompt coach. Claudia fills the gaps between writing code and making good technology decisions.
 
-**10 knowledge domains. 14 hooks. 11 commands. Beginner-friendly.**
+**10 knowledge domains. 14 hooks. 11 commands. 205+ tests. Beginner-friendly.**
 
 ## What Claudia Does
 

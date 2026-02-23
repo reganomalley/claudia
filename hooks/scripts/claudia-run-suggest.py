@@ -83,40 +83,29 @@ def load_config():
     return load_user_config()
 
 
-def main():
-    try:
-        input_data = json.loads(sys.stdin.read())
-    except json.JSONDecodeError:
-        sys.exit(0)
-
+def check(input_data, proactivity, experience):
+    """Run run-suggest logic. Returns output dict or None."""
     session_id = input_data.get("session_id", "default")
     message = input_data.get("last_assistant_message", "")
 
     if not message:
-        sys.exit(0)
+        return None
 
-    proactivity, experience = load_config()
     is_beginner = experience == "beginner"
-
-    # Gate: beginner OR high proactivity
     if not is_beginner and proactivity != "high":
-        sys.exit(0)
+        return None
 
     state = load_state(session_id)
     shown_types = set(state.get("shown_types", []))
 
     # Check for package.json mentions
     if "package.json" not in shown_types and re.search(PACKAGE_JSON_PATTERN, message, re.IGNORECASE):
-        if not stop_lock_acquire(session_id):
-            sys.exit(0)
         shown_types.add("package.json")
         state["shown_types"] = list(shown_types)
         save_state(session_id, state)
         suggestion = RUN_SUGGESTIONS["package.json"][1]
         msg = f"Claudia: {suggestion}"
-        output = json.dumps({"additionalContext": msg, "systemMessage": f"\033[38;5;209m{msg}\033[0m"})
-        print(output)
-        sys.exit(0)
+        return {"additionalContext": msg, "systemMessage": f"\033[38;5;209m{msg}\033[0m"}
 
     # Check for file creation patterns
     for pattern in FILE_PATTERNS:
@@ -125,16 +114,27 @@ def main():
             filename = match.group(1)
             ext = match.group(2).lower()
             if ext in RUN_SUGGESTIONS and ext not in shown_types:
-                if not stop_lock_acquire(session_id):
-                    sys.exit(0)
                 shown_types.add(ext)
                 state["shown_types"] = list(shown_types)
                 save_state(session_id, state)
                 suggestion = RUN_SUGGESTIONS[ext][1].format(filename=filename)
                 msg = f"Claudia: {suggestion}"
-                output = json.dumps({"additionalContext": msg, "systemMessage": f"\033[38;5;209m{msg}\033[0m"})
-                print(output)
-                sys.exit(0)
+                return {"additionalContext": msg, "systemMessage": f"\033[38;5;209m{msg}\033[0m"}
+
+    return None
+
+
+def main():
+    try:
+        input_data = json.loads(sys.stdin.read())
+    except json.JSONDecodeError:
+        sys.exit(0)
+
+    proactivity, experience = load_config()
+    session_id = input_data.get("session_id", "default")
+    result = check(input_data, proactivity, experience)
+    if result and stop_lock_acquire(session_id):
+        print(json.dumps(result))
 
     sys.exit(0)
 
