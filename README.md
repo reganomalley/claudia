@@ -2,7 +2,7 @@
 
 A Claude Code plugin that acts as your technology mentor, security advisor, and prompt coach. Claudia fills the gaps between writing code and making good technology decisions.
 
-**10 knowledge domains. 14 hooks. 10 commands. Beginner-friendly.**
+**10 knowledge domains. 14 hooks. 11 commands. Beginner-friendly.**
 
 ## What Claudia Does
 
