@@ -10,6 +10,7 @@ import json
 import os
 import re
 import sys
+import time
 
 # Completion signals
 COMPLETION_PATTERNS = [
@@ -73,6 +74,24 @@ NEXT_STEPS = {
         "Tell me what you want to add or change next",
     ],
 }
+
+def stop_lock_acquire(session_id):
+    """Try to acquire the per-turn Stop hook lock. Returns True if acquired."""
+    lock_file = os.path.expanduser(f"~/.claude/claudia_stop_lock_{session_id}.tmp")
+    now = time.time()
+    try:
+        if os.path.exists(lock_file):
+            with open(lock_file) as f:
+                ts = float(f.read().strip())
+            if now - ts < 2.0:
+                return False
+        os.makedirs(os.path.dirname(lock_file), exist_ok=True)
+        with open(lock_file, "w") as f:
+            f.write(str(now))
+        return True
+    except (IOError, ValueError):
+        return True
+
 
 # Pattern to extract filenames from the message
 FILENAME_PATTERN = r"[`'\"]?(\S+\.(\w{1,4}))[`'\"]?"
@@ -174,6 +193,9 @@ def main():
         else:
             formatted.append(step.replace(" {filename}", "").replace("{filename}", "the file"))
 
+    if not stop_lock_acquire(session_id):
+        sys.exit(0)
+
     state["count"] += 1
     save_state(session_id, state)
 
@@ -182,7 +204,7 @@ def main():
     )
     output = json.dumps({
         "additionalContext": suggestion_text,
-        "systemMessage": suggestion_text,
+        "systemMessage": f"\033[38;5;209m{suggestion_text}\033[0m",
     })
     print(output)
     sys.exit(0)

@@ -78,7 +78,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-teach.py",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-milestones.py",
             "timeout": 10
           }
         ]
@@ -105,7 +105,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-milestones.py",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/claudia-teach.py",
             "timeout": 10
           }
         ]

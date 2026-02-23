@@ -10,6 +10,7 @@ import json
 import os
 import re
 import sys
+import time
 
 # File type -> run suggestion
 RUN_SUGGESTIONS = {
@@ -27,6 +28,24 @@ FILE_PATTERNS = [
     r"(?:File|Created|Wrote|Saved)\s+[`'\"]?(\S+\.(\w+))[`'\"]?",
     r"(?:new file|writing to|saved to)\s+[`'\"]?(\S+\.(\w+))[`'\"]?",
 ]
+
+def stop_lock_acquire(session_id):
+    """Try to acquire the per-turn Stop hook lock. Returns True if acquired."""
+    lock_file = os.path.expanduser(f"~/.claude/claudia_stop_lock_{session_id}.tmp")
+    now = time.time()
+    try:
+        if os.path.exists(lock_file):
+            with open(lock_file) as f:
+                ts = float(f.read().strip())
+            if now - ts < 2.0:
+                return False
+        os.makedirs(os.path.dirname(lock_file), exist_ok=True)
+        with open(lock_file, "w") as f:
+            f.write(str(now))
+        return True
+    except (IOError, ValueError):
+        return True
+
 
 PACKAGE_JSON_PATTERN = r"(?:created|wrote|updated|modified)\s+[`'\"]?package\.json[`'\"]?"
 
@@ -105,12 +124,14 @@ def main():
 
     # Check for package.json mentions
     if "package.json" not in shown_types and re.search(PACKAGE_JSON_PATTERN, message, re.IGNORECASE):
+        if not stop_lock_acquire(session_id):
+            sys.exit(0)
         shown_types.add("package.json")
         state["shown_types"] = list(shown_types)
         save_state(session_id, state)
         suggestion = RUN_SUGGESTIONS["package.json"][1]
         msg = f"Claudia: {suggestion}"
-        output = json.dumps({"additionalContext": msg, "systemMessage": msg})
+        output = json.dumps({"additionalContext": msg, "systemMessage": f"\033[38;5;209m{msg}\033[0m"})
         print(output)
         sys.exit(0)
 
@@ -121,12 +142,14 @@ def main():
             filename = match.group(1)
             ext = match.group(2).lower()
             if ext in RUN_SUGGESTIONS and ext not in shown_types:
+                if not stop_lock_acquire(session_id):
+                    sys.exit(0)
                 shown_types.add(ext)
                 state["shown_types"] = list(shown_types)
                 save_state(session_id, state)
                 suggestion = RUN_SUGGESTIONS[ext][1].format(filename=filename)
                 msg = f"Claudia: {suggestion}"
-                output = json.dumps({"additionalContext": msg, "systemMessage": msg})
+                output = json.dumps({"additionalContext": msg, "systemMessage": f"\033[38;5;209m{msg}\033[0m"})
                 print(output)
                 sys.exit(0)
 

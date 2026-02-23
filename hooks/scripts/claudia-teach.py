@@ -12,6 +12,7 @@ import json
 import os
 import re
 import sys
+import time
 
 # Technology keywords by category
 KEYWORDS = {
@@ -76,6 +77,24 @@ ERROR_PATTERNS = [
     (r'\bTypeError\b', "a type error"),
     (r'\bReferenceError\b', "a reference error — usually a typo or missing variable"),
 ]
+
+def stop_lock_acquire(session_id):
+    """Try to acquire the per-turn Stop hook lock. Returns True if acquired."""
+    lock_file = os.path.expanduser(f"~/.claude/claudia_stop_lock_{session_id}.tmp")
+    now = time.time()
+    try:
+        if os.path.exists(lock_file):
+            with open(lock_file) as f:
+                ts = float(f.read().strip())
+            if now - ts < 2.0:
+                return False
+        os.makedirs(os.path.dirname(lock_file), exist_ok=True)
+        with open(lock_file, "w") as f:
+            f.write(str(now))
+        return True
+    except (IOError, ValueError):
+        return True
+
 
 # Contextual command reveals for beginners
 COMMAND_REVEALS = {
@@ -276,12 +295,14 @@ def main():
         state["shown_keywords"] = list(shown_keywords)
         state["revealed_commands"] = list(revealed_commands)
         save_state(session_id, state)
-        tip_text = "\n".join(f"Claudia: {tip}" for tip in tips)
-        output = json.dumps({
-            "additionalContext": tip_text,
-            "systemMessage": tip_text,
-        })
-        print(output)
+        if stop_lock_acquire(session_id):
+            tip_text = "\n".join(f"Claudia: {tip}" for tip in tips)
+            colored = "\n".join(f"\033[38;5;209m{line}\033[0m" for line in tip_text.split("\n"))
+            output = json.dumps({
+                "additionalContext": tip_text,
+                "systemMessage": colored,
+            })
+            print(output)
     elif shown_keywords != set(state["shown_keywords"]) or revealed_commands != set(state["revealed_commands"]):
         state["shown_keywords"] = list(shown_keywords)
         state["revealed_commands"] = list(revealed_commands)

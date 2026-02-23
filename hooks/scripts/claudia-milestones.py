@@ -10,6 +10,7 @@ import json
 import os
 import re
 import sys
+import time
 
 # Milestone definitions: key, detection pattern, celebration message
 MILESTONES = {
@@ -53,6 +54,24 @@ MILESTONES = {
 }
 
 STATE_FILE = os.path.expanduser("~/.claude/claudia-milestones.json")
+
+
+def stop_lock_acquire(session_id):
+    """Try to acquire the per-turn Stop hook lock. Returns True if acquired."""
+    lock_file = os.path.expanduser(f"~/.claude/claudia_stop_lock_{session_id}.tmp")
+    now = time.time()
+    try:
+        if os.path.exists(lock_file):
+            with open(lock_file) as f:
+                ts = float(f.read().strip())
+            if now - ts < 2.0:
+                return False  # Another hook already claimed this turn
+        os.makedirs(os.path.dirname(lock_file), exist_ok=True)
+        with open(lock_file, "w") as f:
+            f.write(str(now))
+        return True
+    except (IOError, ValueError):
+        return True  # On error, let it through
 
 
 def load_state():
@@ -147,12 +166,14 @@ def main():
     if celebration:
         state["achieved"] = list(achieved)
         save_state(state)
-        msg = f"Claudia: {celebration}"
-        output = json.dumps({
-            "additionalContext": msg,
-            "systemMessage": msg,
-        })
-        print(output)
+        session_id = input_data.get("session_id", "default")
+        if stop_lock_acquire(session_id):
+            msg = f"Claudia: {celebration}"
+            output = json.dumps({
+                "additionalContext": msg,
+                "systemMessage": f"\033[38;5;209m{msg}\033[0m",
+            })
+            print(output)
 
     # Save state even without celebration (for file_count tracking)
     elif new_files > 0:
