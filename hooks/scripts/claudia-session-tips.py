@@ -24,6 +24,8 @@ STARTUP_TIPS = [
     "If you're not sure what to ask, try describing what you want to build. Claude works best with goals, not instructions.",
     "Claude can read your project files. You don't need to paste code — just reference the file name.",
     "When you get an error you don't understand, paste it here. That's literally what I'm for.",
+    "Ctrl+A then Ctrl+K clears your whole input line. Faster than holding backspace.",
+    "Up arrow recalls your last prompt. Edit and resend instead of retyping the whole thing.",
 ]
 
 COMPACT_TIP = (

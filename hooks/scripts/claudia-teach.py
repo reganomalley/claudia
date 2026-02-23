@@ -150,6 +150,16 @@ COMMAND_REVEALS = {
         "command": "/claudia:health",
         "tip": "Project growing? Try `/claudia:health` for a full checkup",
     },
+    "shortcuts_mentioned": {
+        "patterns": [
+            r'\bshortcut',
+            r'\bhotkey',
+            r'\bkeybind',
+            r'\bkeyboard\b',
+        ],
+        "command": "/claudia:shortcuts",
+        "tip": "Want the full list of keyboard shortcuts? Try `/claudia:shortcuts`",
+    },
 }
 
 
