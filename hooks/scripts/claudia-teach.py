@@ -276,8 +276,11 @@ def main():
         state["shown_keywords"] = list(shown_keywords)
         state["revealed_commands"] = list(revealed_commands)
         save_state(session_id, state)
-        tip_text = "\n".join(f"\U0001f4a1 Claudia: {tip}" for tip in tips)
-        output = json.dumps({"additionalContext": tip_text})
+        tip_text = "\n".join(f"Claudia: {tip}" for tip in tips)
+        output = json.dumps({
+            "additionalContext": tip_text,
+            "systemMessage": tip_text,
+        })
         print(output)
     elif shown_keywords != set(state["shown_keywords"]) or revealed_commands != set(state["revealed_commands"]):
         state["shown_keywords"] = list(shown_keywords)

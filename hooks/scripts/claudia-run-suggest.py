@@ -109,7 +109,8 @@ def main():
         state["shown_types"] = list(shown_types)
         save_state(session_id, state)
         suggestion = RUN_SUGGESTIONS["package.json"][1]
-        output = json.dumps({"additionalContext": f"Claudia: {suggestion}"})
+        msg = f"Claudia: {suggestion}"
+        output = json.dumps({"additionalContext": msg, "systemMessage": msg})
         print(output)
         sys.exit(0)
 
@@ -124,7 +125,8 @@ def main():
                 state["shown_types"] = list(shown_types)
                 save_state(session_id, state)
                 suggestion = RUN_SUGGESTIONS[ext][1].format(filename=filename)
-                output = json.dumps({"additionalContext": f"Claudia: {suggestion}"})
+                msg = f"Claudia: {suggestion}"
+                output = json.dumps({"additionalContext": msg, "systemMessage": msg})
                 print(output)
                 sys.exit(0)
 

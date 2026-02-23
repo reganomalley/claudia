@@ -1,6 +1,6 @@
 {
   "name": "claudia-mentor",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Proactive technology mentor, security advisor, and prompt coach for Claude Code",
   "author": "Regan O'Malley <regan@reganomalley.com>",
   "license": "MIT",

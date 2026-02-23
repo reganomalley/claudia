@@ -147,7 +147,11 @@ def main():
     if celebration:
         state["achieved"] = list(achieved)
         save_state(state)
-        output = json.dumps({"additionalContext": f"Claudia: {celebration}"})
+        msg = f"Claudia: {celebration}"
+        output = json.dumps({
+            "additionalContext": msg,
+            "systemMessage": msg,
+        })
         print(output)
 
     # Save state even without celebration (for file_count tracking)

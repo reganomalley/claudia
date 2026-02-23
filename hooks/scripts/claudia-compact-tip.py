@@ -101,7 +101,10 @@ def main():
 
     if tip:
         save_state(session_id, state)
-        output = json.dumps({"additionalContext": tip})
+        output = json.dumps({
+            "additionalContext": tip,
+            "systemMessage": tip,
+        })
         print(output)
 
     sys.exit(0)

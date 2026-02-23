@@ -180,7 +180,10 @@ def main():
     suggestion_text = "Claudia: What's next? Here are some ideas:\n" + "\n".join(
         f"  - {step}" for step in formatted
     )
-    output = json.dumps({"additionalContext": suggestion_text})
+    output = json.dumps({
+        "additionalContext": suggestion_text,
+        "systemMessage": suggestion_text,
+    })
     print(output)
     sys.exit(0)
 

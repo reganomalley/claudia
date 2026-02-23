@@ -168,7 +168,12 @@ def main():
     if coaching_note:
         state["count"] += 1
         save_state(session_id, state)
-        output = json.dumps({"additionalContext": coaching_note})
+        # additionalContext guides Claude; systemMessage is visible to the user
+        visible = coaching_note.replace("Claudia note: ", "Claudia: ", 1)
+        output = json.dumps({
+            "additionalContext": coaching_note,
+            "systemMessage": visible,
+        })
         print(output)
 
     sys.exit(0)
