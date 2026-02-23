@@ -177,10 +177,18 @@ def main():
     parts = [p for p in [greeting, tip] if p]
     if parts:
         save_state(session_id, state)
-        # systemMessage shows tip to user; greeting is for Claude's context only
         result = {"additionalContext": "\n\n".join(parts)}
+        # Build visible systemMessage: always show greeting line, plus tip if present
+        visible_parts = []
+        if greeting:
+            if is_beginner:
+                visible_parts.append("Claudia is here. Just build. She's watching.")
+            else:
+                visible_parts.append("Claudia is here. She catches what you miss. Try /claudia:ask, /claudia:explain, /claudia:review")
         if tip:
-            result["systemMessage"] = tip
+            visible_parts.append(tip)
+        if visible_parts:
+            result["systemMessage"] = " | ".join(visible_parts) if greeting and tip else visible_parts[0]
         print(json.dumps(result))
 
     sys.exit(0)
