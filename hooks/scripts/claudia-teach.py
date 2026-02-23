@@ -283,7 +283,7 @@ def check(input_data, proactivity, experience):
                     tips.append(
                         f"I noticed we're talking about {keyword} ({description}). "
                         f"Want me to explain more? Just say `/claudia:explain {keyword.lower()}`\n"
-                        f"(To stop tips about {keyword}, add \"{keyword}\" to \"suppress_topics\" in ~/.claude/claudia.json)"
+                        f"(Say \"stop tips about {keyword}\" to silence this)"
                     )
                     break
         if tips:
@@ -322,7 +322,11 @@ def check(input_data, proactivity, experience):
         save_state(session_id, state)
         tip_text = "\n".join(f"Claudia: {tip}" for tip in tips)
         system_text = tip_text
-        context = tip_text
+        context = tip_text + (
+            "\nIf the user asks to stop tips about a keyword or category, "
+            "add it to the \"suppress_topics\" list in ~/.claude/claudia.json "
+            "(create the file/key if missing)."
+        )
         if len(shown_keywords) % 3 == 0:
             user_hint, claude_hint = dismiss_hint("teach")
             system_text += "\n" + user_hint
